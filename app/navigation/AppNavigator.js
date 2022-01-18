@@ -8,7 +8,6 @@ import routes from './routes';
 import MemorialListScreen from '../screens/MemorialListScreen';
 import StatsNavigator from './StatsNavigator';
 
-
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (

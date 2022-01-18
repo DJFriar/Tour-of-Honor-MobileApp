@@ -11,13 +11,13 @@ const REGISTER_URL = 'https://www.tourofhonor.com/pages/register.html';
 export default function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground 
-      blurRadius={10}
+      blurRadius={7}
       style={styles.background} 
-      source={require('../assets/background.jpg')} 
+      source={require('../assets/946_FL3.jpg')} 
       resizeMode='cover' >
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require('../assets/toh_logo.png')} ></Image>
-        <Text style={styles.tagline}>Ride to Remember</Text>
+        {/* <Text style={styles.tagline}>Ride to Remember</Text> */}
       </View>
     
       <View style={styles.buttonsContainer}>
@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   logo: {
-    width: 100,
-    height: 100
+    width: 200,
+    height: 200
   },
   logoContainer: {
     position: "absolute",
-    top: 70,
+    top: 120,
     alignItems: "center"
   },
   tagline: {
