@@ -6,10 +6,11 @@ import AppText from './AppText';
 import colors from '../config/colors';
 
 function ListItem({cityState, category, code, image, name, onPress}) {
+  const imageURL = "https://www.tourofhonor.com/2022appimages/" + image;
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.container}>
-        <Image style={styles.image} source={image} />
+        <Image style={styles.image} source={{uri: imageURL}} />
         <View style={styles.detailContainer}>
           <View style={styles.memorialDetails}>
             <AppText style={styles.name} numberOfLines={1}>{name}</AppText>

@@ -1,70 +1,40 @@
-import React, { useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import colors from '../config/colors';
-import Screen from '../components/Screen';
 import ListItem from '../components/ListItem';
 import ListItemSeperator from '../components/ListItemSeperator';
+import memorial from '../api/memorial';
+import Screen from '../components/Screen';
+import useApi from '../hooks/useApi';
 
-const initialMemorials = [
-  {
-    id: 1,
-    category: 'Tour of Honor',
-    code: 'TX2',
-    name: 'Central Texas Veterans Memorial',
-    cityState: 'Brownwood, TX',
-    image: require('../assets/MTr001.jpg')
-  },
-  {
-    id: 2,
-    category: 'Gold Star Family',
-    code: 'GSF17',
-    name: 'GSF New York',
-    cityState: 'New York City, NY',
-    image: require('../assets/MTr002.jpg')
-  },
-  {
-    id: 3,
-    category: 'Tour of Honor',
-    code: 'TX7',
-    name: 'Veterans Memorial',
-    cityState: 'Wills Point, TX',
-    image: require('../assets/MTr003.jpg')
-  },
-  {
-    id: 4,
-    category: 'Huey',
-    code: 'H238',
-    name: '59-09641 UH-1A',
-    cityState: 'Springfield, IL',
-    image: require('../assets/MTr004.jpg')
-  },
-  {
-    id: 5,
-    category: 'War Dogs',
-    code: 'K9108',
-    name: 'Steelworkers Memorial',
-    cityState: 'Coatesville, PA',
-    image: require('../assets/MTr005.jpg')
-  }
-]
+function MemorialListScreen({ navigation }) {
+  const getMemorialListApi = useApi(memorial.getMemorialList);
+  const memorials = getMemorialListApi.data;
 
-function MemorialListScreen() {
-  const [memorials, setMemorials] = useState(initialMemorials);
+  useEffect(() => {
+    getMemorialListApi.request();
+  }, []);
 
   return (
     <Screen style={styles.screen}>
+      <View style={styles.filterRow}>
+        <MaterialCommunityIcons name='filter-minus-outline' size={30}/>
+        <MaterialCommunityIcons name='filter-menu-outline' size={30}/>
+        <MaterialCommunityIcons name='filter-plus-outline' size={30}/>
+      </View>
       <FlatList 
         data={memorials}
         keyExtractor={memorial => memorial.id.toString()}
         renderItem={({item}) => 
         <ListItem 
-          category={item.category}
-          cityState={item.cityState}
-          code={item.code}
-          image={item.image}
-          name={item.name}
-          onPress={() => console.log("Memorial selected", item)}
+          category={item.CategoryName}
+          cityState={item.City +", " + item.State}
+          code={item.Code}
+          image={item.SampleImage}
+          name={item.Name}
+          onPress={() => navigation.navigate("MemorialDetailScreen", {id: item.id})}
         />}
         ItemSeparatorComponent={ListItemSeperator}
       />
@@ -73,6 +43,12 @@ function MemorialListScreen() {
 }
 
 const styles = StyleSheet.create({
+  filterRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    padding: 10,
+  },
   screen: {
     backgroundColor: colors.background
   }
