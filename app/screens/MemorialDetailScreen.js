@@ -1,17 +1,102 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import HTML from 'react-native-render-html';
 
+import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
-import Screen from '../components/Screen';
 import colors from '../config/colors';
+import memorial from '../api/memorial';
+import Screen from '../components/Screen';
+import useApi from '../hooks/useApi';
+import MetaHeading from '../components/MetaHeading';
+
+const tagsStyles = {
+  p: {
+    margin: 0,
+    marginBottom: 12,
+  }
+};
 
 function MemorialDetailScreen({ route }) {
   const memorialID = route.params.id;
+  const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
+  const memorialDetails = getMemorialDetailsApi.data[0] || {};
+  const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
+  const memorialMetadata = getMemorialMetadataApi.data;
+
+  const contentWidth = useWindowDimensions().width;
+  const imageURL = "https://www.tourofhonor.com/2022appimages/" + memorialDetails.SampleImage;
+
+
+  useEffect(() => {
+    console.log("===== useEffect() ====");
+    getMemorialDetailsApi.request(memorialID);
+    getMemorialMetadataApi.request(memorialID);
+  }, []);
+
   return (
     <Screen>
-      <View style={styles.container}>
-        <AppText>Memorial Details for Memorial # {memorialID} go here.</AppText>
-      </View>
+      {getMemorialDetailsApi.error && (
+        <>
+          <AppText>Couldn't retrieve memorial details.</AppText>
+          <AppButton title="Retry" onPress={getMemorialDetailsApi.request}/>
+        </>
+      )}
+      <ScrollView style={styles.container}>
+
+        {/* Top Section */}
+        <View style={styles.topDetailInfo}>
+          <View style={styles.memorialNameContainer}>
+            <AppText style={styles.memorialName}>{memorialDetails.Name}</AppText>
+            <AppText style={styles.memorialCityState}>{memorialDetails.City}, {memorialDetails.State}</AppText>
+          </View>
+          <View style={styles.statusIcons}>
+            <MaterialCommunityIcons name='shield-check' size={25} style={{color: 'green'}} />
+            {/* <MaterialCommunityIcons name='clock-outline' size={25} style={{color: 'black'}} /> */}
+          </View>
+        </View>
+
+        {/* Middle Section */}
+        <View style={styles.memorialCodeContainer}>
+          <AppText style={styles.memorialCodeText}>{memorialDetails.CategoryName}</AppText>
+          <AppText style={styles.memorialCodeText}>{memorialDetails.Code}</AppText>
+        </View>
+        <View style={styles.sampleImageContainer}>
+          <Image style={styles.sampleImage} source={{uri: imageURL}} />
+        </View>
+        <View style={styles.infoIconsContainer}>
+          <MaterialCommunityIcons name='image-multiple-outline' size={35} style={{color: 'black'}} />
+          <MaterialCommunityIcons name='map-search-outline' size={35} style={{color: 'black'}} />
+          {memorialDetails.Restrictions > 1 && <MaterialCommunityIcons name='alert-octagon-outline' size={35} style={{color: 'red'}} />}
+        </View>
+        <View style={styles.submitButtonContainer}>
+          <AppButton  title="Submit" color='blue' onPress={console.log("Submit button pressed")} />
+        </View>
+
+        {/* Bottom Section */}
+        <View style={styles.metadataDetailContainer}>
+          <MetaHeading>Access</MetaHeading>
+          <AppText>{memorialDetails.Access}</AppText>
+          {memorialMetadata.map(({id, Heading, Text}) => (
+            <View key={id}>
+              <MetaHeading>{Heading}</MetaHeading>
+              <HTML 
+                source={{ html: Text }} 
+                contentWidth={contentWidth}
+                tagsStyles={tagsStyles}
+              />
+            </View>
+          ))}
+        </View>
+        <View style={styles.metadataDetailContainer}>
+          <MetaHeading>Restrictions</MetaHeading>
+          <AppText>{memorialDetails.RestrictionName}</AppText>
+        </View>
+        <View style={{paddingVertical: 10}}>
+          <AppText>&nbsp;</AppText>
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
