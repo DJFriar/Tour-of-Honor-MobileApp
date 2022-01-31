@@ -18,7 +18,7 @@ const tagsStyles = {
   }
 };
 
-function MemorialDetailScreen({ route }) {
+function MemorialDetailScreen({ navigation, route }) {
   const memorialID = route.params.id;
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
@@ -28,9 +28,7 @@ function MemorialDetailScreen({ route }) {
   const contentWidth = useWindowDimensions().width;
   const imageURL = "https://www.tourofhonor.com/2022appimages/" + memorialDetails.SampleImage;
 
-
   useEffect(() => {
-    console.log("===== useEffect() ====");
     getMemorialDetailsApi.request(memorialID);
     getMemorialMetadataApi.request(memorialID);
   }, []);
@@ -71,7 +69,15 @@ function MemorialDetailScreen({ route }) {
           {memorialDetails.Restrictions > 1 && <MaterialCommunityIcons name='alert-octagon-outline' size={35} style={{color: 'red'}} />}
         </View>
         <View style={styles.submitButtonContainer}>
-          <AppButton  title="Submit" color='blue' onPress={console.log("Submit button pressed")} />
+          <AppButton  title="Submit" color='blue' onPress={() => 
+            navigation.navigate('MemorialSubmitScreen', { 
+              id: memorialID,
+              name: memorialDetails.Name,
+              code: memorialDetails.Code,
+              multiImage: memorialDetails.MultiImage,
+              sampleImage: memorialDetails.SampleImage
+            })} 
+          />
         </View>
 
         {/* Bottom Section */}
