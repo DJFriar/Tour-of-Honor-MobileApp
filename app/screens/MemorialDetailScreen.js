@@ -75,9 +75,8 @@ function MemorialDetailScreen({ navigation, route }) {
           <Image style={styles.sampleImage} source={{uri: imageURL}} />
         </View>
         <View style={styles.infoIconsContainer}>
-          <MaterialCommunityIcons name='image-multiple-outline' size={35} style={{color: 'black'}} />
+          {memorialDetails.MultiImage > 0 && <MaterialCommunityIcons name='image-multiple-outline' size={35} style={{color: 'black'}} />}
           <TappableIcon iconName="map-search-outline" onPress={() => {Linking.openURL(gpsUrl)}}/>
-          {/* <MaterialCommunityIcons name='map-search-outline' size={35} style={{color: 'black'}} /> */}
           {memorialDetails.Restrictions > 1 && <MaterialCommunityIcons name='alert-octagon-outline' size={35} style={{color: 'red'}} />}
         </View>
         <View style={styles.submitButtonContainer}>
