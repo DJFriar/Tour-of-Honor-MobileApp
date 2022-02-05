@@ -8,7 +8,7 @@ import colors from '../config/colors';
 import AppFormImagePicker from '../components/forms/AppFormImagePicker';
 import AppForm from '../components/forms/AppForm';
 import submissionApi from '../api/submission';
-import SubmitButton from '../components/SubmitButton'
+import SubmitButton from '../components/forms/SubmitButton'
 import AppFormField from '../components/forms/AppFormField';
 
 let validationSchema = {};

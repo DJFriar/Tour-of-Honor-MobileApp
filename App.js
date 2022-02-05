@@ -13,10 +13,10 @@ import LoginScreen from './app/screens/LoginScreen';
 export default function App() {
 
   return (
-    // <LoginScreen />
+    <LoginScreen />
     // <WelcomeScreen />
-  <NavigationContainer theme={navigationTheme}>
-    <AppNavigator />
-  </NavigationContainer>
+  // <NavigationContainer theme={navigationTheme}>
+  //   <AppNavigator />
+  // </NavigationContainer>
   );
 }
