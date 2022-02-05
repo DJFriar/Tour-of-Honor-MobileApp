@@ -11,14 +11,27 @@ import submissionApi from '../api/submission';
 import SubmitButton from '../components/SubmitButton'
 import AppFormField from '../components/AppFormField';
 
-const validationSchema = Yup.object().shape({
-  images: Yup.array().min(1, "Please select at least one image.")
-});
+let validationSchema = {};
 
 function MemorialSubmitScreen({ navigation, route }) {
+  const multiImage = route.params.multiImage;
+  const maxImageCount = multiImage + 1;
+  console.log("==== maxImageCount ====");
+  console.log(maxImageCount);
+  console.log("multiImage = " + multiImage);
   const memorialID = route.params.id;
   const memorialCode = route.params.code;
   const imageURL = "https://www.tourofhonor.com/2022appimages/" + route.params.sampleImage;
+
+  if (multiImage == 1) {
+    validationSchema = Yup.object().shape({
+      images: Yup.array().min(2, "Two images are required for this memorial.")
+    });
+  } else {
+    validationSchema = Yup.object().shape({
+      images: Yup.array().min(1, "Please select at least one image.")
+    });
+  }
 
   const handleSubmit = async (submission, { resetForm }) => {
     // setProgress(0);
@@ -48,7 +61,9 @@ function MemorialSubmitScreen({ navigation, route }) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <AppFormImagePicker name="images" />
+          <View style={styles.imagesRow}>
+            <AppFormImagePicker name="images" maxImageCount={maxImageCount} />
+          </View>
           <AppFormField 
           autoCorrect
           maxLength={255}
@@ -78,6 +93,10 @@ const styles = StyleSheet.create({
   },
   formPicker: {
     color: colors.medium
+  },
+  imagesRow:{
+    alignContent: 'center',
+    justifyContent: 'space-evenly',
   },
   sampleImage: {
     borderRadius: 10,
