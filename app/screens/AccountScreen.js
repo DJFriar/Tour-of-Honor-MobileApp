@@ -13,7 +13,6 @@ function AccountScreen(props) {
 
   return (
     <Screen style={styles.container}>
-      <Text style={styles.titleText}>User Profile</Text>
       <Text style={styles.riderName}>{user.FirstName} {user.LastName}</Text>
       <Text style={styles.flag}>Flag #{user.FlagNumber}</Text>
       <Text>&nbsp;</Text>
@@ -34,6 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     flex: 1,
     paddingLeft: 10,
+    paddingTop: 15,
   },
   changesTextContainer: {
     margin: 10
@@ -52,11 +52,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
   },
-  titleText: {
-    fontSize: 36,
-    fontWeight: "600",
-    marginBottom: 20
-  }
 });
 
 export default AccountScreen;

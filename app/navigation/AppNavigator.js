@@ -13,9 +13,9 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
 
-  <Tab.Navigator>
-    <Tab.Screen name="Account" component={AccountNavigator} options={{
-      headerShown: false,
+  <Tab.Navigator initialRouteName='MemorialNavigator'>
+    <Tab.Screen name="User Profile" component={AccountNavigator} options={{
+      // headerShown: false,
       tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account" color={color} size={size * 1.5} />
     }} />
     <Tab.Screen 
