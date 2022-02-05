@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import HTML from 'react-native-render-html';
+import * as Linking from 'expo-linking';
+
 
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
@@ -10,6 +12,7 @@ import memorial from '../api/memorial';
 import Screen from '../components/Screen';
 import useApi from '../hooks/useApi';
 import MetaHeading from '../components/MetaHeading';
+import TappableIcon from '../components/TappableIcon';
 
 const tagsStyles = {
   p: {
@@ -24,7 +27,15 @@ function MemorialDetailScreen({ navigation, route }) {
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
   const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
   const memorialMetadata = getMemorialMetadataApi.data;
-
+  const memorialLat = memorialDetails.Latitude;
+  const memorialLong = memorialDetails.Longitude;
+  const memorialCode = memorialDetails.Code;
+  console.log("GPS: " + memorialLat + ',' + memorialLong + ' | ' + memorialCode);
+  const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+  const gpsUrl = Platform.select({
+    ios: `${scheme}${memorialCode}@${memorialLat},${memorialLong}`,
+    android: `${scheme}${memorialLat},${memorialLong}(${memorialCode})`
+  });
   const contentWidth = useWindowDimensions().width;
   const imageURL = "https://www.tourofhonor.com/2022appimages/" + memorialDetails.SampleImage;
 
@@ -65,7 +76,8 @@ function MemorialDetailScreen({ navigation, route }) {
         </View>
         <View style={styles.infoIconsContainer}>
           <MaterialCommunityIcons name='image-multiple-outline' size={35} style={{color: 'black'}} />
-          <MaterialCommunityIcons name='map-search-outline' size={35} style={{color: 'black'}} />
+          <TappableIcon iconName="map-search-outline" onPress={() => {Linking.openURL(gpsUrl)}}/>
+          {/* <MaterialCommunityIcons name='map-search-outline' size={35} style={{color: 'black'}} /> */}
           {memorialDetails.Restrictions > 1 && <MaterialCommunityIcons name='alert-octagon-outline' size={35} style={{color: 'red'}} />}
         </View>
         <View style={styles.submitButtonContainer}>
