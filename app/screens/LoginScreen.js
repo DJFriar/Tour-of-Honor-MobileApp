@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, View, StyleSheet } from 'react-native';
-import AppText from '../components/AppText';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
 import { AppForm, AppFormField, ErrorMessage, SubmitButton } from '../components/forms';
+import AppText from '../components/AppText';
 import authApi from '../api/auth';
 import Screen from '../components/Screen';
-import colors from '../config/colors';
+import useAuth from '../auth/useAuth';
 
 const validationSchema = Yup.object().shape({
   flag: Yup.number().required().min(1).max(1600).label("Flag Number"),
@@ -15,10 +15,14 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen(props) {
+  const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
 
-  const handleSubmit = ({flag, zipcode}) => {
-    console.log("Login Submitted for " + flag);
+  const handleSubmit = async ({flag, zipcode}) => {
+    const result = await authApi.login(flag, zipcode);
+    if (!result.ok) return setLoginFailed(true);
+    setLoginFailed(false);
+    auth.logIn(result.data);
   }
 
   return (
@@ -36,7 +40,9 @@ function LoginScreen(props) {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <ErrorMessage error="Invalid flag and/or zipcode." visible={loginFailed} />
+          <View style={styles.errorMessage}>
+            <ErrorMessage error="Invalid flag and/or zipcode." visible={loginFailed} />
+          </View>
           <View style={styles.formContent}>
             <AppFormField 
               autoCorrect={false}
@@ -65,6 +71,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1, 
     justifyContent: "flex-end",
+    marginTop: 20
+  },
+  errorMessage: {
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20
   },
   formContent: {

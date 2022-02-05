@@ -22,7 +22,7 @@ export default function WelcomeScreen({ navigation }) {
     
       <View style={styles.buttonsContainer}>
         <AppButton title="Register" color="secondary" onPress={() => Linking.openURL(REGISTER_URL)}/>
-        <AppButton title="Login" color="blue" onPress={() => navigation.navigate('LoginScreen')}/>
+        <AppButton title="Login" color="blue" onPress={() => navigation.navigate(routes.LOGIN)}/>
       </View>
     </ImageBackground>
   );
