@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
 import colors from '../config/colors';
-import profiles from '../api/profiles';
 import Screen from '../components/Screen';
-import useApi from '../hooks/useApi';
 import useAuth from '../auth/useAuth';
 
 
