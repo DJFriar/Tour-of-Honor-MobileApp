@@ -14,7 +14,7 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.blue,
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",

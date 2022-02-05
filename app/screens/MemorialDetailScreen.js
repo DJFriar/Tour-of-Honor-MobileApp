@@ -69,7 +69,7 @@ function MemorialDetailScreen({ navigation, route }) {
           {memorialDetails.Restrictions > 1 && <MaterialCommunityIcons name='alert-octagon-outline' size={35} style={{color: 'red'}} />}
         </View>
         <View style={styles.submitButtonContainer}>
-          <AppButton  title="Submit" color='blue' onPress={() => 
+          <AppButton  title="Submit" onPress={() => 
             navigation.navigate('MemorialSubmitScreen', { 
               id: memorialID,
               name: memorialDetails.Name,
