@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormikContext } from 'formik';
 
 import ErrorMessage from './ErrorMessage';
-import ImageInputList from './ImageInputList';
+import ImageInputList from '../ImageInputList';
 
 function AppFormImagePicker({ name, maxImageCount }) {
   const { errors, setFieldValue, touched, values } = useFormikContext();

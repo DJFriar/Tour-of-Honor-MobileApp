@@ -1,6 +1,6 @@
 import apiClient from "./client";
 
-const endpoint = '/mobile-submission';
+const endpoint = '/submission';
 
 const postSubmission = (submission) => {
   const data = new FormData();

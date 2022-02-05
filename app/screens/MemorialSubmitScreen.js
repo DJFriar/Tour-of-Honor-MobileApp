@@ -5,11 +5,11 @@ import * as Yup from 'yup';
 import AppText from '../components/AppText';
 import Screen from '../components/Screen';
 import colors from '../config/colors';
-import AppFormImagePicker from '../components/AppFormImagePicker';
-import AppForm from '../components/AppForm';
+import AppFormImagePicker from '../components/forms/AppFormImagePicker';
+import AppForm from '../components/forms/AppForm';
 import submissionApi from '../api/submission';
 import SubmitButton from '../components/SubmitButton'
-import AppFormField from '../components/AppFormField';
+import AppFormField from '../components/forms/AppFormField';
 
 let validationSchema = {};
 
