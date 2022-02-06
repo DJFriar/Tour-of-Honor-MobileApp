@@ -6,7 +6,6 @@ import MemorialDetailScreen from '../screens/MemorialDetailScreen';
 import MemorialSubmitScreen from '../screens/MemorialSubmitScreen';
 
 const Stack = createStackNavigator();
-console.log("==== MemorialNavigator ====");
 
 const MemorialNavigator = () => (
   <Stack.Navigator>

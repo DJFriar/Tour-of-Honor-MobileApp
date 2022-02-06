@@ -5,8 +5,6 @@ const endpoint = '/submission';
 const postSubmission = (submission) => {
   const data = new FormData();
   const submittedImages = submission.images;
-  console.log("==== submittedImages ====");
-  console.log(submittedImages);
 
   data.append('MemorialID', submission.MemorialID);
   data.append('MemorialCode', submission.MemorialCode);
@@ -26,9 +24,6 @@ const postSubmission = (submission) => {
       uri: submission.images[1]
     })
   }
-
-  console.log("==== submissionAPI data ====");
-  console.log(data);
 
   return apiClient.post(endpoint, data)
 }

@@ -29,7 +29,6 @@ function MemorialDetailScreen({ navigation, route }) {
   const memorialLat = memorialDetails.Latitude;
   const memorialLong = memorialDetails.Longitude;
   const memorialCode = memorialDetails.Code;
-  console.log("GPS: " + memorialLat + ',' + memorialLong + ' | ' + memorialCode);
   const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
   const gpsUrl = Platform.select({
     ios: `${scheme}${memorialCode}@${memorialLat},${memorialLong}`,

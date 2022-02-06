@@ -10,8 +10,6 @@ function AppFormImagePicker({ name, maxImageCount }) {
 
   const handleAdd = uri => {
     setFieldValue(name, [...imageUris, uri])
-    console.log("==== imageUris ====");
-    console.log(imageUris.length);
   }
 
   const handleRemove = uri => {

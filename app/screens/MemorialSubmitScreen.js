@@ -16,9 +16,6 @@ let validationSchema = {};
 function MemorialSubmitScreen({ navigation, route }) {
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
-  console.log("==== maxImageCount ====");
-  console.log(maxImageCount);
-  console.log("multiImage = " + multiImage);
   const memorialID = route.params.id;
   const memorialCode = route.params.code;
   const imageURL = "https://www.tourofhonor.com/2022appimages/" + route.params.sampleImage;
