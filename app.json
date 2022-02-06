@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "3.0.0",
+      "buildNumber": "21",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
       "supportsTablet": false
     },
@@ -25,7 +25,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ambitiousNerds.TourOfHonor",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
