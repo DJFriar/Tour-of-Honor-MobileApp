@@ -5,10 +5,10 @@ const settings = {
     apiUrl: 'http://10.0.0.122:3700/api/v1'
   },
   test: {
-    apiUrl: 'http://toh-portal.ambitiousnerds.com:3700/api/v1'
+    apiUrl: 'https://toh-portal.ambitiousnerds.com/api/v1'
   },  
   prod: {
-    apiUrl: 'http://scoring.tourofhonor.com:3700/api/v1'
+    apiUrl: 'https://scoring.tourofhonor.com/api/v1'
   },
 }
 
