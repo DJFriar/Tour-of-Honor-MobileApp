@@ -13,7 +13,7 @@ export default function WelcomeScreen({ navigation }) {
     <ImageBackground 
       blurRadius={7}
       style={styles.background} 
-      source={require('../assets/946_FL3.jpg')} 
+      source={require('../assets/background.jpg')} 
       resizeMode='cover' >
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require('../assets/toh_logo.png')} ></Image>

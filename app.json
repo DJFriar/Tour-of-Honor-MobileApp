@@ -2,13 +2,13 @@
   "expo": {
     "name": "TourOfHonor",
     "slug": "TourOfHonor",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/appIcon.png",
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f8f4f4"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,6 +17,8 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "3.0.0",
+      "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
       "supportsTablet": false
     },
     "android": {
