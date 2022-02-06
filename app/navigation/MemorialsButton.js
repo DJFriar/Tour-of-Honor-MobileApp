@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import colors from '../config/colors';
 
@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     borderColor: colors.white,
     borderRadius: 40,
     borderWidth: 10,
-    bottom: 20,
+    bottom: Platform.OS === "android" ? 30 : 20,
     height: 80,
     justifyContent: 'center',
+    // opacity: .6, -- Would be nice to set this on active/inactive state, but not urgent.
     width: 80,
   },
   icon: {
