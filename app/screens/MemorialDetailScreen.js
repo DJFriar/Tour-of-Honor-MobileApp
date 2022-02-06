@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HTML from 'react-native-render-html';
 import * as Linking from 'expo-linking';
-
 
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
 import colors from '../config/colors';
 import memorial from '../api/memorial';
-import Screen from '../components/Screen';
-import useApi from '../hooks/useApi';
 import MetaHeading from '../components/MetaHeading';
+import Screen from '../components/Screen';
 import TappableIcon from '../components/TappableIcon';
+import useApi from '../hooks/useApi';
 
 const tagsStyles = {
   p: {
