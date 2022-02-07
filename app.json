@@ -17,8 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "24",
+      "buildNumber": "25",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allows you to submit your memorial visits using the photos in your camera roll."
+      },
       "supportsTablet": false
     },
     "android": {
@@ -27,6 +30,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.ambitiousNerds.TourOfHonor",
+      "permissions": ["READ_EXTERNAL_STORAGE"],
       "versionCode": 2
     },
     "web": {
