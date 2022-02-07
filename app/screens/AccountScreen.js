@@ -1,8 +1,7 @@
 import React from 'react';
 import * as Application from 'expo-application';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
@@ -14,10 +13,6 @@ import useAuth from '../auth/useAuth';
 function AccountScreen(props) {
   const { user, logOut } = useAuth();
   const appVersion = Application.nativeApplicationVersion;
-  const buildNum = Application.nativeBuildVersion;
-  const tabBarHeight = useBottomTabBarHeight();
-  console.log(tabBarHeight);
-
 
   return (
     <Screen style={styles.screen}>
@@ -79,11 +74,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 4
-    // marginBottom: Platform.OS === "android" ? 32 : 22,
   },
   bottomContainer: {
-    // flex: 1,
-    // justifyContent: 'flex-end',
     marginTop: 40,
   },
   copyright: {

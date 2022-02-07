@@ -4,11 +4,13 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import colors from '../config/colors';
+import settings from '../config/settings';
 
 function Screen({ children, style }) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
     <StatusBar barStyle='light-content' />
+      <View style={{backgroundColor: settings.statusBarColor, height: 6}} />
       <View style={[styles.view, style]}>
         {children}
       </View>
