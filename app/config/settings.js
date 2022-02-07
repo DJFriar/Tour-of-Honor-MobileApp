@@ -14,7 +14,7 @@ const settings = {
 
 const getCurrentSettings = () => {
   if (__DEV__) return settings.dev;
-  if (Constants.manifest.releaseChannel === 'test') return settings.staging;
+  if (Constants.manifest.releaseChannel === 'test') return settings.test;
   return settings.prod;
 }
 
