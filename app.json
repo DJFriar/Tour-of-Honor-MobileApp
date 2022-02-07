@@ -31,7 +31,7 @@
       },
       "package": "com.ambitiousNerds.TourOfHonor",
       "permissions": ["READ_EXTERNAL_STORAGE"],
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
