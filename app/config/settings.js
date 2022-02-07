@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 const settings = {
   dev: {
     apiUrl: 'http://10.0.0.122:3700/api/v1',
-    statusBarColor: 'purple',
+    statusBarColor: 'orange',
   },
   test: {
     apiUrl: 'https://toh-portal.ambitiousnerds.com/api/v1',
