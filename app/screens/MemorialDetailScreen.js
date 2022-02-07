@@ -43,7 +43,7 @@ function MemorialDetailScreen({ navigation, route }) {
   }, []);
 
   return (
-    <Screen>
+    <Screen hasNoHeader>
       {getMemorialDetailsApi.error && (
         <>
           <AppText>Couldn't retrieve memorial details.</AppText>

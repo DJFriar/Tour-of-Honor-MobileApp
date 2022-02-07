@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+
 import AppText from '../components/AppText';
 import colors from '../config/colors';
+import Screen from '../components/Screen';
 
 function StatsScreen(props) {
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <AppText>This the stats screen</AppText>
-    </View>
+    </Screen>
   );
 }
 

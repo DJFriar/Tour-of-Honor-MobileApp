@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import Constants from 'expo-constants';
 
 import apiClient from "../api/client";
 import AppTextInput from '../components/AppTextInput';
 import colors from '../config/colors';
 import ListItem from '../components/ListItem';
 import ListItemSeperator from '../components/ListItemSeperator';
-// import memorial from '../api/memorial';
 import Screen from '../components/Screen';
-// import useApi from '../hooks/useApi';
 
 function MemorialListScreen({ navigation }) {
   const [filteredList, setFilteredList] = useState();
   const [masterList, setMasterList] = useState();
   const [search, setSearch] = useState('');
   const [onRefresh, setOnRefresh] = useState(false);
-  
-  // const getMemorialListApi = useApi(memorial.getMemorialList);
-  // const memorials = getMemorialListApi.data;
 
   useEffect(() => {
     fetchMemorialList();
@@ -58,7 +54,7 @@ function MemorialListScreen({ navigation }) {
   }
 
   return (
-    <Screen style={styles.screen}>
+    <Screen style={styles.screen} hasNoHeader>
       <View style={styles.searchRow}>
         <AppTextInput 
           icon="magnify" 
@@ -93,7 +89,8 @@ function MemorialListScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
+    // paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
   },
   searchRow: {
     marginHorizontal: 10

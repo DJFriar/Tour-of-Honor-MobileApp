@@ -1,15 +1,20 @@
 import React from 'react';
-import Constants from 'expo-constants';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 import colors from '../config/colors';
 import settings from '../config/settings';
 
-function Screen({ children, style }) {
+function Screen({ children, style, hasNoHeader }) {
+  const edges = ['left', 'right']
+  if (hasNoHeader) {
+    edges.push('top')
+  }
+
   return (
-    <SafeAreaView style={[styles.screen, style]}>
-    <StatusBar barStyle='light-content' />
+    <SafeAreaView style={[styles.screen, style]} edges={edges}>
+      <StatusBar barStyle='light-content' />
       <View style={{backgroundColor: settings.statusBarColor, height: 6}} />
       <View style={[styles.view, style]}>
         {children}
@@ -21,7 +26,6 @@ function Screen({ children, style }) {
 const styles = StyleSheet.create({
   screen: {
     backgroundColor: colors.background,
-    paddingTop: Constants.statusBarHeight,
     flex: 1,
   },
   view: {
