@@ -9,7 +9,6 @@ import colors from '../config/colors';
 import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
 
-
 function AccountScreen(props) {
   const { user, logOut } = useAuth();
   const appVersion = Application.nativeApplicationVersion;

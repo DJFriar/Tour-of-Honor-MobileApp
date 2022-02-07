@@ -9,17 +9,16 @@ const Stack = createStackNavigator();
 
 const MemorialNavigator = () => (
   <Stack.Navigator>
-  <Stack.Group
-    screenOptions={{
-      headerShown: false
-    }}>
-    <Stack.Screen name="MemorialList" component={MemorialListScreen} />
-    <Stack.Screen name="MemorialDetailScreen" component={MemorialDetailScreen} />
-  </Stack.Group>
-  <Stack.Group screenOptions={{ presentation: 'modal' }}>
-    <Stack.Screen name="MemorialSubmitScreen" component={MemorialSubmitScreen} options={({route}) => ({ title: 'Submit ' + route.params.code })} />
-  </Stack.Group>
-
+    <Stack.Group
+      screenOptions={{
+        headerShown: false
+      }}>
+      <Stack.Screen name="MemorialList" component={MemorialListScreen} />
+      <Stack.Screen name="MemorialDetailScreen" component={MemorialDetailScreen} />
+    </Stack.Group>
+    <Stack.Group screenOptions={{ presentation: 'modal' }}>
+      <Stack.Screen name="MemorialSubmitScreen" component={MemorialSubmitScreen} options={({route}) => ({ title: 'Submit ' + route.params.code })} />
+    </Stack.Group>
   </Stack.Navigator>
 )
 
