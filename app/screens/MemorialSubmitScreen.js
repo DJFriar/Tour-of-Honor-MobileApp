@@ -2,20 +2,27 @@ import React from 'react';
 import { Image, View, StyleSheet, ScrollView } from 'react-native';
 import * as Yup from 'yup';
 
-import AppText from '../components/AppText';
-import Screen from '../components/Screen';
-import colors from '../config/colors';
-import AppFormImagePicker from '../components/forms/AppFormImagePicker';
 import AppForm from '../components/forms/AppForm';
-import submissionApi from '../api/submission';
-import SubmitButton from '../components/forms/SubmitButton'
 import AppFormField from '../components/forms/AppFormField';
+import AppFormImagePicker from '../components/forms/AppFormImagePicker';
+import colors from '../config/colors';
+import Screen from '../components/Screen';
+import submissionApi from '../api/submission';
+import SubmitButton from '../components/forms/SubmitButton';
+import useAuth from '../auth/useAuth';
 
 let validationSchema = {};
 
 function MemorialSubmitScreen({ navigation, route }) {
+  const { user } = useAuth();
+
+  console.log("==== user ====");
+  console.log(user);
+
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
+  const userID = user.UserID;
+  const riderFlagNumber = user.FlagNumber;
   const memorialID = route.params.id;
   const memorialCode = route.params.code;
   const imageURL = "https://www.tourofhonor.com/2022appimages/" + route.params.sampleImage;
@@ -49,12 +56,11 @@ function MemorialSubmitScreen({ navigation, route }) {
   return (
     <Screen>
       <ScrollView style={styles.container}>
-        <AppText>This the submit modal for {memorialCode}</AppText>
         <View style={styles.sampleImageContainer}>
           <Image style={styles.sampleImage} source={{uri: imageURL}} />
         </View>
         <AppForm
-          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, RiderNotes: '', RiderID: 1}}
+          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
