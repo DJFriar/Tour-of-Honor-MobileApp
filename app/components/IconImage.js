@@ -4,7 +4,6 @@ import { Image, StyleSheet, View } from 'react-native';
 function IconImage({ name, size = 40, }) {
   const iconPath = "https://www.tourofhonor.com/2022appimages/stateIcons/" + name + ".png";
 
-  console.log(iconPath);
   return (
     <View style={[styles.container, {
       width: size,
