@@ -26,7 +26,7 @@ function LoginScreen(props) {
   }
 
   return (
-    <Screen>
+    <Screen hasNoHeader>
       <ScrollView style={{marginTop: 20}} keyboardShouldPersistTaps="handled">
         <View style={styles.logoContainer}>
           <Image 
@@ -50,6 +50,7 @@ function LoginScreen(props) {
               keyboardType="number-pad"
               name="flag"
               placeholder="Flag Number"
+              height={60}
             />
             <AppFormField 
               autoCorrect={false}
@@ -57,6 +58,7 @@ function LoginScreen(props) {
               keyboardType="number-pad"
               name="zipcode"
               placeholder="Zip Code"
+              height={60}
             />
             <SubmitButton title="Login"/>
           </View>

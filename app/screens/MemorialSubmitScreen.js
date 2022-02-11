@@ -69,6 +69,7 @@ function MemorialSubmitScreen({ navigation, route }) {
           </View>
           <AppFormField 
           autoCorrect
+          height={100}
           maxLength={255}
           multiline
           name="RiderNotes"
