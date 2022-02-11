@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { useState } from 'react/cjs/react.development';
 
 import AppButton from './AppButton';
 import AppText from './AppText';
