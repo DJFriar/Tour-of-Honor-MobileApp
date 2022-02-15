@@ -7,9 +7,8 @@ import AppTextInput from '../components/AppTextInput';
 import colors from '../config/colors';
 import ListItem from '../components/ListItem';
 import ListItemSeperator from '../components/ListItemSeperator';
-import Screen from '../components/Screen';
-import StatePickerItem from '../components/StatePickerItem';
 import listOfStates from '../config/states';
+import Screen from '../components/Screen';
 
 
 function MemorialListScreen({ navigation }) {
