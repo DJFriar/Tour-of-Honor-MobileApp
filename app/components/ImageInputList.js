@@ -1,29 +1,27 @@
-import React, { useRef } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import ImageInput from './ImageInput';
 
-function ImageInputList({ imageUris = [], onRemoveImage, onAddImage, maxImageCount }) {
-  const scrollView = useRef();
+function ImageInputList({ imageUris = [], onRemoveImage, onAddImage, multiImageRequired, maxImageCount }) {
+  let isOptional = 0;
+
+  if (multiImageRequired === 1) {isOptional = 1}
 
   return (
     <View>
-      {/* <ScrollView 
-        ref={scrollView} 
-        horizontal 
-        > */}
-        <View style={styles.container}>
-          {imageUris.map((uri) => (
-            <View key={uri} style={styles.image}>
-              <ImageInput 
-                imageUri={uri} 
-                key={uri} 
-                onChangeImage={() => onRemoveImage(uri)} 
-              />
-            </View>
-          ))}
-          {imageUris.length < maxImageCount && <ImageInput onChangeImage={uri => onAddImage(uri)} />}
-        </View>
-      {/* </ScrollView> */}
+      <View style={styles.container}>
+        {imageUris.map((uri) => (
+          <View key={uri} style={styles.image}>
+            <ImageInput 
+              imageUri={uri} 
+              key={uri} 
+              onChangeImage={() => onRemoveImage(uri)} 
+            />
+          </View>
+        ))}
+        {imageUris.length < maxImageCount && <ImageInput isOptional={0} onChangeImage={uri => onAddImage(uri)} />}
+        {(imageUris.length >= maxImageCount && imageUris.length < 2 ) && <ImageInput isOptional={1} onChangeImage={uri => onAddImage(uri)} />}
+      </View>
     </View>
   );
 }

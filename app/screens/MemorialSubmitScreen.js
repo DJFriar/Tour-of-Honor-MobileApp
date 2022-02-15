@@ -16,9 +16,6 @@ let validationSchema = {};
 function MemorialSubmitScreen({ navigation, route }) {
   const { user } = useAuth();
 
-  console.log("==== user ====");
-  console.log(user);
-
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
   const userID = user.UserID;
@@ -65,7 +62,7 @@ function MemorialSubmitScreen({ navigation, route }) {
           validationSchema={validationSchema}
         >
           <View style={styles.imagesRow}>
-            <AppFormImagePicker name="images" maxImageCount={maxImageCount} />
+            <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
           </View>
           <AppFormField 
           autoCorrect

@@ -4,8 +4,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker';
 
 import colors from '../config/colors';
+import AppText from './AppText';
 
-function ImageInput({ imageUri, onChangeImage }) {
+function ImageInput({ imageUri, onChangeImage, isOptional }) {
   useEffect(() => {
     requestPermission();
   }, []);
@@ -37,16 +38,35 @@ function ImageInput({ imageUri, onChangeImage }) {
     }
   }
 
-  return (
-    <TouchableWithoutFeedback onPress={handlePress}>
-      <View style={styles.container}>
-        {!imageUri && (
-          <MaterialCommunityIcons color={colors.medium} name="camera" size={35}/>
-        )}
-        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-      </View>
-    </TouchableWithoutFeedback>
-  );
+  // if (multiImageRequired === 1) {
+    return (
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <View style={styles.container}>
+          {!imageUri && (
+            <>
+              <MaterialCommunityIcons color={colors.medium} name="camera" size={50}/>
+              <AppText>{isOptional === 1 ? "Optional" : "Required"}</AppText>
+            </>
+          )}
+          {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  // } else {
+  //   return (
+  //     <TouchableWithoutFeedback onPress={handlePress}>
+  //       <View style={styles.container}>
+  //         {!imageUri && (
+  //           <>
+  //             <MaterialCommunityIcons color={colors.medium} name="camera" size={50}/>
+  //             <AppText>Optional</AppText>
+  //           </>
+  //         )}
+  //         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+  //       </View>
+  //     </TouchableWithoutFeedback>
+  //   );
+  // }
 }
 
 const styles = StyleSheet.create({
