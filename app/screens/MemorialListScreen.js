@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
-// import Constants from 'expo-constants';
 
 import apiClient from "../api/client";
 import AppPicker from '../components/AppPicker';
@@ -84,14 +83,15 @@ function MemorialListScreen({ navigation }) {
     <Screen style={styles.screen} hasNoHeader>
       <View style={styles.searchRow}>
         <AppPicker 
+          clearFilter={() => {
+            handleRefresh();
+          }}
           items={listOfStates}
           numberOfColumns={5}
           onSelectItem={(selectedState) => handleStateFilter(selectedState)}
-          PickerItemComponent={StatePickerItem}
           placeholder="All"
           selectedItem={stateFiltered}
           style={styles.statePicker}
-          // width="20%"
         />
         <AppTextInput 
           icon="magnify" 
@@ -129,9 +129,6 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: colors.background,
   },
-  // searchBox: {
-  //   // flex: 2
-  // },
   searchRow: {
     alignContent: 'space-between',
     flexDirection: 'row',
@@ -139,9 +136,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 10,
   },
-  statePicker: {
-    // flex: 2
-  }
 })
 
 export default MemorialListScreen;

@@ -5,17 +5,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import AppButton from './AppButton';
 import AppText from './AppText';
 import defaultStyles from '../config/styles';
-import PickerItem from './PickerItem';
 import Screen from './Screen';
+import StatePickerItem from './StatePickerItem';
 
-function AppPicker({ items, onSelectItem, numberOfColumns = 1, PickerItemComponent = PickerItem, placeholder, selectedItem, width = '100%' }) {
+function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 1, placeholder, selectedItem }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
         <View style={[styles.container]}>
-          { selectedItem ? (
+          {selectedItem ? (
             <AppText style={styles.text}>{selectedItem.shortName}</AppText>
           ) : ( 
             <AppText style={styles.placeholder}>{placeholder}</AppText> 
@@ -28,26 +28,45 @@ function AppPicker({ items, onSelectItem, numberOfColumns = 1, PickerItemCompone
         </View>
       </TouchableWithoutFeedback>
       <Modal visible={modalVisible} animationType='slide'>
-        <Screen hasNoHeader>
-          <View style={styles.closeButton}>
-            <AppButton title="Close" onPress={() => setModalVisible(false)}/>
-          </View> 
-          <View style={styles.grid}>
-
-          <FlatList 
-            data={items}
-            keyExtractor={(item) => item.value.toString()}
-            numColumns={numberOfColumns}
-            renderItem={({ item }) => (
-              <PickerItemComponent 
-                item={item}
-                onPress={() => {
-                  setModalVisible(false);
-                  onSelectItem(item);
-                }}
+        <Screen style={styles.modalScreen} hasNoHeader >
+          <View style={selectedItem ? {marginBottom: 150} : {marginBottom: 75}}>
+            <View style={styles.closeButton}>
+              <MaterialCommunityIcons 
+                name='close' 
+                onPress={() => setModalVisible(false)} 
+                size={35} 
+                style={styles.closeX}
               />
-            )}
-          />
+              <View style={styles.clearFilter}>
+                {selectedItem && 
+                  <AppButton 
+                    color="secondary" 
+                    onPress={() => {
+                      setModalVisible(false);
+                      clearFilter(true);
+                    }}
+                    title="Clear Filter" 
+                  />
+                }
+              </View>
+            </View> 
+            <View style={styles.grid}>
+              <FlatList 
+                data={items}
+                keyExtractor={(item) => item.value.toString()}
+                horizontal={false}
+                numColumns={numberOfColumns}
+                renderItem={({ item }) => (
+                  <StatePickerItem 
+                    item={item}
+                    onPress={() => {
+                      setModalVisible(false);
+                      onSelectItem(item);
+                    }}
+                  />
+                )}
+              />
+            </View>
           </View>
         </Screen>
       </Modal>
@@ -56,8 +75,19 @@ function AppPicker({ items, onSelectItem, numberOfColumns = 1, PickerItemCompone
 }
 
 const styles = StyleSheet.create({
+  bottomSpacer:{
+    height: 40
+  },
+  clearFilter: {
+    flex: 2
+  },
   closeButton: {
-    marginHorizontal: 50
+    flexDirection: 'row-reverse',
+    marginHorizontal: 10
+  },
+  closeX: {
+    marginLeft: 14,
+    marginRight: 4
   },
   container: {
     alignItems: 'center',
