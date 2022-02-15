@@ -17,9 +17,9 @@ function StatePickerItem({ item, onPress }) {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
     paddingHorizontal: 30,
     paddingVertical: 10,
-    alignItems: "center",
     width: "20%"
   },
   label: {
