@@ -8,7 +8,7 @@ function StatePickerItem({ item, onPress }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
-        <IconImage name={item.shortName} size={70} />
+        {/* <IconImage name={item.shortName} size={70} /> */}
         <AppText numberOfLines={1} style={styles.label}>{item.fullName}</AppText>
       </TouchableOpacity>
     </View>
@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 30,
     paddingVertical: 10,
-    width: "20%"
+    // width: "20%"
   },
   label: {
+    fontSize: 20,
     marginTop: 5,
     textAlign: "center"
   }

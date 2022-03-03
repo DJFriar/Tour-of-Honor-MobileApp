@@ -8,7 +8,7 @@ import defaultStyles from '../config/styles';
 import Screen from './Screen';
 import StatePickerItem from './StatePickerItem';
 
-function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 1, placeholder, selectedItem }) {
+function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, placeholder, selectedItem }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -55,7 +55,7 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 1, plac
                 data={items}
                 keyExtractor={(item) => item.value.toString()}
                 horizontal={false}
-                numColumns={numberOfColumns}
+                numColumns={1}
                 renderItem={({ item }) => (
                   <StatePickerItem 
                     item={item}

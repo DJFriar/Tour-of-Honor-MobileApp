@@ -86,7 +86,7 @@ function MemorialListScreen({ navigation }) {
             handleRefresh();
           }}
           items={listOfStates}
-          numberOfColumns={5}
+          // numberOfColumns={5}
           onSelectItem={(selectedState) => handleStateFilter(selectedState)}
           placeholder="All"
           selectedItem={stateFiltered}
