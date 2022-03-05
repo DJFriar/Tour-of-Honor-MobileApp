@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Image, TouchableWithoutFeedback, Alert } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import * as ImagePicker from 'expo-image-picker';
 
 import colors from '../config/colors';
@@ -39,35 +39,19 @@ function ImageInput({ imageUri, onChangeImage, isOptional }) {
     }
   }
 
-  // if (multiImageRequired === 1) {
-    return (
-      <TouchableWithoutFeedback onPress={handlePress}>
-        <View style={styles.container}>
-          {!imageUri && (
-            <>
-              <MaterialCommunityIcons color={colors.medium} name="camera" size={50}/>
-              <AppText>{isOptional === 1 ? "Optional" : "Required"}</AppText>
-            </>
-          )}
-          {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  // } else {
-  //   return (
-  //     <TouchableWithoutFeedback onPress={handlePress}>
-  //       <View style={styles.container}>
-  //         {!imageUri && (
-  //           <>
-  //             <MaterialCommunityIcons color={colors.medium} name="camera" size={50}/>
-  //             <AppText>Optional</AppText>
-  //           </>
-  //         )}
-  //         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-  //       </View>
-  //     </TouchableWithoutFeedback>
-  //   );
-  // }
+  return (
+    <TouchableWithoutFeedback onPress={handlePress}>
+      <View style={styles.container}>
+        {!imageUri && (
+          <>
+            <FontAwesomeIcon icon={['fas', 'camera']} size={50} color={colors.medium} />
+            <AppText>{isOptional === 1 ? "Optional" : "Required"}</AppText>
+          </>
+        )}
+        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+      </View>
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({
