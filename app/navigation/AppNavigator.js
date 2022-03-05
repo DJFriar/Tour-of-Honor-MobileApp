@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AccountScreen from '../screens/AccountScreen';
 import MemorialsButton from "../navigation/MemorialsButton";
@@ -16,7 +16,7 @@ const AppNavigator = () => (
     initialRouteName='MemorialNavigator'
   >
     <Tab.Screen name="User Profile" component={AccountScreen} options={{
-      tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account" color={color} size={size * 1.5} />
+      tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'user']} color={color} size={size * 1.5} />
     }} />
     <Tab.Screen 
       name="MemorialNavigator" 
@@ -27,7 +27,7 @@ const AppNavigator = () => (
       })}
     />
     <Tab.Screen name="Stats" component={StatsScreen} options={{
-      tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="chart-bar" color={color} size={size * 1.5} />
+      tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'analytics']} color={color} size={size * 1.5} />
     }}/>
   </Tab.Navigator>
 )

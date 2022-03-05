@@ -13,9 +13,9 @@ import navigationTheme from './app/navigation/navigationTheme';
 import { library } from '@fortawesome/fontawesome-svg-core';
 // import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkedAlt, faMapSigns } from '@fortawesome/pro-light-svg-icons';
-import { faCamera, faOctagon, faShieldCheck } from '@fortawesome/pro-solid-svg-icons';
-import { faBan, faClock, faImages, faUser } from '@fortawesome/pro-regular-svg-icons';
-library.add(faBan, faCamera, faClock, faImages, faMapMarkedAlt, faMapSigns, faOctagon, faShieldCheck, faUser)
+import { faAnalytics, faCamera, faOctagon, faShieldCheck, faUser } from '@fortawesome/pro-solid-svg-icons';
+import { faBan, faChartBar, faClock, faImages } from '@fortawesome/pro-regular-svg-icons';
+library.add(faAnalytics, faBan, faCamera, faChartBar, faClock, faImages, faMapMarkedAlt, faMapSigns, faOctagon, faShieldCheck, faUser)
 
 export default function App() {
   const [user, setUser] = useState();
