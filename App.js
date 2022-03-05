@@ -9,6 +9,14 @@ import AuthNavigator from './app/navigation/AuthNavigator';
 import authStorage from './app/auth/storage';
 import navigationTheme from './app/navigation/navigationTheme';
 
+// FontAwesome Setup
+import { library } from '@fortawesome/fontawesome-svg-core';
+// import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faMapMarkedAlt, faMapSigns } from '@fortawesome/pro-light-svg-icons';
+import { faOctagon, faShieldCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faBan, faClock, faImages, faUser } from '@fortawesome/pro-regular-svg-icons';
+library.add(faBan, faClock, faImages, faMapMarkedAlt, faMapSigns, faOctagon, faShieldCheck, faUser)
+
 export default function App() {
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState(false);

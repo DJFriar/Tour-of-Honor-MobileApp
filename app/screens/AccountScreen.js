@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Application from 'expo-application';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
@@ -31,23 +31,23 @@ function AccountScreen(props) {
           <View style={styles.faqSection}>
             <AppText style={{marginBottom: 10}}>Wondering what all the icons are on the memorial details? Below is a handy legend:</AppText>
             <View style={styles.iconDefinitionRow}>
-              <MaterialCommunityIcons name='clock-outline' size={25} style={[styles.icon, {color: 'black'}]} />
+              <FontAwesomeIcon icon={['far', 'clock']} size={25} />
               <Text style={styles.iconDefinition}>This memorial has been submitted and is awaiting review.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <MaterialCommunityIcons name='shield-check' size={25} style={[styles.icon, {color: 'green'}]} />
+              <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />
               <Text style={styles.iconDefinition}>This memorial has been scored and approved. Congrats!</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <MaterialCommunityIcons name='image-multiple-outline' size={25} style={[styles.icon, {color: 'black'}]} />
+              <FontAwesomeIcon icon={['far', 'images']} size={25} />
               <Text style={styles.iconDefinition}>This memorial requires two images. See the official rules for more details.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <MaterialCommunityIcons name='alert-octagon-outline' size={25} style={[styles.icon, {color: 'red'}]} />
+              <FontAwesomeIcon icon={['fas', 'octagon']} size={25} color={'red'} />
               <Text style={styles.iconDefinition}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <MaterialCommunityIcons name='map-search-outline' size={25} style={[styles.icon, {color: 'black'}]} />
+              <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} />
               <Text style={styles.iconDefinition}>Tap on this icon to get driving directions using your phone's default map app.</Text>
             </View>
           </View>
@@ -90,11 +90,9 @@ const styles = StyleSheet.create({
   flag :{
     fontSize: 14,
   },
-  icon: {
-    paddingRight: 8
-  },
   iconDefinition: {
     fontSize: 14,
+    paddingLeft: 8
   },
   iconDefinitionRow: {
     flexDirection: 'row',

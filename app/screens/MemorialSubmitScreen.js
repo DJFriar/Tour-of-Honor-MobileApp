@@ -64,15 +64,24 @@ function MemorialSubmitScreen({ navigation, route }) {
           <View style={styles.imagesRow}>
             <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
           </View>
-          <AppFormField 
-          autoCorrect
-          height={100}
-          maxLength={255}
-          multiline
-          name="RiderNotes"
-          numberOfLines={4}
-          placeholder="Optional Notes"
-        />
+          <View style={styles.formFieldContainer}>
+            <AppFormField 
+              height={50}
+              maxLength={255}
+              name="OtherRiders"
+              numberOfLines={4}
+              placeholder="Other Riders"
+            />
+            <AppFormField 
+              autoCorrect
+              height={100}
+              maxLength={255}
+              multiline
+              name="RiderNotes"
+              numberOfLines={4}
+              placeholder="Optional Notes"
+            />
+          </View>
           <View style={styles.submitButtonContainer}>
             <SubmitButton title="Submit" />
           </View>
@@ -91,6 +100,10 @@ const styles = StyleSheet.create({
   },
   emptyView: {
     marginBottom: 25,
+  },
+  formFieldContainer: {
+    marginRight: 16,
+    marginLeft: 6
   },
   formPicker: {
     color: colors.medium
@@ -112,7 +125,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   submitButtonContainer: {
-    marginHorizontal: 25,
+    marginHorizontal: 34,
   },
 });
 

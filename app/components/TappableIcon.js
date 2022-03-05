@@ -1,25 +1,13 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-function TappableIcon({iconName, onPress}) {
+function TappableIcon({iconFamily, iconName, onPress}) {
   return (
-    <TouchableOpacity style={styles.icon} onPress={onPress}>
-      <MaterialCommunityIcons name={iconName} size={35} style={{color: 'black'}} />
+    <TouchableOpacity onPress={onPress}>
+      <FontAwesomeIcon icon={[iconFamily, iconName]} size={35} />
     </TouchableOpacity>
   );
 }
 
 export default TappableIcon;
-
-const styles = StyleSheet.create({
-  icon: {
-    // backgroundColor: colors.blue,
-    // borderRadius: 25,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // padding: 15,
-    // width: '100%',
-    // marginVertical: 10
-  },
-})

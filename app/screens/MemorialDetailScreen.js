@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import HTML from 'react-native-render-html';
 import * as Linking from 'expo-linking';
 
@@ -59,8 +59,8 @@ function MemorialDetailScreen({ navigation, route }) {
             <AppText style={styles.memorialCityState}>{memorialDetails.City}, {memorialDetails.State}</AppText>
           </View>
           <View style={styles.statusIcons}>
-            <MaterialCommunityIcons name='shield-check' size={25} style={{color: 'green'}} />
-            {/* <MaterialCommunityIcons name='clock-outline' size={25} style={{color: 'black'}} /> */}
+          <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />
+            {/* <FontAwesomeIcon icon={['far', 'clock']} size={25} /> */}
           </View>
         </View>
 
@@ -73,9 +73,10 @@ function MemorialDetailScreen({ navigation, route }) {
           <Image style={styles.sampleImage} source={{uri: imageURL}} />
         </View>
         <View style={styles.infoIconsContainer}>
-          {memorialDetails.MultiImage > 0 && <MaterialCommunityIcons name='image-multiple-outline' size={35} style={{color: 'black'}} />}
-          <TappableIcon iconName="map-search-outline" onPress={() => {Linking.openURL(gpsUrl)}}/>
-          {memorialDetails.Restrictions > 1 && <MaterialCommunityIcons name='alert-octagon-outline' size={35} style={{color: 'red'}} />}
+          {memorialDetails.MultiImage > 0 && <FontAwesomeIcon icon={['far', 'images']} size={35} />}
+          <TappableIcon iconFamily="fal" iconName="map-signs" onPress={() => {Linking.openURL(gpsUrl)}}/>
+          {memorialDetails.Restrictions > 1 && <FontAwesomeIcon icon={['fas', 'octagon']} size={35} color={'red'} />}
+          
         </View>
         <View style={styles.submitButtonContainer}>
           <AppButton  title="Submit" onPress={() => 
