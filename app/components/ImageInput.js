@@ -44,7 +44,7 @@ function ImageInput({ imageUri, onChangeImage, isOptional }) {
       <View style={styles.container}>
         {!imageUri && (
           <>
-            <FontAwesomeIcon icon={['fas', 'camera']} size={50} color={colors.medium} />
+            <FontAwesomeIcon icon={['fas', 'camera-retro']} size={50} color={colors.medium} />
             <AppText>{isOptional === 1 ? "Optional" : "Required"}</AppText>
           </>
         )}

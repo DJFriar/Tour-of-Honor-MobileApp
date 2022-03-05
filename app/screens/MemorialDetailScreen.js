@@ -75,7 +75,7 @@ function MemorialDetailScreen({ navigation, route }) {
         <View style={styles.infoIconsContainer}>
           {memorialDetails.MultiImage > 0 && <FontAwesomeIcon icon={['far', 'images']} size={35} />}
           <TappableIcon iconFamily="fal" iconName="map-signs" onPress={() => {Linking.openURL(gpsUrl)}}/>
-          {memorialDetails.Restrictions > 1 && <FontAwesomeIcon icon={['fas', 'octagon']} size={35} color={'red'} />}
+          {memorialDetails.Restrictions > 1 && <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={35} color={'red'} />}
           
         </View>
         <View style={styles.submitButtonContainer}>

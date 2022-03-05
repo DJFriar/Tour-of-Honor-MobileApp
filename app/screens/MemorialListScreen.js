@@ -93,7 +93,8 @@ function MemorialListScreen({ navigation }) {
           style={styles.statePicker}
         />
         <AppTextInput 
-          icon="magnify" 
+          iconName="search" 
+          iconFamily="far"
           value={search} 
           placeholder="Search" 
           onChangeText={(text) => searchFilter(text)}

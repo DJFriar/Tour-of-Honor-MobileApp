@@ -46,7 +46,8 @@ function LoginScreen(props) {
           <View style={styles.formContent}>
             <AppFormField 
               autoCorrect={false}
-              icon="flag"
+              iconFamily="fas"
+              iconName="flag"
               keyboardType="number-pad"
               name="flag"
               placeholder="Flag Number"
@@ -54,7 +55,8 @@ function LoginScreen(props) {
             />
             <AppFormField 
               autoCorrect={false}
-              icon="map-marker-radius"
+              iconFamily="fas"
+              iconName="location-dot"
               keyboardType="number-pad"
               name="zipcode"
               placeholder="Zip Code"

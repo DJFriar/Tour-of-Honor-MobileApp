@@ -43,7 +43,7 @@ function AccountScreen(props) {
               <Text style={styles.iconDefinition}>This memorial requires two images. See the official rules for more details.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['fas', 'octagon']} size={25} color={'red'} />
+              <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color={'red'} />
               <Text style={styles.iconDefinition}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>

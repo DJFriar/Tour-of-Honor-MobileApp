@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AppButton from './AppButton';
 import AppText from './AppText';
@@ -20,9 +20,9 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, plac
           ) : ( 
             <AppText style={styles.placeholder}>{placeholder}</AppText> 
           )}
-          <MaterialCommunityIcons 
-            name="chevron-down" 
-            size={20} 
+          <FontAwesomeIcon 
+            icon={['far','chevron-down']}
+            size={10}
             color={defaultStyles.colors.medium} 
           />
         </View>
@@ -31,11 +31,11 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, plac
         <Screen style={styles.modalScreen} hasNoHeader >
           <View style={selectedItem ? {marginBottom: 150} : {marginBottom: 75}}>
             <View style={styles.closeButton}>
-              <MaterialCommunityIcons 
-                name='close' 
+              <FontAwesomeIcon 
+                icon={['far','times']}
+                size={35}
+                color={defaultStyles.colors.medium} 
                 onPress={() => setModalVisible(false)} 
-                size={35} 
-                style={styles.closeX}
               />
               <View style={styles.clearFilter}>
                 {selectedItem && 
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flex: 1,
     flexDirection: "row",
+    paddingRight: 10,
     marginVertical: 10,
   },
   grid: {

@@ -12,10 +12,13 @@ import navigationTheme from './app/navigation/navigationTheme';
 // FontAwesome Setup
 import { library } from '@fortawesome/fontawesome-svg-core';
 // import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faMapMarkedAlt, faMapSigns } from '@fortawesome/pro-light-svg-icons';
-import { faAnalytics, faCamera, faOctagon, faShieldCheck, faUser } from '@fortawesome/pro-solid-svg-icons';
-import { faBan, faChartBar, faClock, faImages } from '@fortawesome/pro-regular-svg-icons';
-library.add(faAnalytics, faBan, faCamera, faChartBar, faClock, faImages, faMapMarkedAlt, faMapSigns, faOctagon, faShieldCheck, faUser)
+import { faChevronRight, faMapMarkedAlt, faMapSigns } from '@fortawesome/pro-light-svg-icons';
+import { faBan, faChartBar, faChevronDown, faClock, faFrown, faImages, faSearch, faTimes } from '@fortawesome/pro-regular-svg-icons';
+import { faAnalytics, faCameraRetro, faFlag, faLocationDot, faOctagonExclamation, faShieldCheck, faUser } from '@fortawesome/pro-solid-svg-icons';
+library.add(
+  faAnalytics, faBan, faCameraRetro, faChartBar, faChevronDown, faChevronRight, faClock, faFlag,
+  faFrown, faImages, faLocationDot, faMapMarkedAlt, faMapSigns, faOctagonExclamation, faSearch, faShieldCheck, faTimes, faUser
+)
 
 export default function App() {
   const [user, setUser] = useState();

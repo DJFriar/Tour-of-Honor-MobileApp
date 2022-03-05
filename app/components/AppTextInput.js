@@ -1,16 +1,16 @@
 import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import defaultStyles from '../config/styles';
 
-function AppTextInput({ icon, height, ...otherProps }) {
+function AppTextInput({ iconName, iconFamily, height, ...otherProps }) {
   return (
     <View style={[styles.container, {height: height}]}>
       <View style={styles.iconContainer}>
-        {icon && <MaterialCommunityIcons name={icon} size={25} color={defaultStyles.colors.medium} style={styles.icon} />}
+        {iconName && <FontAwesomeIcon icon={[iconFamily, iconName]} size={20} color={defaultStyles.colors.medium} />}
       </View>
-      <View>
+      <View style={styles.textContainer}>
         <TextInput placeholderTextColor={defaultStyles.colors.medium} style={styles.text} {...otherProps} />
       </View>
     </View>
@@ -33,13 +33,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   iconContainer:{
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   text: {
     color: defaultStyles.colors.dark,
-    fontSize: 24,
     fontFamily: Platform.OS === "android" ? "Roboto": "Avenir",
   },
+  textContainer: {
+    height: 18,
+  }
 })
 
 export default AppTextInput;

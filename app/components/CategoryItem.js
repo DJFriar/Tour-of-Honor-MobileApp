@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, StyleSheet, TouchableHighlight } from 'react-native';
+// import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AppText from './AppText';
 import colors from '../config/colors';
@@ -12,7 +13,8 @@ function CategoryItem({name, onPress}) {
         <View style={styles.detailContainer}>
           <AppText style={styles.category}>{name}</AppText>
         </View>
-        <MaterialCommunityIcons color={colors.medium} name="chevron-right" size={25} />
+        <FontAwesomeIcon icon={['far', 'chevron-right']} size={25} color={colors.medium} />
+        {/* <MaterialCommunityIcons color={colors.medium} name="chevron-right" size={25} /> */}
       </View>
     </TouchableHighlight>
   );

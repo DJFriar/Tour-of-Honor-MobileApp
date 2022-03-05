@@ -1,8 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 function Icon({
+  family,
   name,
   size = 40,
   backgroundColor ="#000",
@@ -17,9 +18,9 @@ function Icon({
       justifyContent: "center",
       alignItems: "center",
     }}>
-      <MaterialCommunityIcons
-        name={name} color={iconColor} size={size * 0.5}
-      />
+    <FontAwesomeIcon 
+      icon={[family, name]} color={iconColor} size={size * 0.5}
+    />
     </View>
   );
 }
