@@ -35,6 +35,17 @@ function MemorialListScreen({ navigation }) {
     })
   }
 
+  // const fetchMemorialList = () => {
+  //   apiClient.get('/memorials-status/' + 1).then((response) => {
+  //     setStateFilteredList(response.data);
+  //     setDisplayList(response.data);
+  //     setFilteredList(response.data);
+  //     setMasterList(response.data);
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   })
+  // }
+
   const handleRefresh = () => {
     setDisplayList(null);
     setFilteredList(null);

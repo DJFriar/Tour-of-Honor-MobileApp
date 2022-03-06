@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AppLoading from 'expo-app-loading';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppLoading from 'expo-app-loading';
 
 import AppNavigator from './app/navigation/AppNavigator';
 import AuthContext from './app/auth/context';
@@ -14,10 +14,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faChevronRight, faMapMarkedAlt, faMapSigns } from '@fortawesome/pro-light-svg-icons';
 import { faBan, faChartBar, faChevronDown, faClock, faFrown, faImages, faSearch, faTimes } from '@fortawesome/pro-regular-svg-icons';
-import { faAnalytics, faCameraRetro, faFlag, faLocationDot, faOctagonExclamation, faShieldCheck, faUser } from '@fortawesome/pro-solid-svg-icons';
+import { faAnalytics, faCameraRetro, faFlag, faLocationDot, faOctagonExclamation, faShieldCheck, faShieldExclamation, faUser } from '@fortawesome/pro-solid-svg-icons';
 library.add(
-  faAnalytics, faBan, faCameraRetro, faChartBar, faChevronDown, faChevronRight, faClock, faFlag,
-  faFrown, faImages, faLocationDot, faMapMarkedAlt, faMapSigns, faOctagonExclamation, faSearch, faShieldCheck, faTimes, faUser
+  faAnalytics, faBan, faCameraRetro, faChartBar, faChevronDown, faChevronRight, faClock, faFlag, faFrown, 
+  faImages, faLocationDot, faMapMarkedAlt, faMapSigns, faOctagonExclamation, faSearch, faShieldCheck, 
+  faShieldExclamation, faTimes, faUser
 )
 
 export default function App() {

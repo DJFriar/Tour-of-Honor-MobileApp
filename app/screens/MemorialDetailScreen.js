@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import HTML from 'react-native-render-html';
@@ -12,6 +12,7 @@ import MetaHeading from '../components/MetaHeading';
 import Screen from '../components/Screen';
 import TappableIcon from '../components/TappableIcon';
 import useApi from '../hooks/useApi';
+import useAuth from '../auth/useAuth';
 
 const tagsStyles = {
   p: {
@@ -21,11 +22,17 @@ const tagsStyles = {
 };
 
 function MemorialDetailScreen({ navigation, route }) {
+  const { user, logOut } = useAuth();
   const memorialID = route.params.id;
+  let memorialStatus = 9;
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
   const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
   const memorialMetadata = getMemorialMetadataApi.data;
+  const getMemorialStatusApi = useApi(memorial.getMemorialStatus);
+  const memorialStatusApiResponse = getMemorialStatusApi.data[0] || {};
+  if (memorialStatusApiResponse.Status > 0) { memorialStatus = memorialStatusApiResponse.Status};
+
   const memorialLat = memorialDetails.Latitude;
   const memorialLong = memorialDetails.Longitude;
   const memorialCode = memorialDetails.Code;
@@ -40,6 +47,7 @@ function MemorialDetailScreen({ navigation, route }) {
   useEffect(() => {
     getMemorialDetailsApi.request(memorialID);
     getMemorialMetadataApi.request(memorialID);
+    getMemorialStatusApi.request(memorialID, user.UserID);
   }, []);
 
   return (
@@ -59,8 +67,9 @@ function MemorialDetailScreen({ navigation, route }) {
             <AppText style={styles.memorialCityState}>{memorialDetails.City}, {memorialDetails.State}</AppText>
           </View>
           <View style={styles.statusIcons}>
-          <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />
-            {/* <FontAwesomeIcon icon={['far', 'clock']} size={25} /> */}
+            {memorialStatus === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
+            {memorialStatus === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
+            {memorialStatus === 0 && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
           </View>
         </View>
 

@@ -36,19 +36,23 @@ function AccountScreen(props) {
             </View>
             <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />
-              <Text style={styles.iconDefinition}>This memorial has been scored and approved. Congrats!</Text>
+              <Text style={styles.iconDefinition}>This memorial submission has been scored and approved. Congrats!</Text>
+            </View>
+            <View style={styles.iconDefinitionRow}>
+              <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />
+              <Text style={styles.iconDefinition}>This memorial submission has been rejected. Check your email for details. You may resubmit this at anytime.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['far', 'images']} size={25} />
               <Text style={styles.iconDefinition}>This memorial requires two images. See the official rules for more details.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color={'red'} />
-              <Text style={styles.iconDefinition}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
-            </View>
-            <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} />
               <Text style={styles.iconDefinition}>Tap on this icon to get driving directions using your phone's default map app.</Text>
+            </View>
+            <View style={styles.iconDefinitionRow}>
+              <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color={'red'} />
+              <Text style={styles.iconDefinition}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
             </View>
           </View>
         </View>
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
   faqSection: {
     marginTop: 20,
     marginRight: 10,
+    paddingRight: 10
   },
   flag :{
     fontSize: 14,
