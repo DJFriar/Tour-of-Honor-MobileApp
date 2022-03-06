@@ -31,7 +31,7 @@ function MemorialDetailScreen({ navigation, route }) {
   const memorialMetadata = getMemorialMetadataApi.data;
   const getMemorialStatusApi = useApi(memorial.getMemorialStatus);
   const memorialStatusApiResponse = getMemorialStatusApi.data[0] || {};
-  if (memorialStatusApiResponse.Status > 0) { memorialStatus = memorialStatusApiResponse.Status};
+  if (memorialStatusApiResponse.Status < 9) { memorialStatus = memorialStatusApiResponse.Status};
 
   const memorialLat = memorialDetails.Latitude;
   const memorialLong = memorialDetails.Longitude;
@@ -88,15 +88,38 @@ function MemorialDetailScreen({ navigation, route }) {
           
         </View>
         <View style={styles.submitButtonContainer}>
-          <AppButton  title="Submit" onPress={() => 
-            navigation.navigate('MemorialSubmitScreen', { 
-              id: memorialID,
-              name: memorialDetails.Name,
-              code: memorialDetails.Code,
-              multiImage: memorialDetails.MultiImage,
-              sampleImage: memorialDetails.SampleImage
-            })} 
-          />
+          { memorialStatus === 9 &&
+            <AppButton title="Submit" onPress={() => 
+              navigation.navigate('MemorialSubmitScreen', { 
+                id: memorialID,
+                name: memorialDetails.Name,
+                code: memorialDetails.Code,
+                multiImage: memorialDetails.MultiImage,
+                sampleImage: memorialDetails.SampleImage
+              })} 
+            />
+          }
+          { memorialStatus === 2 &&
+            <AppButton title="Resubmit" onPress={() => 
+              navigation.navigate('MemorialSubmitScreen', { 
+                id: memorialID,
+                name: memorialDetails.Name,
+                code: memorialDetails.Code,
+                multiImage: memorialDetails.MultiImage,
+                sampleImage: memorialDetails.SampleImage
+              })} 
+            />
+          }
+          { memorialStatus === 1 &&
+            <View style={styles.disabledButtonContainer}>
+              <AppText style={styles.disabledButtonText}>You have already earned this memorial, congrats!</AppText>
+            </View>
+          }
+          { memorialStatus === 0 &&
+            <View style={styles.disabledButtonContainer}>
+              <AppText style={styles.disabledButtonText}>This memorial has been submitted and is awaiting review.</AppText>
+            </View>
+          }
         </View>
 
         {/* Bottom Section */}
@@ -131,6 +154,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     flex: 1,
     paddingVertical: 8,
+  },
+  disabledButtonText: {
+    color: 'white',
+    padding: 10,
+    textAlign: 'center',
+  },
+  disabledButtonContainer: {
+    backgroundColor: '#6e696980',
+    borderRadius: 25,
+    marginTop: 10,
   },
   infoIconsContainer: {
     flexDirection: 'row',
