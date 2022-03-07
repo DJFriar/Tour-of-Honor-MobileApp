@@ -16,7 +16,7 @@ const AppNavigator = () => (
     initialRouteName='MemorialNavigator'
   >
     <Tab.Screen name="User Profile" component={AccountScreen} options={{
-      tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'user']} color={color} size={size * 1.5} />
+      tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'user']} color={color} size={size * 1.3} />
     }} />
     <Tab.Screen 
       name="MemorialNavigator" 
@@ -27,7 +27,7 @@ const AppNavigator = () => (
       })}
     />
     <Tab.Screen name="Stats" component={StatsScreen} options={{
-      tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'analytics']} color={color} size={size * 1.5} />
+      tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'analytics']} color={color} size={size * 1.3} />
     }}/>
   </Tab.Navigator>
 )
