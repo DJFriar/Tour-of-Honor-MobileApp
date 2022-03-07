@@ -11,7 +11,7 @@ const postSubmission = (submission) => {
   data.append('UserID', submission.RiderID);
   data.append('RiderFlag', submission.RiderFlag);
   data.append('RiderNotes', submission.RiderNotes);
-
+  data.append('OtherRiders', submission.OtherRiders)
 
   if (submittedImages[0]) {
     data.append('images', {
@@ -27,9 +27,6 @@ const postSubmission = (submission) => {
       uri: submission.images[1]
     })
   }
-
-  console.log("==== Submission ====");
-  console.log(data);
 
   return apiClient.post(endpoint, data)
 }

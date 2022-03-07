@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, View, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Image, View, StyleSheet, ScrollView, Switch, Text } from 'react-native';
 import * as Yup from 'yup';
 
 import AppForm from '../components/forms/AppForm';
@@ -15,6 +15,8 @@ let validationSchema = {};
 
 function MemorialSubmitScreen({ navigation, route }) {
   const { user } = useAuth();
+  const [showOtherRiders, setShowOtherRiders] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
 
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
@@ -34,6 +36,14 @@ function MemorialSubmitScreen({ navigation, route }) {
     });
   }
 
+  const toggleOtherRiders = () => {
+    setShowOtherRiders((previousState) => !previousState);
+  };
+
+  const toggleShowNotes = () => {
+    setShowNotes((previousState) => !previousState);
+  };
+
   const handleSubmit = async (submission, { resetForm }) => {
     // setProgress(0);
     // setUploadVisible(true);
@@ -47,6 +57,8 @@ function MemorialSubmitScreen({ navigation, route }) {
       return alert('Could not save the submission.')
     }
 
+    setShowNotes(false);
+    setShowOtherRiders(false);
     resetForm();
   }
 
@@ -65,13 +77,31 @@ function MemorialSubmitScreen({ navigation, route }) {
             <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
           </View>
           <View style={styles.formFieldContainer}>
-            <AppFormField 
-              height={50}
-              maxLength={255}
-              name="OtherRiders"
-              numberOfLines={4}
-              placeholder="Other Riders"
-            />
+          <View style={styles.toggleContainer}>
+            <View style={styles.toggleLabelView}>
+              <Text style={styles.toggleLabelText}>Include Other Riders</Text>
+            </View>
+            <Switch onValueChange={toggleOtherRiders} value={showOtherRiders}></Switch>
+          </View>
+          { showOtherRiders && 
+            <>
+              <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
+              <AppFormField 
+                height={50}
+                maxLength={255}
+                name="OtherRiders"
+                numberOfLines={4}
+                placeholder="xxx,yyy,zzz"
+              />
+            </>
+          }
+          <View style={styles.toggleContainer}>
+            <View style={styles.toggleLabelView}>
+              <Text style={styles.toggleLabelText}>Include Notes</Text>
+            </View>
+            <Switch onValueChange={toggleShowNotes} value={showNotes}></Switch>
+          </View>
+          { showNotes && 
             <AppFormField 
               autoCorrect
               height={100}
@@ -81,6 +111,7 @@ function MemorialSubmitScreen({ navigation, route }) {
               numberOfLines={4}
               placeholder="Optional Notes"
             />
+          }
           </View>
           <View style={styles.submitButtonContainer}>
             <SubmitButton title="Submit" />
@@ -126,6 +157,20 @@ const styles = StyleSheet.create({
   },
   submitButtonContainer: {
     marginHorizontal: 34,
+  },
+  toggleContainer: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 4,
+  },
+  toggleLabelText: {
+    fontSize: 18,
+  },
+  toggleLabelView: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
