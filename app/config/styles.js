@@ -14,5 +14,11 @@ export default {
     fontSize: 24,
     fontWeight: "600",
     paddingTop: 10,
-  }
+  },
+  miniHeading: {
+    color: colors.dark,
+    fontSize: 20,
+    fontWeight: "600",
+    paddingBottom: 2,
+  },
 };

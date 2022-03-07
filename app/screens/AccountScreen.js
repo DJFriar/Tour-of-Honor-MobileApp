@@ -6,8 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
 import colors from '../config/colors';
+import MiniAppButton from '../components/MiniAppButton';
 import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
+import MiniHeading from '../components/MiniHeading';
 
 function AccountScreen(props) {
   const { user, logOut } = useAuth();
@@ -17,19 +19,33 @@ function AccountScreen(props) {
     <Screen style={styles.screen}>
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
         <View style={styles.topContainer}>
-          <Text style={styles.riderName}>{user.FirstName} {user.LastName}</Text>
-          <Text style={styles.flag}>Flag #{user.FlagNumber}</Text>
-          <Text>&nbsp;</Text>
-          <Text style={styles.text}>Zip Code: {user.ZipCode}</Text>
-          <Text style={styles.text}>Email: {user.Email}</Text>
+          <View style={styles.nameLogOutRow}>
+            <View style={styles.nameAndFlagContainer}>
+              <Text style={styles.riderName}>{user.FirstName} {user.LastName}</Text>
+              <Text style={styles.flag}>Flag #{user.FlagNumber}</Text>
+            </View>
+            <View style={styles.logoutButtonContainer}>
+              <MiniAppButton title="Log Out" onPress={() => logOut()}/>
+            </View>
+          </View>
+          <View style={styles.userDetailContainer}>
+            <View style={styles.textRow}>
+              <Text style={styles.label}>Email:</Text><Text style={styles.text}>{user.Email}</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.label}>Zip Code:</Text><Text style={styles.text}>{user.ZipCode}</Text>
+            </View>
+          </View>
           <View style={styles.changesTextContainer}>
-            <AppText>To make changes to your User Profile, please login to the Scoring Portal.</AppText>
+            <Text>To make changes to your User Profile, please login to the Scoring Portal.</Text>
           </View>
-          <View style={styles.logoutButtonContainer}>
-            <AppButton title="Log Out" onPress={() => logOut()}/>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
           </View>
+
           <View style={styles.faqSection}>
-            <AppText style={{marginBottom: 10}}>Wondering what all the icons are on the memorial details? Below is a handy legend:</AppText>
+            <MiniHeading>Icon Legend</MiniHeading>
             <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['far', 'clock']} size={25} />
               <Text style={styles.iconDefinition}>This memorial has been submitted and is awaiting review.</Text>
@@ -85,15 +101,15 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   changesTextContainer: {
-    margin: 10
+    marginVertical: 10
   },
   faqSection: {
-    marginTop: 20,
+    marginTop: 10,
     marginRight: 10,
     paddingRight: 10
   },
   flag :{
-    fontSize: 14,
+    fontSize: 20,
   },
   iconDefinition: {
     fontSize: 14,
@@ -104,8 +120,20 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginRight: 6,
   },
+  label: {
+    alignItems: 'flex-start',
+    fontSize: 18,
+  },
   logoutButtonContainer: {
-    width: "100%"
+    alignItems: 'flex-end',
+    flex: 1,
+  },
+  nameAndFlagContainer: {
+    flex: 2,
+  },
+  nameLogOutRow: {
+    flex: 1,
+    flexDirection: 'row',
   },
   riderName: {
     fontSize: 24,
@@ -115,12 +143,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   text: {
+    alignItems: 'flex-end',
     fontSize: 18,
   },
+  textRow: {
+    alignItems: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   topContainer: {
-    flex: 2,
     paddingHorizontal: 10,
     paddingTop: 15,
+  },
+  userDetailContainer: {
+    marginTop: 10,
   },
 });
 
