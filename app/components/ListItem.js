@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
 
 import AppText from './AppText';
 import colors from '../config/colors';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 function ListItem({cityState, category, code, image, name, onPress}) {
   const imageURL = "https://www.tourofhonor.com/2022appimages/" + image;
@@ -11,9 +12,18 @@ function ListItem({cityState, category, code, image, name, onPress}) {
       <View style={styles.container}>
         <Image style={styles.image} source={{uri: imageURL}} />
         <View style={styles.detailContainer}>
-          <View style={styles.memorialDetails}>
+          <View style={styles.memorialNameContainer}>
             <AppText style={styles.name} numberOfLines={1}>{name}</AppText>
-            <AppText style={styles.cityState} numberOfLines={1}>{cityState}</AppText>
+          </View>
+          <View style={styles.row2}>
+            <View style={styles.cityStateContainer}>
+              <AppText style={styles.cityState} numberOfLines={1}>{cityState}</AppText>
+            </View>
+            <View style={styles.statusIconContainer}>
+              {/* <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={20} color={'red'} /> */}
+              {/* <FontAwesomeIcon icon={['fas', 'shield-check']} size={20} color={'green'} /> */}
+              {/* <FontAwesomeIcon icon={['far', 'clock']} size={20} /> */}
+            </View>
           </View>
           <View style={styles.memorialCode}>
             <AppText style={styles.memorialCodeText}>{category}</AppText>
@@ -28,6 +38,11 @@ function ListItem({cityState, category, code, image, name, onPress}) {
 const styles = StyleSheet.create({
   cityState: {
     fontWeight: "400"
+  },
+  cityStateContainer: {
+    alignItems: 'flex-start',
+    flex: 9,
+    justifyContent: 'center'
   },
   container: {
     alignItems: 'center',
@@ -54,13 +69,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
   },
-  memorialDetails: {
+  memorialNameContainer: {
+    alignItems: 'flex-start',
     flex: 1,
+    justifyContent: 'center'
   },
   name: {
     fontSize: 20,
     fontWeight: "700"
-  }
+  },
+  statusIconContainer: {
+    alignItems: 'flex-end',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  row2: {
+    flex: 1,
+    flexDirection: 'row',
+  },
 });
 
 export default ListItem;
