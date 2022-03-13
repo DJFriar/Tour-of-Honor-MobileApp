@@ -3,8 +3,6 @@ import * as Application from 'expo-application';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-import AppButton from '../components/AppButton';
-import AppText from '../components/AppText';
 import colors from '../config/colors';
 import MiniAppButton from '../components/MiniAppButton';
 import Screen from '../components/Screen';

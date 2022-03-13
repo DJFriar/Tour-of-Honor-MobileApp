@@ -2,6 +2,8 @@ import apiClient from "./client";
 
 const endpoint = '/submission';
 
+const getSubmissionDetailsByUser = (id) => apiClient.get(endpoint + '/byUser/' + id);
+
 const postSubmission = (submission) => {
   const data = new FormData();
   const submittedImages = submission.images;
@@ -32,5 +34,6 @@ const postSubmission = (submission) => {
 }
 
 export default {
-  postSubmission
+  postSubmission,
+  getSubmissionDetailsByUser
 };

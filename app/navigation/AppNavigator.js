@@ -27,6 +27,7 @@ const AppNavigator = () => (
       })}
     />
     <Tab.Screen name="Stats" component={StatsScreen} options={{
+      headerShown: false,
       tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'analytics']} color={color} size={size * 1.3} />
     }}/>
   </Tab.Navigator>
