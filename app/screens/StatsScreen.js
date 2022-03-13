@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import apiClient from '../api/client';
 import AppText from '../components/AppText';
 import colors from '../config/colors';
-import MiniAppButton from '../components/MiniAppButton';
 import MiniHeading from '../components/MiniHeading';
 import Screen from '../components/Screen';
 import TinyAppButton from '../components/TinyAppButton';

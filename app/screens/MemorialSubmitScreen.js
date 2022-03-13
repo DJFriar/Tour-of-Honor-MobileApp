@@ -55,6 +55,8 @@ function MemorialSubmitScreen({ navigation, route }) {
     if (!result.ok) {
       // setUploadVisible(false);
       return alert('Could not save the submission.')
+    } else {
+      navigation.goBack();
     }
 
     setShowNotes(false);
