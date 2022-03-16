@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   topViewContainer: {
+    backgroundColor: colors.background,
     flex: 2,
-    backgroundColor: colors.background
+    margin: 8,
   },
 });
 
