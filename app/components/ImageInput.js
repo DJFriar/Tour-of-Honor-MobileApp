@@ -7,15 +7,6 @@ import colors from '../config/colors';
 import AppText from './AppText';
 
 function ImageInput({ imageUri, onChangeImage, isOptional }) {
-  useEffect(() => {
-    requestPermission();
-  }, []);
-
-  const requestPermission = async () => {
-    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!granted)
-      alert('You need to enable permissions to access the library.')
-  };
 
   const handlePress = () => {
     if (!imageUri) selectImage();
