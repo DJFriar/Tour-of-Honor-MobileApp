@@ -2,6 +2,8 @@ import React from 'react';
 import * as Application from 'expo-application';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import * as Linking from 'expo-linking';
+
 
 import colors from '../config/colors';
 import MiniAppButton from '../components/MiniAppButton';
@@ -13,6 +15,9 @@ function AccountScreen(props) {
   const { user, logOut } = useAuth();
   const appVersion = Application.nativeApplicationVersion;
 
+  const ANDROID_URL = 'https://improveloop.com/loop/aTOH';
+  const IPHONE_URL = 'https://improveloop.com/loop/iTOH';
+  
   return (
     <Screen style={styles.screen}>
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
@@ -68,6 +73,14 @@ function AccountScreen(props) {
               <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color={'red'} />
               <Text style={styles.iconDefinition}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
             </View>
+          </View>
+
+          <View style={styles.suggestionsSection}>
+            {(Platform.OS === 'android') ? 
+              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(ANDROID_URL)}/>
+              : 
+              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(IPHONE_URL)}/>
+            }
           </View>
         </View>
         <View style={styles.bottomContainer}>
@@ -139,6 +152,12 @@ const styles = StyleSheet.create({
   },
   screen: {
     backgroundColor: colors.background,
+  },
+  suggestionsSection:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
   },
   text: {
     alignItems: 'flex-end',
