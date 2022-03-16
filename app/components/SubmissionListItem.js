@@ -1,13 +1,37 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { DateTime } from "luxon";
+import { Platform, View, StyleSheet } from 'react-native';
+import { DateTime } from 'luxon';
 
 import AppText from './AppText';
 import colors from '../config/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-function SubmissionListItem({category, code, date, statusID}) {
-  const formattedDate = DateTime.fromISO(date).setZone("America/Chicago").toLocaleString(DateTime.DATETIME_SHORT);
+let formattedDate = Date.now;
+
+function addZero(i) {
+  if (i < 10) {i = "0" + i}
+  return i;
+}
+
+function SubmissionListItem({code, date, statusID}) {
+  if(Platform.OS === 'android') {
+    const dateValue = new Date(date);
+    const month = dateValue.getMonth() + 1;
+    const day = dateValue.getDate();
+    const year = dateValue.getFullYear();
+    const hour = dateValue.getHours();
+    let adjustedHour = 0;
+    if (hour == 0) {
+      adjustedHour = 12;
+    } else {
+      adjustedHour = (hour > 12 ? hour - 12 : hour);
+    }
+    const minutes = addZero(dateValue.getMinutes());
+
+    formattedDate = month + "/" + day + "/" + year + ", " + adjustedHour + ":" + minutes + (hour > 11 ? " PM" : " AM");
+  } else {
+    formattedDate = DateTime.fromISO(date).setZone("America/Chicago").toLocaleString(DateTime.DATETIME_SHORT);
+  }
 
   return (
     <View style={styles.container}>
