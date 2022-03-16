@@ -146,7 +146,7 @@ export default [
   {
     icon: "car",
     fullName: "Missouri",
-    shortName: "MS",
+    shortName: "MO",
     value: 25,
   },
   {
@@ -194,7 +194,7 @@ export default [
   {
     icon: "car",
     fullName: "North Carolina",
-    shortName: "NJ",
+    shortName: "NC",
     value: 33,
   },
   {
