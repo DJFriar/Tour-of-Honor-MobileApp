@@ -71,7 +71,7 @@ function MemorialSubmitScreen({ navigation, route }) {
           <Image style={styles.sampleImage} source={{uri: imageURL}} />
         </View>
         <AppForm
-          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber}}
+          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
