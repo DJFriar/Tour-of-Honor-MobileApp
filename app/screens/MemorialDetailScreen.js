@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useIsFocused } from '@react-navigation/native';
 import HTML from 'react-native-render-html';
 import * as Linking from 'expo-linking';
 
@@ -23,6 +24,7 @@ const tagsStyles = {
 
 function MemorialDetailScreen({ navigation, route }) {
   const { user, logOut } = useAuth();
+  const isFocused = useIsFocused();
   const memorialID = route.params.id;
   let memorialStatus = 9;
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
@@ -48,7 +50,7 @@ function MemorialDetailScreen({ navigation, route }) {
     getMemorialDetailsApi.request(memorialID);
     getMemorialMetadataApi.request(memorialID);
     getMemorialStatusApi.request(memorialID, user.UserID);
-  }, []);
+  }, [isFocused]);
 
   return (
     <Screen hasNoHeader>
