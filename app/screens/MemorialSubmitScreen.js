@@ -17,11 +17,13 @@ function MemorialSubmitScreen({ navigation, route }) {
   const { user } = useAuth();
   const [showOtherRiders, setShowOtherRiders] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+  const [includePassenger, setIncludePassenger] = useState(false);
 
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
   const userID = user.UserID;
   const riderFlagNumber = user.FlagNumber;
+  const passengerFlagNumber = user.PassengerFlag;
   const memorialID = route.params.id;
   const memorialCode = route.params.code;
   const imageURL = "http://images.tourofhonor.com/SampleImages/" + route.params.sampleImage;
@@ -44,7 +46,18 @@ function MemorialSubmitScreen({ navigation, route }) {
     setShowNotes((previousState) => !previousState);
   };
 
+  const togglePassenger = () => {
+    setIncludePassenger((previousState) => !previousState);
+  };
+
   const handleSubmit = async (submission, { resetForm }) => {
+    if (includePassenger) {
+      if (submission.OtherRiders != '') {
+        submission.OtherRiders = submission.OtherRiders + "," + passengerFlagNumber;
+      } else {
+        submission.OtherRiders = passengerFlagNumber
+      }
+    }
     // setProgress(0);
     // setUploadVisible(true);
     const result = await submissionApi.postSubmission(
@@ -71,7 +84,7 @@ function MemorialSubmitScreen({ navigation, route }) {
           <Image style={styles.sampleImage} source={{uri: imageURL}} />
         </View>
         <AppForm
-          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber}}
+          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber, includePassenger: includePassenger}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -79,41 +92,51 @@ function MemorialSubmitScreen({ navigation, route }) {
             <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
           </View>
           <View style={styles.formFieldContainer}>
-          <View style={styles.toggleContainer}>
-            <View style={styles.toggleLabelView}>
-              <Text style={styles.toggleLabelText}>Include Other Riders</Text>
+            { passengerFlagNumber > 0 &&
+              <>
+                <View style={styles.toggleContainer}>
+                  <View style={styles.toggleLabelView}>
+                    <Text style={styles.toggleLabelText}>Include Passenger</Text>
+                  </View>
+                  <Switch onValueChange={togglePassenger} value={includePassenger}></Switch>
+                </View>
+              </>
+            }
+            <View style={styles.toggleContainer}>
+              <View style={styles.toggleLabelView}>
+                <Text style={styles.toggleLabelText}>Include Other Riders</Text>
+              </View>
+              <Switch onValueChange={toggleOtherRiders} value={showOtherRiders}></Switch>
             </View>
-            <Switch onValueChange={toggleOtherRiders} value={showOtherRiders}></Switch>
-          </View>
-          { showOtherRiders && 
-            <>
-              <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
+            { showOtherRiders && 
+              <>
+                <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
+                <AppFormField 
+                  height={50}
+                  maxLength={255}
+                  name="OtherRiders"
+                  numberOfLines={4}
+                  placeholder="xxx,yyy,zzz"
+                />
+              </>
+            }
+            <View style={styles.toggleContainer}>
+              <View style={styles.toggleLabelView}>
+                <Text style={styles.toggleLabelText}>Include Notes</Text>
+              </View>
+              <Switch onValueChange={toggleShowNotes} value={showNotes}></Switch>
+            </View>
+            { showNotes && 
               <AppFormField 
-                height={50}
+                autoCorrect
+                height={100}
                 maxLength={255}
-                name="OtherRiders"
+                multiline
+                name="RiderNotes"
                 numberOfLines={4}
-                placeholder="xxx,yyy,zzz"
+                placeholder="Optional Notes"
               />
-            </>
-          }
-          <View style={styles.toggleContainer}>
-            <View style={styles.toggleLabelView}>
-              <Text style={styles.toggleLabelText}>Include Notes</Text>
-            </View>
-            <Switch onValueChange={toggleShowNotes} value={showNotes}></Switch>
-          </View>
-          { showNotes && 
-            <AppFormField 
-              autoCorrect
-              height={100}
-              maxLength={255}
-              multiline
-              name="RiderNotes"
-              numberOfLines={4}
-              placeholder="Optional Notes"
-            />
-          }
+            }
           </View>
           <View style={styles.submitButtonContainer}>
             <SubmitButton title="Submit" />
