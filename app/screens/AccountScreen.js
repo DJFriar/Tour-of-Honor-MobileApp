@@ -14,10 +14,11 @@ import MiniHeading from '../components/MiniHeading';
 function AccountScreen(props) {
   const { user, logOut } = useAuth();
   const appVersion = Application.nativeApplicationVersion;
-
   const ANDROID_URL = 'https://improveloop.com/loop/aTOH';
   const IPHONE_URL = 'https://improveloop.com/loop/iTOH';
   
+  console.log(user);
+
   return (
     <Screen style={styles.screen}>
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
@@ -37,6 +38,9 @@ function AccountScreen(props) {
             </View>
             <View style={styles.textRow}>
               <Text style={styles.label}>Zip Code:</Text><Text style={styles.text}>{user.ZipCode}</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.label}>Passenger Flag Number:</Text><Text style={styles.text}>{user.PassengerFlag}</Text>
             </View>
           </View>
           <View style={styles.changesTextContainer}>
