@@ -40,7 +40,7 @@ function AccountScreen(props) {
               <Text style={styles.label}>Zip Code:</Text><Text style={styles.text}>{user.ZipCode}</Text>
             </View>
             <View style={styles.textRow}>
-              <Text style={styles.label}>Passenger Flag Number:</Text><Text style={styles.text}>{user.PassengerFlag}</Text>
+              <Text style={styles.label}>Passenger Flag Number:</Text><Text style={styles.text}>{(user.PassengerFlag == 0) ? "N/A" : user.PassengerFlag}</Text>
             </View>
           </View>
           <View style={styles.changesTextContainer}>
