@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 
 const settings = {
   dev: {
-    apiUrl: 'http://10.0.0.122:3700/api/v1',
+    apiUrl: 'http://10.0.0.100:3700/api/v1',
     statusBarColor: 'orange',
   },
   test: {
