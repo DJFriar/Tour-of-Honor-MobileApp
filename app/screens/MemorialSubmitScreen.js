@@ -10,7 +10,6 @@ import Screen from '../components/Screen';
 import submissionApi from '../api/submission';
 import SubmitButton from '../components/forms/SubmitButton';
 import useAuth from '../auth/useAuth';
-import { fal } from '@fortawesome/pro-light-svg-icons';
 
 let validationSchema = {};
 
