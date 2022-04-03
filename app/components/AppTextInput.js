@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "android" ? "Roboto": "Avenir",
   },
   textContainer: {
-    height: 18,
+    flex: 1,
   }
 })
 

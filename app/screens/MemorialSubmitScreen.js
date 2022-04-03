@@ -119,8 +119,8 @@ function MemorialSubmitScreen({ navigation, route }) {
                 <>
                   <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
                   <AppFormField 
-                    height={50}
-                    maxLength={255}
+                    maxLength={250}
+                    multiline
                     name="OtherRiders"
                     numberOfLines={4}
                     placeholder="xxx,yyy,zzz"
@@ -136,8 +136,7 @@ function MemorialSubmitScreen({ navigation, route }) {
               { showNotes && 
                 <AppFormField 
                   autoCorrect
-                  height={100}
-                  maxLength={255}
+                  maxLength={250}
                   multiline
                   name="RiderNotes"
                   numberOfLines={4}
@@ -163,7 +162,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   emptyView: {
-    marginBottom: 25,
+    height:50,
+    marginBottom: 30,
+    paddingBottom: 50,
   },
   flexGrowOne: {
     flexGrow: 1,
