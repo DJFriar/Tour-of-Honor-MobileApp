@@ -109,7 +109,7 @@ function MemorialListScreen({ navigation }) {
           value={search} 
           placeholder="Search" 
           onChangeText={(text) => searchFilter(text)}
-          style={styles.searchBox}
+          style={{ height: 18 }}
         />
       </View>
       <FlatList 
