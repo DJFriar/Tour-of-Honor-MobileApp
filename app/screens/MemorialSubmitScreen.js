@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, View, StyleSheet, ScrollView, Switch, Text } from 'react-native';
+import { Platform, KeyboardAvoidingView, Image, View, StyleSheet, ScrollView, Switch, Text } from 'react-native';
 import * as Yup from 'yup';
 
 import AppForm from '../components/forms/AppForm';
@@ -83,71 +83,76 @@ function MemorialSubmitScreen({ navigation, route }) {
 
   return (
     <Screen>
-      <ScrollView style={styles.container}>
-        <View style={styles.sampleImageContainer}>
-          <Image style={styles.sampleImage} source={{uri: imageURL}} />
-        </View>
-        <AppForm
-          initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber, includePassenger: includePassenger}}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <View style={styles.imagesRow}>
-            <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
+      <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : null }
+      style={styles.flexGrowOne}>
+
+        <ScrollView style={styles.container}>
+          <View style={styles.sampleImageContainer}>
+            <Image style={styles.sampleImage} source={{uri: imageURL}} />
           </View>
-          <View style={styles.formFieldContainer}>
-            { passengerFlagNumber > 0 &&
-              <>
-                <View style={styles.toggleContainer}>
-                  <View style={styles.toggleLabelView}>
-                    <Text style={styles.toggleLabelText}>Include Passenger</Text>
+          <AppForm
+            initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber, includePassenger: includePassenger}}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <View style={styles.imagesRow}>
+              <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
+            </View>
+            <View style={styles.formFieldContainer}>
+              { passengerFlagNumber > 0 &&
+                <>
+                  <View style={styles.toggleContainer}>
+                    <View style={styles.toggleLabelView}>
+                      <Text style={styles.toggleLabelText}>Include Passenger</Text>
+                    </View>
+                    <Switch onValueChange={togglePassenger} value={includePassenger}></Switch>
                   </View>
-                  <Switch onValueChange={togglePassenger} value={includePassenger}></Switch>
+                </>
+              }
+              <View style={styles.toggleContainer}>
+                <View style={styles.toggleLabelView}>
+                  <Text style={styles.toggleLabelText}>Include Other Riders</Text>
                 </View>
-              </>
-            }
-            <View style={styles.toggleContainer}>
-              <View style={styles.toggleLabelView}>
-                <Text style={styles.toggleLabelText}>Include Other Riders</Text>
+                <Switch onValueChange={toggleOtherRiders} value={showOtherRiders}></Switch>
               </View>
-              <Switch onValueChange={toggleOtherRiders} value={showOtherRiders}></Switch>
-            </View>
-            { showOtherRiders && 
-              <>
-                <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
+              { showOtherRiders && 
+                <>
+                  <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
+                  <AppFormField 
+                    height={50}
+                    maxLength={255}
+                    name="OtherRiders"
+                    numberOfLines={4}
+                    placeholder="xxx,yyy,zzz"
+                  />
+                </>
+              }
+              <View style={styles.toggleContainer}>
+                <View style={styles.toggleLabelView}>
+                  <Text style={styles.toggleLabelText}>Include Notes</Text>
+                </View>
+                <Switch onValueChange={toggleShowNotes} value={showNotes}></Switch>
+              </View>
+              { showNotes && 
                 <AppFormField 
-                  height={50}
+                  autoCorrect
+                  height={100}
                   maxLength={255}
-                  name="OtherRiders"
+                  multiline
+                  name="RiderNotes"
                   numberOfLines={4}
-                  placeholder="xxx,yyy,zzz"
+                  placeholder="Optional Notes"
                 />
-              </>
-            }
-            <View style={styles.toggleContainer}>
-              <View style={styles.toggleLabelView}>
-                <Text style={styles.toggleLabelText}>Include Notes</Text>
-              </View>
-              <Switch onValueChange={toggleShowNotes} value={showNotes}></Switch>
+              }
             </View>
-            { showNotes && 
-              <AppFormField 
-                autoCorrect
-                height={100}
-                maxLength={255}
-                multiline
-                name="RiderNotes"
-                numberOfLines={4}
-                placeholder="Optional Notes"
-              />
-            }
-          </View>
-          <View style={styles.submitButtonContainer}>
-            {(isUploading) ? <SubmitButton title="Uploading..." disabled /> : <SubmitButton title="Submit" />}
-          </View>
-        </AppForm>
-        <View style={styles.emptyView} />
-      </ScrollView>
+            <View style={styles.submitButtonContainer}>
+              {(isUploading) ? <SubmitButton title="Uploading..." disabled /> : <SubmitButton title="Submit" />}
+            </View>
+          </AppForm>
+          <View style={styles.emptyView} />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
@@ -162,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   flexGrowOne: {
-    flexGrow : 1
+    flexGrow: 1,
   },
   formFieldContainer: {
     marginRight: 16,
