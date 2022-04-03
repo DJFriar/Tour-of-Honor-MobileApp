@@ -2,12 +2,20 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from '../config/colors';
 
-function AppButton({title, onPress, color = "primary"}) {
-  return (
-    <TouchableOpacity style={[styles.button, {backgroundColor: colors[color]}]} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
-  );
+function AppButton({title, onPress, color = "primary", disabled = false}) {
+  if(disabled) {
+    return (
+      <TouchableOpacity style={[styles.button, {backgroundColor: colors[color]}]} onPress={onPress} disabled>
+        <Text style={styles.text}>{title}</Text>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity style={[styles.button, {backgroundColor: colors[color]}]} onPress={onPress}>
+        <Text style={styles.text}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
 }
 
 export default AppButton;

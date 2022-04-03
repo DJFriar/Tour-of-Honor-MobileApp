@@ -10,6 +10,7 @@ import Screen from '../components/Screen';
 import submissionApi from '../api/submission';
 import SubmitButton from '../components/forms/SubmitButton';
 import useAuth from '../auth/useAuth';
+import { fal } from '@fortawesome/pro-light-svg-icons';
 
 let validationSchema = {};
 
@@ -18,6 +19,7 @@ function MemorialSubmitScreen({ navigation, route }) {
   const [showOtherRiders, setShowOtherRiders] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [includePassenger, setIncludePassenger] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
@@ -51,6 +53,8 @@ function MemorialSubmitScreen({ navigation, route }) {
   };
 
   const handleSubmit = async (submission, { resetForm }) => {
+    setIsUploading(true);
+
     if (includePassenger) {
       if (submission.OtherRiders != '') {
         submission.OtherRiders = submission.OtherRiders + "," + passengerFlagNumber;
@@ -58,23 +62,23 @@ function MemorialSubmitScreen({ navigation, route }) {
         submission.OtherRiders = passengerFlagNumber
       }
     }
-    // setProgress(0);
-    // setUploadVisible(true);
+
     const result = await submissionApi.postSubmission(
       {...submission},
-      // progress => setProgress(progress)
     );
 
     if (!result.ok) {
-      // setUploadVisible(false);
+      setIsUploading(false);
       return alert('Could not save the submission.')
     } else {
+      setIsUploading(false);
       navigation.goBack();
     }
 
     setShowNotes(false);
     setShowOtherRiders(false);
     resetForm();
+    
   }
 
   return (
@@ -139,7 +143,7 @@ function MemorialSubmitScreen({ navigation, route }) {
             }
           </View>
           <View style={styles.submitButtonContainer}>
-            <SubmitButton title="Submit" />
+            {(isUploading) ? <SubmitButton title="Uploading..." disabled /> : <SubmitButton title="Submit" />}
           </View>
         </AppForm>
         <View style={styles.emptyView} />
@@ -156,6 +160,9 @@ const styles = StyleSheet.create({
   },
   emptyView: {
     marginBottom: 25,
+  },
+  flexGrowOne: {
+    flexGrow : 1
   },
   formFieldContainer: {
     marginRight: 16,
