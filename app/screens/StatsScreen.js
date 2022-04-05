@@ -58,7 +58,7 @@ function StatsScreen(props) {
             <SubmissionListItem 
               category={item.Category}
               code={item.Code}
-              date={item.updatedAt}
+              date={item.createdAt}
               name={item.Name}
               statusID={item.StatusID}
             />}
