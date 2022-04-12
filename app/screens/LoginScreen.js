@@ -35,13 +35,14 @@ function LoginScreen(props) {
           />
         </View>
         <AppText style={styles.text}>Please login below using your flag number and zip code.</AppText>
+        <AppText style={styles.text}>You must have already clicked the link in your Welcome Email to be able to use this app.</AppText>
         <AppForm 
           initialValues={{ flag: '', zipcode: ''}}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <View style={styles.errorMessage}>
-            <ErrorMessage error="Invalid flag and/or zipcode." visible={loginFailed} />
+            <ErrorMessage error="Invalid flag and/or zipcode. Please ensure you clicked the link in your Welcome Email before using this app." visible={loginFailed} />
           </View>
           <View style={styles.formContent}>
             <AppFormField 
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   errorMessage: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20
+    marginTop: 20,
   },
   formContent: {
     padding: 20,

@@ -2,7 +2,7 @@
   "expo": {
     "name": "TourOfHonor",
     "slug": "TourOfHonor",
-    "version": "3.3.1",
+    "version": "3.3.2",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
     "splash": {
@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "39",
+      "buildNumber": "40",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Allows you to submit your memorial visits using the photos in your camera roll."
@@ -31,7 +31,7 @@
       },
       "package": "com.ambitiousNerds.TourOfHonor",
       "permissions": ["READ_EXTERNAL_STORAGE"],
-      "versionCode": 17
+      "versionCode": 18
     },
     "web": {
       "favicon": "./assets/favicon.png"
