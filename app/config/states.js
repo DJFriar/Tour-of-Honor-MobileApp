@@ -121,7 +121,7 @@ export default [
   },
   {
     icon: "car",
-    fullName: "Massachusettes",
+    fullName: "Massachusetts",
     shortName: "MA",
     value: 21,
   },
