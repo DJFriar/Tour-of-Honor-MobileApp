@@ -13,7 +13,8 @@ const postSubmission = (submission) => {
   data.append('UserID', submission.RiderID);
   data.append('RiderFlag', submission.RiderFlag);
   data.append('RiderNotes', submission.RiderNotes);
-  data.append('OtherRiders', submission.OtherRiders)
+  data.append('OtherRiders', submission.OtherRiders);
+  data.append('Source', submission.Source);
 
   if (submittedImages[0]) {
     data.append('images', {

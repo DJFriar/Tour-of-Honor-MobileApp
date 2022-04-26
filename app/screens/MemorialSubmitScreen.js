@@ -54,6 +54,13 @@ function MemorialSubmitScreen({ navigation, route }) {
   const handleSubmit = async (submission, { resetForm }) => {
     setIsUploading(true);
 
+    // Set the Submission Source to iPhone (2) or Android (3)
+    if(Platform.OS === 'ios') {
+      submission.Source = 2
+    } else {
+      submission.Source = 3
+    }
+
     if (includePassenger) {
       if (submission.OtherRiders != '') {
         submission.OtherRiders = submission.OtherRiders + "," + passengerFlagNumber;
