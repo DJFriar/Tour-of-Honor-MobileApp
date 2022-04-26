@@ -6,7 +6,7 @@ import colors from '../config/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 function ListItem({cityState, category, code, image, name, onPress}) {
-  const imageURL = "https://www.tourofhonor.com/2022appimages/" + image;
+  const imageURL = "http://images.tourofhonor.com/SampleImages/" + image;
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.container}>
