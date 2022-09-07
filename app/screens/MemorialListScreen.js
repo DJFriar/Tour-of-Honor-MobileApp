@@ -130,6 +130,7 @@ function MemorialListScreen({ navigation }) {
           image={item.SampleImage}
           name={item.Name}
           onPress={() => navigation.navigate("MemorialDetailScreen", {id: item.id})}
+          status={item.Status}
         />}
       />
     </Screen>
