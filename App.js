@@ -11,10 +11,29 @@ import navigationTheme from './app/navigation/navigationTheme';
 
 // FontAwesome Setup
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faChevronRight, faMapMarkedAlt, faMapSigns } from '@fortawesome/pro-light-svg-icons';
-import { faBan, faChartBar, faChevronDown, faClock, faFrown, faImages, faSearch, faTimes } from '@fortawesome/pro-regular-svg-icons';
-import { faAnalytics, faCameraRetro, faFlag, faLocationDot, faOctagonExclamation, faShieldCheck, faShieldExclamation, faUser } from '@fortawesome/pro-solid-svg-icons';
+// FontAwesome Pro Light Icons
+import { faChevronRight } from '@fortawesome/pro-light-svg-icons/faChevronRight';
+import { faMapMarkedAlt } from '@fortawesome/pro-light-svg-icons/faMapMarkedAlt';
+import { faMapSigns } from '@fortawesome/pro-light-svg-icons/faMapSigns';
+// FontAwesome Pro Regular Icons
+import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
+import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
+import { faFrown } from '@fortawesome/pro-regular-svg-icons/faFrown';
+import { faImages } from '@fortawesome/pro-regular-svg-icons/faImages';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+// FontAwesome Pro Solid Icons
+import { faAnalytics } from '@fortawesome/pro-solid-svg-icons/faAnalytics';
+import { faCameraRetro } from '@fortawesome/pro-solid-svg-icons/faCameraRetro';
+import { faFlag } from '@fortawesome/pro-solid-svg-icons/faFlag';
+import { faLocationDot } from '@fortawesome/pro-solid-svg-icons/faLocationDot';
+import { faOctagonExclamation } from '@fortawesome/pro-solid-svg-icons/faOctagonExclamation';
+import { faShieldCheck } from '@fortawesome/pro-solid-svg-icons/faShieldCheck';
+import { faShieldExclamation } from '@fortawesome/pro-solid-svg-icons/faShieldExclamation';
+import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser';
+// FontAwesome Library Creation
 library.add(
   faAnalytics, faBan, faCameraRetro, faChartBar, faChevronDown, faChevronRight, faClock, faFlag, faFrown, 
   faImages, faLocationDot, faMapMarkedAlt, faMapSigns, faOctagonExclamation, faSearch, faShieldCheck, 
