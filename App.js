@@ -49,7 +49,7 @@ export default function App() {
     if (user) setUser(user);
   }
 
-  if (!isReady)
+  if (!isReady) {
     return (
       <AppLoading
         startAsync={restoreUser}
@@ -57,6 +57,7 @@ export default function App() {
         onError={console.warn}
       />
     );
+  }
 
   return (
     <AuthContext.Provider value={{user, setUser}}>
