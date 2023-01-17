@@ -27,16 +27,10 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, plac
           />
         </View>
       </TouchableWithoutFeedback>
-      <Modal visible={modalVisible} animationType='slide'>
-        <Screen style={styles.modalScreen} hasNoHeader >
+      <Modal visible={modalVisible} transparent={true} animationType='slide'>
+        <Screen style={styles.modalScreen} hasNoHeader>
           <View style={selectedItem ? {marginBottom: 150} : {marginBottom: 75}}>
             <View style={styles.closeButton}>
-              <FontAwesomeIcon 
-                icon={['far','times']}
-                size={35}
-                color={defaultStyles.colors.medium} 
-                onPress={() => setModalVisible(false)} 
-              />
               <View style={styles.clearFilter}>
                 {selectedItem && 
                   <AppButton 
@@ -100,6 +94,9 @@ const styles = StyleSheet.create({
   },
   grid: {
     marginHorizontal: 10
+  },
+  modalScreen: {
+    marginTop: 20,
   },
   placeholder: {
     color: defaultStyles.colors.medium,
