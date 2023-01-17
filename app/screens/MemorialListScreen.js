@@ -9,7 +9,7 @@ import ListItem from '../components/ListItem';
 import ListItemSeperator from '../components/ListItemSeperator';
 import listOfStates from '../config/states';
 import Screen from '../components/Screen';
-
+import useAuth from '../auth/useAuth';
 
 function MemorialListScreen({ navigation }) {
   const [displayList, setDisplayList] = useState();
@@ -19,13 +19,14 @@ function MemorialListScreen({ navigation }) {
   const [onRefresh, setOnRefresh] = useState(false);
   const [stateFiltered, setStateFiltered] = useState();
   const [stateFilteredList, setStateFilteredList] = useState();
+  const { user, logOut } = useAuth();
 
   useEffect(() => {
     fetchMemorialList();
   }, []);
 
   const fetchMemorialList = () => {
-    apiClient.get('/memorial-list').then((response) => {
+    apiClient.get('/memorials-status/' + user.UserID).then((response) => {
       setStateFilteredList(response.data);
       setDisplayList(response.data);
       setFilteredList(response.data);
@@ -34,17 +35,6 @@ function MemorialListScreen({ navigation }) {
       console.log(error);
     })
   }
-
-  // const fetchMemorialList = () => {
-  //   apiClient.get('/memorials-status/' + 1).then((response) => {
-  //     setStateFilteredList(response.data);
-  //     setDisplayList(response.data);
-  //     setFilteredList(response.data);
-  //     setMasterList(response.data);
-  //   }).catch((error) => {
-  //     console.log(error);
-  //   })
-  // }
 
   const handleRefresh = () => {
     setDisplayList(null);
@@ -130,7 +120,7 @@ function MemorialListScreen({ navigation }) {
           image={item.SampleImage}
           name={item.Name}
           onPress={() => navigation.navigate("MemorialDetailScreen", {id: item.id})}
-          status={item.Status}
+          status={item.RiderStatus}
         />}
       />
     </Screen>

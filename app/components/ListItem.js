@@ -20,9 +20,9 @@ function ListItem({cityState, category, code, image, name, onPress, status}) {
               <AppText style={styles.cityState} numberOfLines={1}>{cityState}</AppText>
             </View>
             <View style={styles.statusIconContainer}>
-              {/* <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={20} color={'red'} /> */}
-              {/* <FontAwesomeIcon icon={['fas', 'shield-check']} size={20} color={'green'} /> */}
-              {/* <FontAwesomeIcon icon={['far', 'clock']} size={20} /> */}
+              {status === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={20} color={'red'} />}
+              {status === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={20} color={'green'} />}
+              {status === 0 && <FontAwesomeIcon icon={['far', 'clock']} size={20} /> }
             </View>
           </View>
           <View style={styles.memorialCode}>
