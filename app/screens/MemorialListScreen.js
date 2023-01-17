@@ -26,7 +26,7 @@ function MemorialListScreen({ navigation }) {
   }, []);
 
   const fetchMemorialList = () => {
-    apiClient.get('/memorials-status/' + user.UserID).then((response) => {
+    apiClient.get('/memorials/status/' + user.UserID).then((response) => {
       setStateFilteredList(response.data);
       setDisplayList(response.data);
       setFilteredList(response.data);
