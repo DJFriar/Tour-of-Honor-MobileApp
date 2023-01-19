@@ -23,7 +23,7 @@ function ImageInput({ imageUri, onChangeImage, isOptional }) {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.2,
       });
-      if (!result.cancelled)
+      if (!result.canceled)
         onChangeImage(result.uri)
     } catch (error) {
       console.log("Error reading an image", error);
