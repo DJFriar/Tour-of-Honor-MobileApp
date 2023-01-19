@@ -16,12 +16,17 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allows you to submit your memorial visits using the photos in your camera roll."
+        }
+      ]
+    ],
     "ios": {
       "buildNumber": "43",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
-      "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Allows you to submit your memorial visits using the photos in your camera roll."
-      },
       "supportsTablet": false
     },
     "android": {
