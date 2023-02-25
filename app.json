@@ -35,8 +35,16 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.ambitiousNerds.TourOfHonor",
-      "permissions": ["READ_EXTERNAL_STORAGE"],
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+      ],
       "versionCode": 21
+    },
+    "extra": {
+      "eas": {
+        "projectId": "58f65fc8-31fd-4e42-9b47-506ffc6c05bf"
+      }
     }
   }
 }
