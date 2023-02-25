@@ -26,7 +26,7 @@ const AppNavigator = () => (
         tabBarButton: () => <MemorialsButton onPress={() => navigation.navigate(routes.MEMORIAL_LIST)}/>,
       })}
     />
-    <Tab.Screen name="Stats" component={StatsScreen} options={{
+    <Tab.Screen name="History" component={StatsScreen} options={{
       headerShown: false,
       tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'analytics']} color={color} size={size * 1.3} />
     }}/>

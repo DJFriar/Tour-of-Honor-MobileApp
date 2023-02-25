@@ -29,7 +29,7 @@ function StatsScreen(props) {
 
   return (
     <Screen style={styles.container} hasNoHeader>
-      <View style={styles.topViewContainer}>
+      {/* <View style={styles.topViewContainer}>
         <MiniHeading>Stats</MiniHeading>
         <View style={styles.statSection}>
           <FontAwesomeIcon icon={['far', 'frown']} size={60} />
@@ -39,7 +39,7 @@ function StatsScreen(props) {
 
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
-      </View>
+      </View> */}
 
       <View style={styles.bottomViewContainer}>
         <View style={styles.submissionHeaderRow}>
