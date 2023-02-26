@@ -2,7 +2,7 @@
   "expo": {
     "name": "TourOfHonor",
     "slug": "TourOfHonor",
-    "version": "3.5.0",
+    "version": "3.5.1",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
     "splash": {
@@ -25,7 +25,7 @@
       ]
     ],
     "ios": {
-      "buildNumber": "43",
+      "buildNumber": "44",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
       "supportsTablet": false
     },
@@ -39,7 +39,7 @@
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.RECORD_AUDIO"
       ],
-      "versionCode": 21
+      "versionCode": 22
     },
     "extra": {
       "eas": {
