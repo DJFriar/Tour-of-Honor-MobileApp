@@ -9,7 +9,7 @@ import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
 
 const validationSchema = Yup.object().shape({
-  flag: Yup.number().required().min(1).max(1600).label("Flag Number"),
+  flag: Yup.number().required().min(1).max(2500).label("Flag Number"),
   zipcode: Yup.string().required().matches(/^[0-9]+$/, "Must be only digits")
     .min(5, 'Must be exactly 5 digits').max(5, 'Must be exactly 5 digits').label("Zipcode")
 });
