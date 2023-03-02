@@ -44,7 +44,7 @@ function AccountScreen(props) {
             </View>
           </View>
           <View style={styles.changesTextContainer}>
-            <Text>To make changes to your User Profile, please login to the Scoring Portal.</Text>
+            <Text>To make changes to your profile, please login to the Scoring Portal.</Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
