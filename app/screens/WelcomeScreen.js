@@ -12,7 +12,6 @@ const REGISTER_URL = 'https://www.tourofhonor.com/pages/register.html';
 export default function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground 
-      blurRadius={7}
       style={styles.background} 
       source={require('../assets/background.jpg')} 
       resizeMode='cover' >
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: "absolute",
-    top: 120,
+    top: 240,
     alignItems: "center"
   },
   loginNotice: {
