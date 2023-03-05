@@ -17,14 +17,12 @@ function MemorialSubmitScreen({ navigation, route }) {
   const { user } = useAuth();
   const [showOtherRiders, setShowOtherRiders] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
-  const [includePassenger, setIncludePassenger] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
   const userID = user.UserID;
   const riderFlagNumber = user.FlagNumber;
-  const passengerFlagNumber = user.PassengerFlag;
   const memorialID = route.params.id;
   const memorialCode = route.params.code;
   const imageURL = "http://images.tourofhonor.com/SampleImages/" + route.params.sampleImage;
@@ -47,10 +45,6 @@ function MemorialSubmitScreen({ navigation, route }) {
     setShowNotes((previousState) => !previousState);
   };
 
-  const togglePassenger = () => {
-    setIncludePassenger((previousState) => !previousState);
-  };
-
   const handleSubmit = async (submission, { resetForm }) => {
     setIsUploading(true);
 
@@ -59,14 +53,6 @@ function MemorialSubmitScreen({ navigation, route }) {
       submission.Source = 2
     } else {
       submission.Source = 3
-    }
-
-    if (includePassenger) {
-      if (submission.OtherRiders != '') {
-        submission.OtherRiders = submission.OtherRiders + "," + passengerFlagNumber;
-      } else {
-        submission.OtherRiders = passengerFlagNumber
-      }
     }
 
     const result = await submissionApi.postSubmission(
@@ -98,7 +84,7 @@ function MemorialSubmitScreen({ navigation, route }) {
             <Image style={styles.sampleImage} source={{uri: imageURL}} />
           </View>
           <AppForm
-            initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber, includePassenger: includePassenger}}
+            initialValues={{ images: [], MemorialID: memorialID, MemorialCode: memorialCode, OtherRiders: '', RiderNotes: '', RiderID: userID, RiderFlag: riderFlagNumber}}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
@@ -106,16 +92,6 @@ function MemorialSubmitScreen({ navigation, route }) {
               <AppFormImagePicker multiImageRequired={multiImage} name="images" maxImageCount={maxImageCount} />
             </View>
             <View style={styles.formFieldContainer}>
-              { passengerFlagNumber > 0 &&
-                <>
-                  <View style={styles.toggleContainer}>
-                    <View style={styles.toggleLabelView}>
-                      <Text style={styles.toggleLabelText}>Include Passenger</Text>
-                    </View>
-                    <Switch onValueChange={togglePassenger} value={includePassenger}></Switch>
-                  </View>
-                </>
-              }
               <View style={styles.toggleContainer}>
                 <View style={styles.toggleLabelView}>
                   <Text style={styles.toggleLabelText}>Include Other Riders</Text>

@@ -32,20 +32,6 @@ function AccountScreen(props) {
               <MiniAppButton title="Log Out" onPress={() => logOut()}/>
             </View>
           </View>
-          <View style={styles.userDetailContainer}>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Email:</Text><Text style={styles.text}>{user.Email}</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Zip Code:</Text><Text style={styles.text}>{user.ZipCode}</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Passenger Flag Number:</Text><Text style={styles.text}>{(user.PassengerFlag == 0) ? "N/A" : user.PassengerFlag}</Text>
-            </View>
-          </View>
-          <View style={styles.changesTextContainer}>
-            <Text>To make changes to your profile, please login to the Scoring Portal.</Text>
-          </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
@@ -89,7 +75,7 @@ function AccountScreen(props) {
         </View>
         <View style={styles.bottomContainer}>
           <View style={styles.appInfoRow}>
-            <Text style={styles.copyright}>&copy;2022 ambitiousNerds</Text>
+            <Text style={styles.copyright}>&copy;2021-2023 ambitiousNerds</Text>
             <Text style={styles.appInfo}>Version {appVersion}</Text>
           </View>
         </View>
@@ -114,9 +100,6 @@ const styles = StyleSheet.create({
   },
   copyright: {
     fontSize: 10,
-  },
-  changesTextContainer: {
-    marginVertical: 10
   },
   faqSection: {
     marginTop: 10,
@@ -149,6 +132,7 @@ const styles = StyleSheet.create({
   nameLogOutRow: {
     flex: 1,
     flexDirection: 'row',
+    marginBottom: 10,
   },
   riderName: {
     fontSize: 24,
@@ -178,7 +162,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   userDetailContainer: {
-    marginTop: 10,
+    marginVertical: 10
   },
 });
 
