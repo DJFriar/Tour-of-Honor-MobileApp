@@ -4,7 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppLoading from 'expo-app-loading';
 
 import AppNavigator from './app/navigation/AppNavigator';
-import AuthContext from './app/auth/context';
+import AuthContext from './app/context/authContext';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import authStorage from './app/auth/storage';
 import navigationTheme from './app/navigation/navigationTheme';
