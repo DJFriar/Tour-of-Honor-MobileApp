@@ -26,14 +26,14 @@ function MemorialDetailScreen({ navigation, route }) {
   const { user, logOut } = useAuth();
   const isFocused = useIsFocused();
   const memorialID = route.params.id;
-  let memorialStatus = 9;
+  let memorialStatus = {"ScorerNotes": "", "Status": 9};
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
   const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
   const memorialMetadata = getMemorialMetadataApi.data;
   const getMemorialStatusApi = useApi(memorial.getMemorialStatus);
   const memorialStatusApiResponse = getMemorialStatusApi.data[0] || {};
-  if (memorialStatusApiResponse.Status < 9) { memorialStatus = memorialStatusApiResponse.Status};
+  if (memorialStatusApiResponse.Status < 9) { memorialStatus = memorialStatusApiResponse };
 
   const memorialLat = memorialDetails.Latitude;
   const memorialLong = memorialDetails.Longitude;
@@ -45,6 +45,8 @@ function MemorialDetailScreen({ navigation, route }) {
   });
   const contentWidth = useWindowDimensions().width;
   const imageURL = "http://images.tourofhonor.com/SampleImages/" + memorialDetails.SampleImage;
+
+  console.log(`memorialStatus is: `, memorialStatus);
 
   useEffect(() => {
     getMemorialDetailsApi.request(memorialID);
@@ -69,9 +71,9 @@ function MemorialDetailScreen({ navigation, route }) {
             <AppText style={styles.memorialCityState}>{memorialDetails.City}, {memorialDetails.State}</AppText>
           </View>
           <View style={styles.statusIcons}>
-            {memorialStatus === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
-            {memorialStatus === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
-            {memorialStatus === 0 && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
+            {memorialStatus.Status === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
+            {memorialStatus.Status === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
+            {memorialStatus.Status === 0 && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
           </View>
         </View>
 
@@ -90,7 +92,7 @@ function MemorialDetailScreen({ navigation, route }) {
           
         </View>
         <View style={styles.submitButtonContainer}>
-          { memorialStatus === 9 &&
+          { memorialStatus.Status === 9 &&
             <AppButton title="Submit" onPress={() => 
               navigation.navigate('MemorialSubmitScreen', { 
                 id: memorialID,
@@ -101,23 +103,28 @@ function MemorialDetailScreen({ navigation, route }) {
               })} 
             />
           }
-          { memorialStatus === 2 &&
-            <AppButton title="Resubmit" onPress={() => 
-              navigation.navigate('MemorialSubmitScreen', { 
-                id: memorialID,
-                name: memorialDetails.Name,
-                code: memorialDetails.Code,
-                multiImage: memorialDetails.MultiImage,
-                sampleImage: memorialDetails.SampleImage
-              })} 
-            />
+          { memorialStatus.Status === 2 &&
+            <>
+              <View style={styles.disabledButtonContainer}>
+                <AppText style={styles.disabledButtonText}>{memorialStatus.ScorerNotes}</AppText>
+              </View>
+              <AppButton title="Resubmit" onPress={() => 
+                navigation.navigate('MemorialSubmitScreen', { 
+                  id: memorialID,
+                  name: memorialDetails.Name,
+                  code: memorialDetails.Code,
+                  multiImage: memorialDetails.MultiImage,
+                  sampleImage: memorialDetails.SampleImage
+                })} 
+              />
+            </>
           }
-          { memorialStatus === 1 &&
+          { memorialStatus.Status === 1 &&
             <View style={styles.disabledButtonContainer}>
               <AppText style={styles.disabledButtonText}>You have already earned this memorial, congrats!</AppText>
             </View>
           }
-          { memorialStatus === 0 &&
+          { memorialStatus.Status === 0 &&
             <View style={styles.disabledButtonContainer}>
               <AppText style={styles.disabledButtonText}>This memorial has been submitted and is awaiting review.</AppText>
             </View>
