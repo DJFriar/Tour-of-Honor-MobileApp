@@ -1,17 +1,21 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-import defaultStyles from '../config/styles';
+import colors from '../config/colors';
 
 function AppTextInput({ iconName, iconFamily, height, ...otherProps }) {
+  const colorScheme = useColorScheme();
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
+
   return (
-    <View style={[styles.container, {height: height}]}>
+    <View style={[styles.container, themeContainerStyle, {height: height}]}>
       <View style={styles.iconContainer}>
-        {iconName && <FontAwesomeIcon icon={[iconFamily, iconName]} size={20} color={defaultStyles.colors.medium} />}
+        {iconName && <FontAwesomeIcon icon={[iconFamily, iconName]} size={20} color={colors.medium} />}
       </View>
-      <View style={styles.textContainer}>
-        <TextInput placeholderTextColor={defaultStyles.colors.medium} style={styles.text} {...otherProps} />
+      <View style={[styles.textContainer, themeContainerStyle]}>
+        <TextInput placeholderTextColor={colors.medium} style={[styles.text, themeTextStyle]} {...otherProps} />
       </View>
     </View>
   );
@@ -20,13 +24,18 @@ function AppTextInput({ iconName, iconFamily, height, ...otherProps }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flex: 4,
     flexDirection: "row",
-    marginLeft: 10,
+    marginHorizontal: 10,
     marginVertical: 10,
     paddingVertical: 10,
+  },
+  darkContainer: {
+    backgroundColor: colors.darkBackground
+  },
+  darkTextStyle: {
+    color: colors.light
   },
   icon: {
     alignItems: 'center',
@@ -35,8 +44,13 @@ const styles = StyleSheet.create({
   iconContainer:{
     marginHorizontal: 10,
   },
+  lightContainer: {
+    backgroundColor: colors.white
+  },
+  lightTextStyle: {
+    color: colors.dark
+  },
   text: {
-    color: defaultStyles.colors.dark,
     fontFamily: Platform.OS === "android" ? "Roboto": "Avenir",
   },
   textContainer: {

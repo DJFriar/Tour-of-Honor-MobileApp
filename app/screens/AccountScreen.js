@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Application from 'expo-application';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import * as Linking from 'expo-linking';
 
@@ -13,6 +13,9 @@ import MiniHeading from '../components/MiniHeading';
 
 function AccountScreen(props) {
   const { user, logOut } = useAuth();
+  const colorScheme = useColorScheme();
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
   const appVersion = Application.nativeApplicationVersion;
   const ANDROID_URL = 'https://improveloop.com/loop/aTOH';
   const IPHONE_URL = 'https://improveloop.com/loop/iTOH';
@@ -21,12 +24,12 @@ function AccountScreen(props) {
 
   return (
     <Screen style={styles.screen}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
-        <View style={styles.topContainer}>
+      <ScrollView contentContainerStyle={[{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }, themeContainerStyle]}>
+        <View style={[styles.topContainer, themeContainerStyle]}>
           <View style={styles.nameLogOutRow}>
             <View style={styles.nameAndFlagContainer}>
-              <Text style={styles.riderName}>{user.FirstName} {user.LastName}</Text>
-              <Text style={styles.flag}>Flag #{user.FlagNumber}</Text>
+              <Text style={[styles.riderName, themeTextStyle]}>{user.FirstName} {user.LastName}</Text>
+              <Text style={[styles.flag, themeTextStyle]}>Flag #{user.FlagNumber}</Text>
             </View>
             <View style={styles.logoutButtonContainer}>
               <MiniAppButton title="Log Out" onPress={() => logOut()}/>
@@ -34,34 +37,38 @@ function AccountScreen(props) {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+            {colorScheme === 'light' && <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />}
+            {colorScheme === 'dark' && <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />}
           </View>
 
           <View style={styles.faqSection}>
             <MiniHeading>Icon Legend</MiniHeading>
             <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['far', 'clock']} size={25} />
-              <Text style={styles.iconDefinition}>This memorial has been submitted and is awaiting review.</Text>
+              {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
+              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'}  />}
+              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial has been submitted and is awaiting review.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />
-              <Text style={styles.iconDefinition}>This memorial submission has been scored and approved. Congrats!</Text>
+              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial submission has been scored and approved. Congrats!</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />
-              <Text style={styles.iconDefinition}>This memorial submission has been rejected. Check your email for details. You may resubmit this at anytime.</Text>
+              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial submission has been rejected. Check your email for details. You may resubmit this at anytime.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['far', 'images']} size={25} />
-              <Text style={styles.iconDefinition}>This memorial requires two images. See the official rules for more details.</Text>
+              {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'images']} size={25} />}
+              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'images']} size={25} color={'white'}  />}
+              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial requires two images. See the official rules for more details.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} />
-              <Text style={styles.iconDefinition}>Tap on this icon to get driving directions using your phone's default map app.</Text>
+              {colorScheme === 'light' && <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} />}
+              {colorScheme === 'dark' && <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} color={'white'} />}
+              <Text style={[styles.iconDefinition, themeTextStyle]}>Tap on this icon to get driving directions using your phone's default map app.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
               <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color={'red'} />
-              <Text style={styles.iconDefinition}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
+              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
             </View>
           </View>
 
@@ -73,10 +80,10 @@ function AccountScreen(props) {
             }
           </View>
         </View>
-        <View style={styles.bottomContainer}>
+        <View style={[styles.bottomContainer, themeContainerStyle]}>
           <View style={styles.appInfoRow}>
-            <Text style={styles.copyright}>&copy;2021-2023 ambitiousNerds</Text>
-            <Text style={styles.appInfo}>Version {appVersion}</Text>
+            <Text style={[styles.copyright, themeTextStyle]}>&copy;2021-2023 ambitiousNerds</Text>
+            <Text style={[styles.appInfo, themeTextStyle]}>Version {appVersion}</Text>
           </View>
         </View>
       </ScrollView>
@@ -101,6 +108,12 @@ const styles = StyleSheet.create({
   copyright: {
     fontSize: 10,
   },
+  darkContainer: {
+    backgroundColor: colors.black
+  },
+  darkTextStyle: {
+    color: colors.light
+  },
   faqSection: {
     marginTop: 10,
     marginRight: 10,
@@ -121,6 +134,12 @@ const styles = StyleSheet.create({
   label: {
     alignItems: 'flex-start',
     fontSize: 18,
+  },
+  lightContainer: {
+    backgroundColor: colors.background
+  },
+  lightTextStyle: {
+    color: colors.dark
   },
   logoutButtonContainer: {
     alignItems: 'flex-end',

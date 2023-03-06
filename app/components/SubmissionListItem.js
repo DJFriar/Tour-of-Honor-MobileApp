@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View, StyleSheet } from 'react-native';
+import { Platform, View, StyleSheet, useColorScheme } from 'react-native';
 import { DateTime } from 'luxon';
 
 import AppText from './AppText';
@@ -14,6 +14,8 @@ function addZero(i) {
 }
 
 function SubmissionListItem({code, date, statusID}) {
+  const colorScheme = useColorScheme();
+  
   if(Platform.OS === 'android') {
     const dateValue = new Date(date);
     const month = dateValue.getMonth() + 1;
@@ -44,7 +46,8 @@ function SubmissionListItem({code, date, statusID}) {
       <View style={styles.statusIcons}>
         {statusID === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
         {statusID === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
-        {statusID === 0 && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
+        {(statusID === 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
+        {(statusID === 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} /> }
       </View>
     </View>
 
@@ -56,7 +59,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingVertical: 4,
-    backgroundColor: colors.backgroundColor
   },
   statusIcons: {
     alignItems: 'flex-end',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppLoading from 'expo-app-loading';
@@ -7,7 +8,7 @@ import AppNavigator from './app/navigation/AppNavigator';
 import AuthContext from './app/context/authContext';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import authStorage from './app/auth/storage';
-import navigationTheme from './app/navigation/navigationTheme';
+import {tohDarkTheme, tohLightTheme} from './app/navigation/navigationTheme';
 
 // FontAwesome Setup
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -43,6 +44,7 @@ library.add(
 export default function App() {
   const [user, setUser] = useState();
   const [isReady, setIsReady] = useState(false);
+  const scheme = useColorScheme();
 
   const restoreUser = async () => {
     const user = await authStorage.getUser();
@@ -62,7 +64,7 @@ export default function App() {
   return (
     <AuthContext.Provider value={{user, setUser}}>
       <SafeAreaProvider>
-        <NavigationContainer theme={navigationTheme}>
+        <NavigationContainer theme={scheme === 'dark' ? tohDarkTheme : tohLightTheme}>
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       </SafeAreaProvider>

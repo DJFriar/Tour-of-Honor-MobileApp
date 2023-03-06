@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
-import { FlatList, Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Modal, StyleSheet, TouchableWithoutFeedback, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AppButton from './AppButton';
 import AppText from './AppText';
-import defaultStyles from '../config/styles';
+import colors from '../config/colors';
 import Screen from './Screen';
 import StatePickerItem from './StatePickerItem';
 
 function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, placeholder, selectedItem }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const colorScheme = useColorScheme();
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-        <View style={[styles.container]}>
+        <View style={[styles.container, themeContainerStyle]}>
           {selectedItem ? (
-            <AppText style={styles.text}>{selectedItem.shortName}</AppText>
+            <AppText style={[styles.text, themeTextStyle]}>{selectedItem.shortName}</AppText>
           ) : ( 
             <AppText style={styles.placeholder}>{placeholder}</AppText> 
           )}
           <FontAwesomeIcon 
             icon={['far','chevron-down']}
             size={10}
-            color={defaultStyles.colors.medium} 
+            color={colors.medium} 
           />
         </View>
       </TouchableWithoutFeedback>
@@ -85,12 +88,24 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: defaultStyles.colors.light,
+    backgroundColor: colors.light,
     borderRadius: 25,
     flex: 1,
     flexDirection: "row",
     paddingRight: 10,
     marginVertical: 10,
+  },
+  darkContainer: {
+    backgroundColor: colors.darkBackground
+  },
+  darkTextStyle: {
+    color: colors.light
+  },
+  lightContainer: {
+    backgroundColor: colors.white
+  },
+  lightTextStyle: {
+    color: colors.dark
   },
   grid: {
     marginHorizontal: 10
@@ -99,7 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   placeholder: {
-    color: defaultStyles.colors.medium,
+    color: colors.medium,
     flex: 1,
     fontSize: 18,
     marginLeft: 10,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, useColorScheme, View } from 'react-native';
 
 import apiClient from "../api/client";
 import AppPicker from '../components/AppPicker';
@@ -20,6 +20,10 @@ function MemorialListScreen({ navigation }) {
   const [stateFiltered, setStateFiltered] = useState();
   const [stateFilteredList, setStateFilteredList] = useState();
   const { user, logOut } = useAuth();
+
+  const colorScheme = useColorScheme();
+  const themeScreenStyle = colorScheme === 'light' ? styles.lightScreen : styles.darkScreen;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
   useEffect(() => {
     fetchMemorialList();
@@ -80,7 +84,7 @@ function MemorialListScreen({ navigation }) {
   }
 
   return (
-    <Screen style={styles.screen} hasNoHeader>
+    <Screen style={themeScreenStyle} hasNoHeader>
       <View style={styles.searchRow}>
         <AppPicker 
           clearFilter={() => {
@@ -99,7 +103,7 @@ function MemorialListScreen({ navigation }) {
           value={search} 
           placeholder="Search" 
           onChangeText={(text) => searchFilter(text)}
-          style={{ height: 18 }}
+          style={[{ height: 18 }, themeTextStyle]}
         />
       </View>
       <FlatList 
@@ -128,7 +132,16 @@ function MemorialListScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  darkScreen: {
+    backgroundColor: colors.black,
+  },
+  darkTextStyle: {
+    color: colors.light
+  },
+  lightTextStyle: {
+    color: colors.dark
+  },
+  lightScreen: {
     backgroundColor: colors.background,
   },
   searchRow: {

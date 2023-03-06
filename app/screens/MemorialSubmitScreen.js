@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, KeyboardAvoidingView, Image, View, StyleSheet, ScrollView, Switch, Text } from 'react-native';
+import { Platform, KeyboardAvoidingView, Image, View, StyleSheet, ScrollView, Switch, Text, useColorScheme } from 'react-native';
 import * as Yup from 'yup';
 
 import AppForm from '../components/forms/AppForm';
@@ -18,6 +18,10 @@ function MemorialSubmitScreen({ navigation, route }) {
   const [showOtherRiders, setShowOtherRiders] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+
+  const colorScheme = useColorScheme();
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
   const multiImage = route.params.multiImage;
   const maxImageCount = multiImage + 1;
@@ -79,8 +83,8 @@ function MemorialSubmitScreen({ navigation, route }) {
       behavior={Platform.OS == 'ios' ? 'padding' : null }
       style={styles.flexGrowOne}>
 
-        <ScrollView style={styles.container}>
-          <View style={styles.sampleImageContainer}>
+        <ScrollView style={[styles.container, themeContainerStyle]}>
+          <View style={[styles.sampleImageContainer, themeContainerStyle]}>
             <Image style={styles.sampleImage} source={{uri: imageURL}} />
           </View>
           <AppForm
@@ -94,13 +98,13 @@ function MemorialSubmitScreen({ navigation, route }) {
             <View style={styles.formFieldContainer}>
               <View style={styles.toggleContainer}>
                 <View style={styles.toggleLabelView}>
-                  <Text style={styles.toggleLabelText}>Include Other Riders</Text>
+                  <Text style={[styles.toggleLabelText, themeTextStyle]}>Include Other Riders</Text>
                 </View>
                 <Switch onValueChange={toggleOtherRiders} value={showOtherRiders}></Switch>
               </View>
               { showOtherRiders && 
                 <>
-                  <Text>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
+                  <Text style={themeTextStyle}>If multiple flags are present in this submission, please enter them below seperated with a comma, and with no spaces.</Text>
                   <AppFormField 
                     maxLength={250}
                     multiline
@@ -112,7 +116,7 @@ function MemorialSubmitScreen({ navigation, route }) {
               }
               <View style={styles.toggleContainer}>
                 <View style={styles.toggleLabelView}>
-                  <Text style={styles.toggleLabelText}>Include Notes</Text>
+                  <Text style={[styles.toggleLabelText, themeTextStyle]}>Include Notes</Text>
                 </View>
                 <Switch onValueChange={toggleShowNotes} value={showNotes}></Switch>
               </View>
@@ -140,9 +144,14 @@ function MemorialSubmitScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.background,
     flex: 1,
     paddingVertical: 8,
+  },
+  darkContainer: {
+    backgroundColor: colors.black
+  },
+  darkTextStyle: {
+    color: colors.light
   },
   emptyView: {
     height:50,
@@ -162,6 +171,12 @@ const styles = StyleSheet.create({
   imagesRow:{
     alignContent: 'center',
     justifyContent: 'space-evenly',
+  },
+  lightContainer: {
+    backgroundColor: colors.background
+  },
+  lightTextStyle: {
+    color: colors.dark
   },
   sampleImage: {
     borderRadius: 10,

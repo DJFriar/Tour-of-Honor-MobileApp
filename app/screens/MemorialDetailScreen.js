@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, useWindowDimensions, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useIsFocused } from '@react-navigation/native';
 import HTML from 'react-native-render-html';
@@ -15,7 +15,20 @@ import TappableIcon from '../components/TappableIcon';
 import useApi from '../hooks/useApi';
 import useAuth from '../auth/useAuth';
 
-const tagsStyles = {
+const lightTagsStyles = {
+  body: {
+    color: colors.dark,
+  },
+  p: {
+    margin: 0,
+    marginBottom: 12,
+  }
+};
+
+const darkTagsStyles = {
+  body: {
+    color: colors.light,
+  },
   p: {
     margin: 0,
     marginBottom: 12,
@@ -25,6 +38,12 @@ const tagsStyles = {
 function MemorialDetailScreen({ navigation, route }) {
   const { user, logOut } = useAuth();
   const isFocused = useIsFocused();
+
+  const colorScheme = useColorScheme();
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
+  const tagsStyles = colorScheme === 'light' ? lightTagsStyles : darkTagsStyles;
+
   const memorialID = route.params.id;
   let memorialStatus = {"ScorerNotes": "", "Status": 9};
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
@@ -46,8 +65,6 @@ function MemorialDetailScreen({ navigation, route }) {
   const contentWidth = useWindowDimensions().width;
   const imageURL = "http://images.tourofhonor.com/SampleImages/" + memorialDetails.SampleImage;
 
-  console.log(`memorialStatus is: `, memorialStatus);
-
   useEffect(() => {
     getMemorialDetailsApi.request(memorialID);
     getMemorialMetadataApi.request(memorialID);
@@ -62,31 +79,33 @@ function MemorialDetailScreen({ navigation, route }) {
           <AppButton title="Retry" onPress={getMemorialDetailsApi.request}/>
         </>
       )}
-      <ScrollView style={styles.container}>
+      <ScrollView style={[styles.container, themeContainerStyle]}>
 
         {/* Top Section */}
         <View style={styles.topDetailInfo}>
           <View style={styles.memorialNameContainer}>
-            <AppText style={styles.memorialName}>{memorialDetails.Name}</AppText>
-            <AppText style={styles.memorialCityState}>{memorialDetails.City}, {memorialDetails.State}</AppText>
+            <AppText style={[styles.memorialName, themeTextStyle]}>{memorialDetails.Name}</AppText>
+            <AppText style={[styles.memorialCityState, themeTextStyle]}>{memorialDetails.City}, {memorialDetails.State}</AppText>
           </View>
           <View style={styles.statusIcons}>
             {memorialStatus.Status === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
             {memorialStatus.Status === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
-            {memorialStatus.Status === 0 && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
+            {(memorialStatus.Status === 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
+            {(memorialStatus.Status === 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} /> }
           </View>
         </View>
 
         {/* Middle Section */}
         <View style={styles.memorialCodeContainer}>
-          <AppText style={styles.memorialCodeText}>{memorialDetails.CategoryName}</AppText>
-          <AppText style={styles.memorialCodeText}>{memorialDetails.Code}</AppText>
+          <AppText style={[styles.memorialCodeText, themeTextStyle]}>{memorialDetails.CategoryName}</AppText>
+          <AppText style={[styles.memorialCodeText, themeTextStyle]}>{memorialDetails.Code}</AppText>
         </View>
         <View style={styles.sampleImageContainer}>
           <Image style={styles.sampleImage} source={{uri: imageURL}} />
         </View>
         <View style={styles.infoIconsContainer}>
-          {memorialDetails.MultiImage > 0 && <FontAwesomeIcon icon={['far', 'images']} size={35} />}
+          {(memorialDetails.MultiImage > 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'images']} size={35} />}
+          {(memorialDetails.MultiImage > 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'images']} size={35} color={'white'} />}
           <TappableIcon iconFamily="fal" iconName="map-signs" onPress={() => {Linking.openURL(gpsUrl)}}/>
           {memorialDetails.Restrictions > 1 && <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={35} color={'red'} />}
           
@@ -106,7 +125,7 @@ function MemorialDetailScreen({ navigation, route }) {
           { memorialStatus.Status === 2 &&
             <>
               <View style={styles.disabledButtonContainer}>
-                <AppText style={styles.disabledButtonText}>{memorialStatus.ScorerNotes}</AppText>
+                <AppText style={[styles.disabledButtonText, themeTextStyle]}>{memorialStatus.ScorerNotes}</AppText>
               </View>
               <AppButton title="Resubmit" onPress={() => 
                 navigation.navigate('MemorialSubmitScreen', { 
@@ -121,23 +140,23 @@ function MemorialDetailScreen({ navigation, route }) {
           }
           { memorialStatus.Status === 1 &&
             <View style={styles.disabledButtonContainer}>
-              <AppText style={styles.disabledButtonText}>You have already earned this memorial, congrats!</AppText>
+              <AppText style={[styles.disabledButtonText, themeTextStyle]}>You have already earned this memorial, congrats!</AppText>
             </View>
           }
           { memorialStatus.Status === 0 &&
             <View style={styles.disabledButtonContainer}>
-              <AppText style={styles.disabledButtonText}>This memorial has been submitted and is awaiting review.</AppText>
+              <AppText style={[styles.disabledButtonText, themeTextStyle]}>This memorial has been submitted and is awaiting review.</AppText>
             </View>
           }
         </View>
 
         {/* Bottom Section */}
         <View style={styles.metadataDetailContainer}>
-          <MetaHeading>Access</MetaHeading>
-          <AppText>{memorialDetails.Access}</AppText>
+          <MetaHeading style={themeTextStyle}>Access</MetaHeading>
+          <AppText style={themeTextStyle}>{memorialDetails.Access}</AppText>
           {memorialMetadata.map(({id, Heading, Text}) => (
             <View key={id}>
-              <MetaHeading>{Heading}</MetaHeading>
+              <MetaHeading style={themeTextStyle}>{Heading}</MetaHeading>
               <HTML 
                 source={{ html: Text }} 
                 contentWidth={contentWidth}
@@ -147,8 +166,8 @@ function MemorialDetailScreen({ navigation, route }) {
           ))}
         </View>
         <View style={styles.metadataDetailContainer}>
-          <MetaHeading>Restrictions</MetaHeading>
-          <AppText>{memorialDetails.RestrictionName}</AppText>
+          <MetaHeading style={themeTextStyle}>Restrictions</MetaHeading>
+          <AppText style={themeTextStyle}>{memorialDetails.RestrictionName}</AppText>
         </View>
         <View style={{paddingVertical: 10}}>
           <AppText>&nbsp;</AppText>
@@ -160,12 +179,22 @@ function MemorialDetailScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.background,
     flex: 1,
     paddingVertical: 8,
   },
+  darkContainer: {
+    backgroundColor: colors.black
+  },
+  darkTextStyle: {
+    color: colors.light
+  },
+  lightContainer: {
+    backgroundColor: colors.background
+  },
+  lightTextStyle: {
+    color: colors.dark
+  },
   disabledButtonText: {
-    color: 'white',
     padding: 10,
     textAlign: 'center',
   },

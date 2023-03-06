@@ -10,4 +10,6 @@ export default {
   secondary: "#4ecdc4",
   white: "#fff",
   yellow: "yellow",
+  darkBackground: "#282A3A",
+  darkSeperator: "#2f3537",
 }

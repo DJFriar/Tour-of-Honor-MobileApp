@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import apiClient from '../api/client';
@@ -15,6 +15,10 @@ function StatsScreen(props) {
   const { user, logOut } = useAuth();
   const [ submissionList, setSubmissionList ] = useState();
 
+  const colorScheme = useColorScheme();
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+  const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
+
   useEffect(() => {
     fetchSubmissionsList();
   }, []);
@@ -28,8 +32,8 @@ function StatsScreen(props) {
   }
 
   return (
-    <Screen style={styles.container} hasNoHeader>
-      {/* <View style={styles.topViewContainer}>
+    <Screen style={[styles.container, themeContainerStyle]} hasNoHeader>
+      {/* <View style={[styles.topViewContainer, themeContainerStyle]}>
         <MiniHeading>Stats</MiniHeading>
         <View style={styles.statSection}>
           <FontAwesomeIcon icon={['far', 'frown']} size={60} />
@@ -41,7 +45,7 @@ function StatsScreen(props) {
         <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
       </View> */}
 
-      <View style={styles.bottomViewContainer}>
+      <View style={[styles.bottomViewContainer, themeContainerStyle]}>
         <View style={styles.submissionHeaderRow}>
           <View style={styles.headerText}>
             <MiniHeading>Submission History</MiniHeading>
@@ -79,8 +83,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background
   },
+  darkContainer: {
+    backgroundColor: colors.black
+  },
+  darkTextStyle: {
+    color: colors.light
+  },
   headerText: {
     flex: 3
+  },
+  lightContainer: {
+    backgroundColor: colors.background
+  },
+  lightTextStyle: {
+    color: colors.dark
   },
   logoutButtonContainer: {
     alignItems: 'flex-end',
