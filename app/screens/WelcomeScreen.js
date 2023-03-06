@@ -27,7 +27,7 @@ export default function WelcomeScreen({ navigation }) {
           <AppButton title="Login" color="blue" onPress={() => navigation.navigate(routes.LOGIN)}/>
         </> : <>
           <View style={styles.loginNoticeContainer}>
-            <AppText style={styles.loginNotice}>This app is only for registered 2022 Tour of Honor participants.</AppText>
+            <AppText style={styles.loginNotice}>This app is only for registered 2023 Tour of Honor participants.</AppText>
             <AppText style={styles.loginNotice}>Please click below to login.</AppText>
           </View>
           <AppButton title="Login" color="blue" onPress={() => navigation.navigate(routes.LOGIN)}/>
