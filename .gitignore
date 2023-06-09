@@ -15,3 +15,7 @@ web-build/
 # macOS
 .DS_Store
 .vscode
+
+# App Store Credentials
+/credentials
+credentials.json
