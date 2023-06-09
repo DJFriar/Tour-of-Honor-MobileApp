@@ -17,7 +17,7 @@ const validationSchema = Yup.object().shape({
 function LoginScreen(props) {
   const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
-  const [errorMessageText, setErrorMessageText] = useState('default');
+  const [errorMessageText, setErrorMessageText] = useState('An unexpected error occured. If this error persists, please send an email to support@tourofhonor.com.');
 
   const handleSubmit = async ({flag, zipcode}) => {
     const result = await authApi.login(flag, zipcode);
