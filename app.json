@@ -23,7 +23,8 @@
         {
           "photosPermission": "Allows you to submit your memorial visits using the photos in your camera roll."
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "ios": {
       "buildNumber": "48",
