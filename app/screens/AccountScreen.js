@@ -82,7 +82,7 @@ function AccountScreen(props) {
         </View>
         <View style={[styles.bottomContainer, themeContainerStyle]}>
           <View style={styles.appInfoRow}>
-            <Text style={[styles.copyright, themeTextStyle]}>&copy;2021-2023 ambitiousNerds</Text>
+            <Text style={[styles.copyright, themeTextStyle]}>&copy;2024 ambitiousNerds</Text>
             <Text style={[styles.appInfo, themeTextStyle]}>Version {appVersion}</Text>
           </View>
         </View>
