@@ -63,7 +63,7 @@ function MemorialDetailScreen({ navigation, route }) {
     android: `${scheme}${memorialLat},${memorialLong}(${memorialCode})`
   });
   const contentWidth = useWindowDimensions().width;
-  const imageURL = "http://images.tourofhonor.com/SampleImages/" + memorialDetails.SampleImage;
+  const imageURL = "https://images.tourofhonor.com/SampleImages/" + memorialDetails.SampleImage;
 
   useEffect(() => {
     getMemorialDetailsApi.request(memorialID);

@@ -10,7 +10,7 @@ function ListItem({cityState, category, code, image, name, onPress, status}) {
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
-  const imageURL = "http://images.tourofhonor.com/SampleImages/" + image;
+  const imageURL = "https://images.tourofhonor.com/SampleImages/" + image;
 
   return (
     <TouchableHighlight onPress={onPress}>

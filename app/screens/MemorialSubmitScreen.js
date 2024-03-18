@@ -29,7 +29,7 @@ function MemorialSubmitScreen({ navigation, route }) {
   const riderFlagNumber = user.FlagNumber;
   const memorialID = route.params.id;
   const memorialCode = route.params.code;
-  const imageURL = "http://images.tourofhonor.com/SampleImages/" + route.params.sampleImage;
+  const imageURL = "https://images.tourofhonor.com/SampleImages/" + route.params.sampleImage;
 
   if (multiImage == 1) {
     validationSchema = Yup.object().shape({
