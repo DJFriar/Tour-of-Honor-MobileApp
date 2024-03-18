@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Application from 'expo-application';
-import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import * as Linking from 'expo-linking';
 

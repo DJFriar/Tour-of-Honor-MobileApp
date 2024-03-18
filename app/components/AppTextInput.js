@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, useColorScheme, View } from 'react-native';
+import { Platform, StyleSheet, TextInput, useColorScheme, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from '../config/colors';
