@@ -43,6 +43,12 @@ export default [
   },
   {
     icon: "car",
+    fullName: "Washington, DC",
+    shortName: "DC",
+    value: 51,
+  },
+  {
+    icon: "car",
     fullName: "Delaware",
     shortName: "DE",
     value: 8,
