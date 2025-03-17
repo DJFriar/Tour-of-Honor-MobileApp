@@ -5,15 +5,11 @@
     "version": "3.7.5",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
-    // "splash": {
-    //   "image": "./app/assets/splash.png",
-    //   "resizeMode": "contain",
-    //   "backgroundColor": "#f8f4f4"
-    // },
     "newArchEnabled": true,
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "jsEngine": "hermes",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
       "**/*"
@@ -28,7 +24,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#232323",
+          "backgroundColor": "#f8f4f4",
           "image": "./app/assets/splash.png"
         }
       ],
@@ -37,6 +33,7 @@
     "ios": {
       "buildNumber": "60",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
+      "jsEngine": "hermes",
       "supportsTablet": false,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-// import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 
 import AppNavigator from './app/navigation/AppNavigator';
@@ -46,9 +45,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [user, setUser] = useState();
-  const [appIsReady, setAppIsReady] = useState(false);
 
-  // const [isReady, setIsReady] = useState(false);
   const scheme = useColorScheme();
 
   const restoreUser = async () => {
@@ -63,42 +60,21 @@ export default function App() {
       } catch (e) {
         console.warn(e);
       } finally {
-        setAppIsReady(true);
+        // setAppIsReady(true);
+        SplashScreen.hide();
       }
     }
 
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      SplashScreen.hide();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
-  }
-
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={restoreUser}
-  //       onFinish={() => setIsReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
-
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} onLayout={onLayoutRootView}>
-      <AuthContext.Provider value={{ user, setUser }}>
-        <SafeAreaProvider>
-          <NavigationContainer theme={scheme === 'dark' ? tohDarkTheme : tohLightTheme}>
-            {user ? <AppNavigator /> : <AuthNavigator />}
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </AuthContext.Provider>
-    </View>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <SafeAreaProvider>
+        <NavigationContainer theme={scheme === 'dark' ? tohDarkTheme : tohLightTheme}>
+          {user ? <AppNavigator /> : <AuthNavigator />}
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </AuthContext.Provider>
   );
 }
