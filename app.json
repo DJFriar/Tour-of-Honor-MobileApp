@@ -2,14 +2,15 @@
   "expo": {
     "name": "TourOfHonor",
     "slug": "TourOfHonor",
-    "version": "3.7.3",
+    "version": "3.7.5",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
-    "splash": {
-      "image": "./app/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#f8f4f4"
-    },
+    // "splash": {
+    //   "image": "./app/assets/splash.png",
+    //   "resizeMode": "contain",
+    //   "backgroundColor": "#f8f4f4"
+    // },
+    "newArchEnabled": true,
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -24,12 +25,22 @@
           "photosPermission": "Allows you to submit your memorial visits using the photos in your camera roll."
         }
       ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#232323",
+          "image": "./app/assets/splash.png"
+        }
+      ],
       "expo-secure-store"
     ],
     "ios": {
-      "buildNumber": "51",
+      "buildNumber": "60",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
-      "supportsTablet": false
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -37,11 +48,10 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.ambitiousNerds.TourOfHonor",
+      "versionCode": 60,
       "permissions": [
-        "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.RECORD_AUDIO"
-      ],
-      "versionCode": 29
+      ]
     },
     "extra": {
       "eas": {
