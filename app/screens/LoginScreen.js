@@ -9,7 +9,7 @@ import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
 
 const validationSchema = Yup.object().shape({
-  flag: Yup.number().required().min(1).max(2500).label("Flag Number"),
+  flag: Yup.number().required().min(1).label("Flag Number"),
   zipcode: Yup.string().required().matches(/^[0-9]+$/, "Must be only digits")
     .min(5, 'Must be exactly 5 digits').max(5, 'Must be exactly 5 digits').label("Zipcode")
 });
@@ -19,7 +19,7 @@ function LoginScreen(props) {
   const [loginFailed, setLoginFailed] = useState(false);
   const [errorMessageText, setErrorMessageText] = useState('An unexpected error occured. If this error persists, please send an email to support@tourofhonor.com.');
 
-  const handleSubmit = async ({flag, zipcode}) => {
+  const handleSubmit = async ({ flag, zipcode }) => {
     const result = await authApi.login(flag, zipcode);
     console.log(`authResponse was: ${JSON.stringify(result.status)}`);
     if (!result.ok) {
@@ -34,16 +34,16 @@ function LoginScreen(props) {
 
   return (
     <Screen hasNoHeader>
-      <ScrollView style={{marginTop: 20}} keyboardShouldPersistTaps="handled">
+      <ScrollView style={{ marginTop: 20 }} keyboardShouldPersistTaps="handled">
         <View style={styles.logoContainer}>
-          <Image 
-            style={styles.logo} 
+          <Image
+            style={styles.logo}
             source={require("../assets/toh_logo.png")}
           />
         </View>
         <AppText style={styles.text}>Please login below using your flag number and zip code.</AppText>
-        <AppForm 
-          initialValues={{ flag: '', zipcode: ''}}
+        <AppForm
+          initialValues={{ flag: '', zipcode: '' }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -51,7 +51,7 @@ function LoginScreen(props) {
             <ErrorMessage error={errorMessageText} visible={loginFailed} />
           </View>
           <View style={styles.formContent}>
-            <AppFormField 
+            <AppFormField
               autoCorrect={false}
               iconFamily="fas"
               iconName="flag"
@@ -60,7 +60,7 @@ function LoginScreen(props) {
               placeholder="Flag Number"
               height={60}
             />
-            <AppFormField 
+            <AppFormField
               autoCorrect={false}
               iconFamily="fas"
               iconName="location-dot"
@@ -69,7 +69,7 @@ function LoginScreen(props) {
               placeholder="Zip Code"
               height={60}
             />
-            <SubmitButton title="Login"/>
+            <SubmitButton title="Login" />
           </View>
         </AppForm>
       </ScrollView>
@@ -80,7 +80,7 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    flex: 1, 
+    flex: 1,
     justifyContent: "flex-end",
     marginTop: 20
   },
