@@ -11,8 +11,8 @@ function ImageInput({ imageUri, onChangeImage, isOptional }) {
   const handlePress = () => {
     if (!imageUri) selectImage();
     else Alert.alert('Delete', 'Are you sure you want to delete this image?', [
-      { text: 'Yes', onPress: () => onChangeImage(null)},
-      { text: 'No'}
+      { text: 'Yes', onPress: () => onChangeImage(null) },
+      { text: 'No' }
     ])
   }
 
@@ -20,7 +20,7 @@ function ImageInput({ imageUri, onChangeImage, isOptional }) {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         exif: true,
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         quality: 0.2,
       });
       if (!result.canceled)
