@@ -19,7 +19,7 @@ function AccountScreen(props) {
   const appVersion = Application.nativeApplicationVersion;
   const ANDROID_URL = 'https://improveloop.com/loop/aTOH';
   const IPHONE_URL = 'https://improveloop.com/loop/iTOH';
-  
+
   console.log(user);
 
   return (
@@ -32,20 +32,20 @@ function AccountScreen(props) {
               <Text style={[styles.flag, themeTextStyle]}>Flag #{user.FlagNumber}</Text>
             </View>
             <View style={styles.logoutButtonContainer}>
-              <MiniAppButton title="Log Out" onPress={() => logOut()}/>
+              <MiniAppButton title="Log Out" onPress={() => logOut()} />
             </View>
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {colorScheme === 'light' && <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />}
-            {colorScheme === 'dark' && <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />}
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {colorScheme === 'light' && <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />}
+            {colorScheme === 'dark' && <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />}
           </View>
 
           <View style={styles.faqSection}>
             <MiniHeading>Icon Legend</MiniHeading>
             <View style={styles.iconDefinitionRow}>
               {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
-              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'}  />}
+              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} />}
               <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial has been submitted and is awaiting review.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
@@ -58,7 +58,7 @@ function AccountScreen(props) {
             </View>
             <View style={styles.iconDefinitionRow}>
               {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'images']} size={25} />}
-              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'images']} size={25} color={'white'}  />}
+              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'images']} size={25} color={'white'} />}
               <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial requires two images. See the official rules for more details.</Text>
             </View>
             <View style={styles.iconDefinitionRow}>
@@ -73,16 +73,16 @@ function AccountScreen(props) {
           </View>
 
           <View style={styles.suggestionsSection}>
-            {(Platform.OS === 'android') ? 
-              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(ANDROID_URL)}/>
-              : 
-              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(IPHONE_URL)}/>
+            {(Platform.OS === 'android') ?
+              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(ANDROID_URL)} />
+              :
+              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(IPHONE_URL)} />
             }
           </View>
         </View>
         <View style={[styles.bottomContainer, themeContainerStyle]}>
           <View style={styles.appInfoRow}>
-            <Text style={[styles.copyright, themeTextStyle]}>&copy;2024 ambitiousNerds</Text>
+            <Text style={[styles.copyright, themeTextStyle]}>&copy;2025 ambitiousNerds</Text>
             <Text style={[styles.appInfo, themeTextStyle]}>Version {appVersion}</Text>
           </View>
         </View>
@@ -92,10 +92,10 @@ function AccountScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  appInfo:{
+  appInfo: {
     fontSize: 12,
   },
-  appInfoRow:{
+  appInfoRow: {
     alignItems: 'flex-end',
     flex: 1,
     flexDirection: 'row',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     paddingRight: 10
   },
-  flag :{
+  flag: {
     fontSize: 20,
   },
   iconDefinition: {
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: colors.background,
   },
-  suggestionsSection:{
+  suggestionsSection: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
