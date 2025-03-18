@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useIsFocused } from '@react-navigation/native';
 import HTML from 'react-native-render-html';
 import * as Linking from 'expo-linking';
+import * as Clipboard from 'expo-clipboard';
 
 import AppButton from '../components/AppButton';
 import AppText from '../components/AppText';
@@ -45,7 +46,7 @@ function MemorialDetailScreen({ navigation, route }) {
   const tagsStyles = colorScheme === 'light' ? lightTagsStyles : darkTagsStyles;
 
   const memorialID = route.params.id;
-  let memorialStatus = {"ScorerNotes": "", "Status": 9};
+  let memorialStatus = { "ScorerNotes": "", "Status": 9 };
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
   const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
@@ -57,13 +58,17 @@ function MemorialDetailScreen({ navigation, route }) {
   const memorialLat = memorialDetails.Latitude;
   const memorialLong = memorialDetails.Longitude;
   const memorialCode = memorialDetails.Code;
-  const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+  const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
   const gpsUrl = Platform.select({
     ios: `${scheme}${memorialCode}@${memorialLat},${memorialLong}`,
     android: `${scheme}${memorialLat},${memorialLong}(${memorialCode})`
   });
   const contentWidth = useWindowDimensions().width;
   const imageURL = "https://images.tourofhonor.com/SampleImages/" + memorialDetails.SampleImage;
+
+  const copyGPSToClipboard = async () => {
+    await Clipboard.setStringAsync(`${memorialLat}, ${memorialLong}`, { contentType: Clipboard.ContentType.PLAIN_TEXT });
+  };
 
   useEffect(() => {
     getMemorialDetailsApi.request(memorialID);
@@ -76,7 +81,7 @@ function MemorialDetailScreen({ navigation, route }) {
       {getMemorialDetailsApi.error && (
         <>
           <AppText>Couldn't retrieve memorial details.</AppText>
-          <AppButton title="Retry" onPress={getMemorialDetailsApi.request}/>
+          <AppButton title="Retry" onPress={getMemorialDetailsApi.request} />
         </>
       )}
       <ScrollView style={[styles.container, themeContainerStyle]}>
@@ -90,60 +95,66 @@ function MemorialDetailScreen({ navigation, route }) {
           <View style={styles.statusIcons}>
             {memorialStatus.Status === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
             {memorialStatus.Status === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
-            {(memorialStatus.Status === 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'clock']} size={25} /> }
-            {(memorialStatus.Status === 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} /> }
+            {(memorialStatus.Status === 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
+            {(memorialStatus.Status === 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} />}
           </View>
         </View>
 
         {/* Middle Section */}
+
+        <View style={styles.gpsCoordinatesContainer}>
+          <AppText style={styles.gpsCoordinatesText}>{memorialDetails.Latitude}, {memorialDetails.Longitude}</AppText>
+        </View>
         <View style={styles.memorialCodeContainer}>
           <AppText style={[styles.memorialCodeText, themeTextStyle]}>{memorialDetails.CategoryName}</AppText>
           <AppText style={[styles.memorialCodeText, themeTextStyle]}>{memorialDetails.Code}</AppText>
         </View>
         <View style={styles.sampleImageContainer}>
-          <Image style={styles.sampleImage} source={{uri: imageURL}} />
+          <Image style={styles.sampleImage} source={{ uri: imageURL }} />
         </View>
+
         <View style={styles.infoIconsContainer}>
+          <TappableIcon iconFamily="fas" iconName="location-dot" onPress={() => { copyGPSToClipboard }} />
           {(memorialDetails.MultiImage > 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'images']} size={35} />}
           {(memorialDetails.MultiImage > 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'images']} size={35} color={'white'} />}
-          <TappableIcon iconFamily="fal" iconName="map-signs" onPress={() => {Linking.openURL(gpsUrl)}}/>
+          <TappableIcon iconFamily="fal" iconName="map-signs" onPress={() => { Linking.openURL(gpsUrl) }} />
           {memorialDetails.Restrictions > 1 && <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={35} color={'red'} />}
-          
+
         </View>
         <View style={styles.submitButtonContainer}>
-          { memorialStatus.Status === 9 &&
-            <AppButton title="Submit" onPress={() => 
-              navigation.navigate('MemorialSubmitScreen', { 
+          {memorialStatus.Status === 9 &&
+            <AppButton title="Submit" onPress={() =>
+              navigation.navigate('MemorialSubmitScreen', {
                 id: memorialID,
                 name: memorialDetails.Name,
                 code: memorialDetails.Code,
                 multiImage: memorialDetails.MultiImage,
                 sampleImage: memorialDetails.SampleImage
-              })} 
+              })}
             />
           }
-          { memorialStatus.Status === 2 &&
+          {memorialStatus.Status === 2 &&
             <>
               <View style={styles.disabledButtonContainer}>
                 <AppText style={[styles.disabledButtonText, themeTextStyle]}>{memorialStatus.ScorerNotes}</AppText>
               </View>
-              <AppButton title="Resubmit" onPress={() => 
-                navigation.navigate('MemorialSubmitScreen', { 
+              <AppButton title="Resubmit" onPress={() =>
+                navigation.navigate('MemorialSubmitScreen', {
                   id: memorialID,
                   name: memorialDetails.Name,
                   code: memorialDetails.Code,
                   multiImage: memorialDetails.MultiImage,
                   sampleImage: memorialDetails.SampleImage
-                })} 
+                })}
               />
             </>
           }
-          { memorialStatus.Status === 1 &&
+          {memorialStatus.Status === 1 &&
             <View style={styles.disabledButtonContainer}>
               <AppText style={[styles.disabledButtonText, themeTextStyle]}>You have already earned this memorial, congrats!</AppText>
             </View>
           }
-          { memorialStatus.Status === 0 &&
+          {memorialStatus.Status === 0 &&
             <View style={styles.disabledButtonContainer}>
               <AppText style={[styles.disabledButtonText, themeTextStyle]}>This memorial has been submitted and is awaiting review.</AppText>
             </View>
@@ -154,11 +165,11 @@ function MemorialDetailScreen({ navigation, route }) {
         <View style={styles.metadataDetailContainer}>
           <MetaHeading style={themeTextStyle}>Access</MetaHeading>
           <AppText style={themeTextStyle}>{memorialDetails.Access}</AppText>
-          {memorialMetadata.map(({id, Heading, Text}) => (
+          {memorialMetadata.map(({ id, Heading, Text }) => (
             <View key={id}>
               <MetaHeading style={themeTextStyle}>{Heading}</MetaHeading>
-              <HTML 
-                source={{ html: Text }} 
+              <HTML
+                source={{ html: Text }}
                 contentWidth={contentWidth}
                 tagsStyles={tagsStyles}
               />
@@ -169,7 +180,7 @@ function MemorialDetailScreen({ navigation, route }) {
           <MetaHeading style={themeTextStyle}>Restrictions</MetaHeading>
           <AppText style={themeTextStyle}>{memorialDetails.RestrictionName}</AppText>
         </View>
-        <View style={{paddingVertical: 10}}>
+        <View style={{ paddingVertical: 10 }}>
           <AppText>&nbsp;</AppText>
         </View>
       </ScrollView>
@@ -202,6 +213,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#6e696980',
     borderRadius: 25,
     marginTop: 10,
+  },
+  gpsCoordinatesContainer: {
+    paddingHorizontal: 10,
+  },
+  gpsCoordinatesText: {
+    fontSize: 16,
   },
   infoIconsContainer: {
     flexDirection: 'row',
