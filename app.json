@@ -31,7 +31,6 @@
       "expo-secure-store"
     ],
     "ios": {
-      "buildNumber": "60",
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
       "jsEngine": "hermes",
       "supportsTablet": false,
@@ -45,7 +44,6 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.ambitiousNerds.TourOfHonor",
-      "versionCode": 60,
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
