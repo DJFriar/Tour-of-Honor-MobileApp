@@ -19,3 +19,6 @@ web-build/
 # App Store Credentials
 /credentials
 credentials.json
+
+# iOS Dev
+ios/
