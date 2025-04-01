@@ -2,7 +2,7 @@
   "expo": {
     "name": "TourOfHonor",
     "slug": "TourOfHonor",
-    "version": "3.7.5",
+    "version": "3.7.6",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
     "newArchEnabled": true,
@@ -34,8 +34,8 @@
       "bundleIdentifier": "com.ambitiousNerds.TourOfHonor",
       "jsEngine": "hermes",
       "supportsTablet": false,
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
@@ -52,6 +52,7 @@
       "eas": {
         "projectId": "58f65fc8-31fd-4e42-9b47-506ffc6c05bf"
       }
-    }
+    },
+    "scheme": "toh"
   }
 }

@@ -41,32 +41,32 @@ library.add(
   faShieldExclamation, faTimes, faUser
 )
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync(); // Prevent the splash screen from hiding automatically
 
 export default function App() {
   const [user, setUser] = useState();
-
+  const [isReady, setIsReady] = useState(true);
   const scheme = useColorScheme();
-
-  const restoreUser = async () => {
-    const user = await authStorage.getUser();
-    if (user) setUser(user);
-  }
 
   useEffect(() => {
     async function prepare() {
       try {
-        startAsync = { restoreUser }
+        const user = await authStorage.getUser();
+        if (user) setUser(user);
+        setIsReady(true);
       } catch (e) {
         console.warn(e);
       } finally {
-        // setAppIsReady(true);
-        SplashScreen.hide();
+        // Hide the splash screen after the resources are loaded
+        await SplashScreen.hideAsync();
       }
     }
-
     prepare();
   }, []);
+
+  if (!isReady) {
+    return null; // Optionally, you could return a loading indicator here
+  }
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
