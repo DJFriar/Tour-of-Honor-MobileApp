@@ -17,7 +17,7 @@ const MemorialNavigator = () => (
       <Stack.Screen name="MemorialDetailScreen" component={MemorialDetailScreen} />
     </Stack.Group>
     <Stack.Group screenOptions={{ presentation: 'modal' }}>
-      <Stack.Screen name="MemorialSubmitScreen" component={MemorialSubmitScreen} options={({route}) => ({ title: 'Submit ' + route.params.code })} />
+      <Stack.Screen name="MemorialSubmitScreen" component={MemorialSubmitScreen} options={({ route }) => ({ title: 'Submit ' + route.params.code })} />
     </Stack.Group>
   </Stack.Navigator>
 )

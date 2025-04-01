@@ -12,24 +12,24 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
 
-  <Tab.Navigator 
+  <Tab.Navigator
     initialRouteName='MemorialNavigator'
   >
     <Tab.Screen name="Profile" component={AccountScreen} options={{
       tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'user']} color={color} size={size * 1.3} />
     }} />
-    <Tab.Screen 
-      name="MemorialNavigator" 
-      component={MemorialNavigator} 
+    <Tab.Screen
+      name="MemorialNavigator"
+      component={MemorialNavigator}
       options={({ navigation }) => ({
         headerShown: false,
-        tabBarButton: () => <MemorialsButton onPress={() => navigation.navigate(routes.MEMORIAL_LIST)}/>,
+        tabBarButton: () => <MemorialsButton onPress={() => navigation.navigate(routes.MEMORIAL_LIST)} />,
       })}
     />
     <Tab.Screen name="History" component={StatsScreen} options={{
       headerShown: false,
       tabBarIcon: ({ color, size }) => <FontAwesomeIcon icon={['fas', 'analytics']} color={color} size={size * 1.3} />
-    }}/>
+    }} />
   </Tab.Navigator>
 )
 
