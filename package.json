@@ -1,6 +1,6 @@
 {
   "name": "tourofhonor",
-  "version": "1.0.0",
+  "version": "3.7.7",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
@@ -38,7 +38,7 @@
     "luxon": "^2.3.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-native": "0.76.8",
+    "react-native": "0.76.9",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-progress": "^5.0.0",
     "react-native-reanimated": "~3.16.1",
@@ -51,9 +51,20 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3",
+    "@babel/core": "^7.20.0",
     "@types/react": "~18.3.12",
     "typescript": "^5.3.3"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "jwt-decode",
+          "@fortawesome/free-brands-svg-icons"
+        ],
+        "listUnknownPackages": false
+      }
+    }
   },
   "private": true
 }
