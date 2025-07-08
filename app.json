@@ -2,7 +2,7 @@
   "expo": {
     "name": "TourOfHonor",
     "slug": "TourOfHonor",
-    "version": "3.7.6",
+    "version": "3.7.7",
     "orientation": "portrait",
     "icon": "./app/assets/appIcon.png",
     "newArchEnabled": true,
