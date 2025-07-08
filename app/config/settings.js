@@ -2,13 +2,13 @@ import Constants from 'expo-constants';
 
 const settings = {
   dev: {
-    apiUrl: 'https://scoringtest.tourofhonor.com/api/v1',
+    apiUrl: 'http://10.10.10.238:3700/api/v1',
     statusBarColor: 'orange',
   },
   test: {
     apiUrl: 'https://scoringtest.tourofhonor.com/api/v1',
     statusBarColor: 'blue',
-  },  
+  },
   prod: {
     apiUrl: 'https://scoring.tourofhonor.com/api/v1',
     statusBarColor: '#c0dffd',
