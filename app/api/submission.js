@@ -31,7 +31,7 @@ const postSubmission = (submission) => {
     })
   }
 
-  return apiClient.post(endpoint, data)
+  return apiClient.post(endpoint + '/mobile', data)
 }
 
 export default {

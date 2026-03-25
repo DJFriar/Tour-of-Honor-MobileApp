@@ -1,16 +1,21 @@
+import { Platform } from 'react-native';
 import Constants from 'expo-constants';
+
+const devHost =
+  process.env.EXPO_PUBLIC_TOH_DEV_HOST ||
+  (Platform.OS === 'android' ? '10.0.2.2' : 'localhost');
 
 const settings = {
   dev: {
-    apiUrl: 'http://10.10.10.238:3700/api/v1',
+    apiUrl: process.env.EXPO_PUBLIC_TOH_API_URL || `http://${devHost}:3000/api/v1`,
     statusBarColor: 'orange',
   },
   test: {
-    apiUrl: 'https://scoringtest.tourofhonor.com/api/v1',
+    apiUrl: 'https://test.tourofhonor.com/api/v1',
     statusBarColor: 'blue',
   },
   prod: {
-    apiUrl: 'https://scoring.tourofhonor.com/api/v1',
+    apiUrl: 'https://www.tourofhonor.com/api/v1',
     statusBarColor: '#c0dffd',
   },
 }

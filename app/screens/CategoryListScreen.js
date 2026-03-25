@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 
 import categories from '../api/categories';
+import AppButton from '../components/AppButton';
+import AppText from '../components/AppText';
 import CategoryItem from '../components/CategoryItem';
 import colors from '../config/colors';
 import routes from '../navigation/routes';

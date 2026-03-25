@@ -1,21 +1,34 @@
-import React from 'react';
-import { View, StyleSheet, Image, TouchableHighlight, useColorScheme } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, StyleSheet, Image, TouchableHighlight } from 'react-native';
 
 import AppText from './AppText';
 import colors from '../config/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
- 
-function ListItem({cityState, category, code, image, name, onPress, status}) {
-  const colorScheme = useColorScheme();
+
+function ListItem({
+  cityState,
+  category,
+  code,
+  colorScheme,
+  image,
+  memorialId,
+  name,
+  onNavigateToMemorial,
+  status,
+}) {
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
-  const imageURL = "https://images.tourofhonor.com/SampleImages/" + image;
+  const imageURL = 'https://images.tourofhonor.com/SampleImages/' + image;
+
+  const handlePress = useCallback(() => {
+    onNavigateToMemorial(memorialId);
+  }, [onNavigateToMemorial, memorialId]);
 
   return (
-    <TouchableHighlight onPress={onPress}>
+    <TouchableHighlight onPress={handlePress}>
       <View style={[styles.container, themeContainerStyle]}>
-        <Image style={styles.image} source={{uri: imageURL}} />
+        <Image style={styles.image} source={{ uri: imageURL }} resizeMode="cover" />
         <View style={styles.detailContainer}>
           <View style={styles.memorialNameContainer}>
             <AppText style={[styles.name, themeTextStyle]} numberOfLines={1}>{name}</AppText>
@@ -106,4 +119,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItem;
+function listItemPropsEqual(prev, next) {
+  return (
+    prev.colorScheme === next.colorScheme &&
+    prev.memorialId === next.memorialId &&
+    prev.name === next.name &&
+    prev.cityState === next.cityState &&
+    prev.category === next.category &&
+    prev.code === next.code &&
+    prev.image === next.image &&
+    prev.status === next.status &&
+    prev.onNavigateToMemorial === next.onNavigateToMemorial
+  );
+}
+
+export default React.memo(ListItem, listItemPropsEqual);

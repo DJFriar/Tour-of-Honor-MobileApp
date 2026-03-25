@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, useColorScheme, View } from 'react-native'
+import { StyleSheet, useColorScheme, View } from 'react-native';
 
 import colors from '../config/colors';
 
-function ListItemSeperator(props) {
+function ListItemSeperator() {
   const colorScheme = useColorScheme();
   const themeSeperatorStyle = colorScheme === 'light' ? styles.lightSeperator : styles.darkSeperator;
 
-  return <View style={[styles.seperator, themeSeperatorStyle]}/>;
+  return <View style={[styles.seperator, themeSeperatorStyle]} />;
 }
 
 const styles = StyleSheet.create({
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   seperator: {
     width: '100%',
     height: 1,
-  }
-})
+  },
+});
 
 export default ListItemSeperator;

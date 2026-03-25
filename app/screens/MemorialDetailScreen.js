@@ -50,7 +50,9 @@ function MemorialDetailScreen({ navigation, route }) {
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
   const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
-  const memorialMetadata = getMemorialMetadataApi.data;
+  const memorialMetadata = Array.isArray(getMemorialMetadataApi.data)
+    ? getMemorialMetadataApi.data
+    : [];
   const getMemorialStatusApi = useApi(memorial.getMemorialStatus);
   const memorialStatusApiResponse = getMemorialStatusApi.data[0] || {};
   if (memorialStatusApiResponse.Status < 9) { memorialStatus = memorialStatusApiResponse };
@@ -81,7 +83,7 @@ function MemorialDetailScreen({ navigation, route }) {
       {getMemorialDetailsApi.error && (
         <>
           <AppText>Couldn't retrieve memorial details.</AppText>
-          <AppButton title="Retry" onPress={getMemorialDetailsApi.request} />
+          <AppButton title="Retry" onPress={() => getMemorialDetailsApi.request(memorialID)} />
         </>
       )}
       <ScrollView style={[styles.container, themeContainerStyle]}>

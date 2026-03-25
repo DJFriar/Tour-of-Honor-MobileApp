@@ -1,22 +1,22 @@
-import { useContext } from "react"
+import { useContext } from "react";
 
-import AuthContext from "../context/authContext"
-import authStorage from './storage';
+import AuthContext from "../context/authContext";
+import authStorage from "./storage";
 import jwtDecode from "jwt-decode";
 
-export default useAuth = () => {
+export default function useAuth() {
   const { user, setUser } = useContext(AuthContext);
 
   const logIn = (authToken) => {
     const user = jwtDecode(authToken);
     setUser(user);
     authStorage.storeToken(authToken);
-  }
+  };
 
   const logOut = () => {
     setUser(null);
-    authStorage.removeToken()
-  }
+    authStorage.removeToken();
+  };
 
   return { user, logIn, logOut };
 }
