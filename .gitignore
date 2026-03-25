@@ -22,3 +22,5 @@ credentials.json
 
 # iOS Dev
 ios/
+
+.google-service-key.json
