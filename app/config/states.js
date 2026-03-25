@@ -43,7 +43,7 @@ export default [
   },
   {
     icon: "car",
-    fullName: "Washington, DC",
+    fullName: "District of Columbia",
     shortName: "DC",
     value: 51,
   },

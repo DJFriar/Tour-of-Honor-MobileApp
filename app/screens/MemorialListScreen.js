@@ -13,20 +13,58 @@ import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
 
 function MemorialListScreen({ navigation }) {
-  const [displayList, setDisplayList] = useState([]);
-  /** Kept in sync with masterList (legacy name used by some code paths / refresh flows). */
-  const [filteredList, setFilteredList] = useState([]);
   const [masterList, setMasterList] = useState([]);
   const [search, setSearch] = useState('');
   const [onRefresh, setOnRefresh] = useState(false);
   const [stateFiltered, setStateFiltered] = useState();
-  const [stateFilteredList, setStateFilteredList] = useState([]);
+  const [categoryFiltered, setCategoryFiltered] = useState();
   const [listError, setListError] = useState(null);
   const { user } = useAuth();
 
   const colorScheme = useColorScheme();
   const themeScreenStyle = colorScheme === 'light' ? styles.lightScreen : styles.darkScreen;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
+
+  const categoryPickerItems = useMemo(() => {
+    const names = [
+      ...new Set(masterList.map((m) => m.CategoryName).filter(Boolean)),
+    ];
+    names.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+    return names.map((name, idx) => ({
+      value: `cat-${idx}-${name}`,
+      fullName: name,
+      shortName: name.length > 16 ? `${name.slice(0, 14)}…` : name,
+    }));
+  }, [masterList]);
+
+  const facetFilteredList = useMemo(() => {
+    let list = masterList;
+    if (stateFiltered) {
+      const sn = stateFiltered.shortName.toUpperCase();
+      list = list.filter(
+        (item) => item.State.toUpperCase().indexOf(sn) > -1
+      );
+    }
+    if (categoryFiltered) {
+      const cat = categoryFiltered.fullName.toUpperCase();
+      list = list.filter(
+        (item) => (item.CategoryName || '').toUpperCase() === cat
+      );
+    }
+    return list;
+  }, [masterList, stateFiltered, categoryFiltered]);
+
+  const displayList = useMemo(() => {
+    if (!search) return facetFilteredList;
+    const t = search.toUpperCase();
+    return facetFilteredList.filter(
+      (item) =>
+        item.CategoryName.toUpperCase().indexOf(t) > -1 ||
+        item.Name.toUpperCase().indexOf(t) > -1 ||
+        item.City.toUpperCase().indexOf(t) > -1 ||
+        item.Code.toUpperCase().indexOf(t) > -1
+    );
+  }, [facetFilteredList, search]);
 
   useEffect(() => {
     if (user?.UserID == null) return;
@@ -46,31 +84,19 @@ function MemorialListScreen({ navigation }) {
             response.data?.error ||
             `Could not load memorials (HTTP ${response.status}).`;
           setListError(String(msg));
-          setStateFilteredList([]);
-          setDisplayList([]);
-          setFilteredList([]);
           setMasterList([]);
           return;
         }
         if (!Array.isArray(response.data)) {
           setListError('Unexpected response from server.');
-          setStateFilteredList([]);
-          setDisplayList([]);
-          setFilteredList([]);
           setMasterList([]);
           return;
         }
-        setStateFilteredList(response.data);
-        setDisplayList(response.data);
-        setFilteredList(response.data);
         setMasterList(response.data);
       })
       .catch((error) => {
         console.log(error);
         setListError('Network error while loading memorials.');
-        setStateFilteredList([]);
-        setDisplayList([]);
-        setFilteredList([]);
         setMasterList([]);
       })
       .finally(() => setOnRefresh(false));
@@ -78,37 +104,22 @@ function MemorialListScreen({ navigation }) {
 
   const handleRefresh = () => {
     setSearch('');
-    setStateFiltered(null);
+    setStateFiltered(undefined);
+    setCategoryFiltered(undefined);
     fetchMemorialList();
   };
 
   const handleStateFilter = (selectedState) => {
     if (selectedState) {
       setStateFiltered(selectedState);
-      const newData = masterList.filter((item) => {
-        return (item.State.toUpperCase().indexOf(selectedState.shortName.toUpperCase()) > -1 );
-      });
-      setStateFilteredList(newData);
-      setDisplayList(newData);
-      setSearch('');
-    } 
-  }
-
-  const searchFilter = (text) => {
-    if (text) {
-      const newData = stateFilteredList.filter((item) => {
-        return (item.CategoryName.toUpperCase().indexOf(text.toUpperCase()) > -1 ||
-        item.Name.toUpperCase().indexOf(text.toUpperCase()) > -1 || 
-        item.City.toUpperCase().indexOf(text.toUpperCase()) > -1 ||
-        item.Code.toUpperCase().indexOf(text.toUpperCase()) > -1 );
-      });
-      setDisplayList(newData);
-      setSearch(text);
-    } else {
-      setDisplayList(stateFiltered ? stateFilteredList : filteredList);
-      setSearch(text);
     }
-  }
+  };
+
+  const handleCategoryFilter = (selected) => {
+    if (selected) {
+      setCategoryFiltered(selected);
+    }
+  };
 
   const onNavigateToMemorial = useCallback(
     (id) => navigation.navigate('MemorialDetailScreen', { id }),
@@ -147,24 +158,32 @@ function MemorialListScreen({ navigation }) {
   return (
     <Screen style={themeScreenStyle} hasNoHeader>
       <View style={styles.searchRow}>
-        <AppPicker 
-          clearFilter={() => {
-            handleRefresh();
-          }}
-          items={listOfStates}
-          // numberOfColumns={5}
-          onSelectItem={(selectedState) => handleStateFilter(selectedState)}
-          placeholder="All"
-          selectedItem={stateFiltered}
-          style={styles.statePicker}
-        />
-        <AppTextInput 
-          iconName="search" 
+        <AppTextInput
+          iconName="search"
           iconFamily="far"
-          value={search} 
-          placeholder="Search" 
-          onChangeText={(text) => searchFilter(text)}
+          inputContainerStyle={styles.searchInputContainer}
+          value={search}
+          placeholder="Search"
+          onChangeText={setSearch}
           style={[{ height: 18 }, themeTextStyle]}
+        />
+      </View>
+      <View style={styles.filtersRow}>
+        <AppPicker
+          clearFilter={() => setStateFiltered(undefined)}
+          items={listOfStates}
+          onSelectItem={(selectedState) => handleStateFilter(selectedState)}
+          placeholder="State"
+          selectedItem={stateFiltered}
+          style={styles.filterPicker}
+        />
+        <AppPicker
+          clearFilter={() => setCategoryFiltered(undefined)}
+          items={categoryPickerItems}
+          onSelectItem={(selected) => handleCategoryFilter(selected)}
+          placeholder="Category"
+          selectedItem={categoryFiltered}
+          style={styles.filterPicker}
         />
       </View>
       {listError ? (
@@ -172,7 +191,7 @@ function MemorialListScreen({ navigation }) {
           <AppText style={themeTextStyle}>{listError}</AppText>
         </View>
       ) : null}
-      <FlatList 
+      <FlatList
         data={displayList}
         initialNumToRender={14}
         ItemSeparatorComponent={ListItemSeperator}
@@ -181,7 +200,7 @@ function MemorialListScreen({ navigation }) {
         maxToRenderPerBatch={12}
         removeClippedSubviews={Platform.OS === 'android'}
         refreshControl={
-          <RefreshControl 
+          <RefreshControl
             refreshing={onRefresh}
             onRefresh={handleRefresh}
           />
@@ -199,25 +218,43 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
   },
   darkTextStyle: {
-    color: colors.light
+    color: colors.light,
+  },
+  filterPicker: {
+    flex: 1,
+    marginHorizontal: 4,
+    marginVertical: 6,
+    minWidth: 0,
+  },
+  filtersRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+    marginHorizontal: 6,
+    marginTop: 0,
   },
   lightTextStyle: {
-    color: colors.dark
+    color: colors.dark,
   },
   lightScreen: {
     backgroundColor: colors.background,
-  },
-  searchRow: {
-    alignContent: 'space-between',
-    flexDirection: 'row',
-    height: 50,
-    justifyContent: 'space-between',
-    marginHorizontal: 10,
   },
   messageWrap: {
     paddingHorizontal: 16,
     paddingVertical: 24,
   },
-})
+  searchInputContainer: {
+    flex: 1,
+    marginHorizontal: 0,
+    marginVertical: 6,
+    minWidth: 0,
+  },
+  searchRow: {
+    flexDirection: 'row',
+    marginBottom: 0,
+    marginHorizontal: 10,
+    marginTop: 0,
+  },
+});
 
 export default MemorialListScreen;

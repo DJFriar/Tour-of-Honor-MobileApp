@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from '../config/colors';
 
-function AppTextInput({ iconName, iconFamily, height, ...otherProps }) {
+function AppTextInput({ iconName, iconFamily, height, inputContainerStyle, ...otherProps }) {
   const colorScheme = useColorScheme();
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
   return (
-    <View style={[styles.container, themeContainerStyle, {height: height}]}>
+    <View style={[styles.container, themeContainerStyle, { height }, inputContainerStyle]}>
       <View style={styles.iconContainer}>
         {iconName && <FontAwesomeIcon icon={[iconFamily, iconName]} size={20} color={colors.medium} />}
       </View>

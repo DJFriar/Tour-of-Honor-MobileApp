@@ -71,18 +71,10 @@ function AccountScreen(props) {
               <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
             </View>
           </View>
-
-          <View style={styles.suggestionsSection}>
-            {(Platform.OS === 'android') ?
-              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(ANDROID_URL)} />
-              :
-              <MiniAppButton color="secondary" title="Suggest an Improvement" onPress={() => Linking.openURL(IPHONE_URL)} />
-            }
-          </View>
         </View>
         <View style={[styles.bottomContainer, themeContainerStyle]}>
           <View style={styles.appInfoRow}>
-            <Text style={[styles.copyright, themeTextStyle]}>&copy;2025 ambitiousNerds</Text>
+            <Text style={[styles.copyright, themeTextStyle]}>&copy;2026 ambitiousNerds</Text>
             <Text style={[styles.appInfo, themeTextStyle]}>Version {appVersion}</Text>
           </View>
         </View>

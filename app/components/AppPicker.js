@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { FlatList, Modal, StyleSheet, TouchableWithoutFeedback, useColorScheme, View } from 'react-native';
+import {
+  FlatList,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  useColorScheme,
+  View,
+} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AppButton from './AppButton';
@@ -8,7 +16,15 @@ import colors from '../config/colors';
 import Screen from './Screen';
 import StatePickerItem from './StatePickerItem';
 
-function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, placeholder, selectedItem }) {
+function AppPicker({
+  clearFilter,
+  items,
+  onSelectItem,
+  numberOfColumns = 5,
+  placeholder,
+  selectedItem,
+  style,
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   const colorScheme = useColorScheme();
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
@@ -17,7 +33,7 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, plac
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-        <View style={[styles.container, themeContainerStyle]}>
+        <View style={[styles.container, themeContainerStyle, style]}>
           {selectedItem ? (
             <AppText style={[styles.text, themeTextStyle]}>{selectedItem.shortName}</AppText>
           ) : ( 
@@ -30,23 +46,41 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, plac
           />
         </View>
       </TouchableWithoutFeedback>
-      <Modal visible={modalVisible} transparent={true} animationType='slide'>
+      <Modal
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+        transparent={true}
+        visible={modalVisible}
+      >
         <Screen style={styles.modalScreen} hasNoHeader>
-          <View style={selectedItem ? {marginBottom: 150} : {marginBottom: 75}}>
-            <View style={styles.closeButton}>
-              <View style={styles.clearFilter}>
-                {selectedItem && 
-                  <AppButton 
-                    color="secondary" 
+          <View style={styles.modalBody}>
+            <View style={styles.modalHeader}>
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel="Close picker"
+                hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                onPress={() => setModalVisible(false)}
+                style={styles.closeIconHit}
+              >
+                <FontAwesomeIcon
+                  icon={['far', 'times']}
+                  size={22}
+                  color={colorScheme === 'light' ? colors.dark : colors.light}
+                />
+              </TouchableOpacity>
+              <View style={styles.modalHeaderRight}>
+                {selectedItem ? (
+                  <AppButton
+                    color="secondary"
                     onPress={() => {
                       setModalVisible(false);
-                      clearFilter(true);
+                      clearFilter?.(true);
                     }}
-                    title="Clear Filter" 
+                    title="Clear filter"
                   />
-                }
+                ) : null}
               </View>
-            </View> 
+            </View>
             <View style={styles.grid}>
               <FlatList 
                 data={items}
@@ -72,19 +106,29 @@ function AppPicker({ clearFilter, items, onSelectItem, numberOfColumns = 5, plac
 }
 
 const styles = StyleSheet.create({
-  bottomSpacer:{
-    height: 40
+  closeIconHit: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+    minWidth: 44,
   },
-  clearFilter: {
-    flex: 2
+  modalBody: {
+    flex: 1,
+    marginBottom: 24,
   },
-  closeButton: {
-    flexDirection: 'row-reverse',
-    marginHorizontal: 10
+  modalHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
+    marginBottom: 8,
+    minHeight: 44,
+    paddingVertical: 4,
   },
-  closeX: {
-    marginLeft: 14,
-    marginRight: 4
+  modalHeaderRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    minHeight: 44,
   },
   container: {
     alignItems: 'center',

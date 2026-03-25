@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, Image, TouchableWithoutFeedback, Alert } from 'react-native';
+import React from 'react';
+import { Alert, Image, Platform, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 
 import colors from '../config/colors';
@@ -18,13 +19,25 @@ function ImageInput({ imageUri, onChangeImage, isOptional }) {
 
   const selectImage = async () => {
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const pickerOptions = {
         exif: true,
         mediaTypes: ['images'],
         quality: 0.2,
-      });
-      if (!result.canceled)
-        onChangeImage(result.assets[0].uri)
+      };
+      if (Platform.OS === 'ios') {
+        pickerOptions.preferredAssetRepresentationMode =
+          ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync(pickerOptions);
+      if (result.canceled) return;
+      const uri = result.assets[0].uri;
+      // Server uses sharp without HEIF; normalize to JPEG so uploads decode reliably.
+      const { uri: jpegUri } = await ImageManipulator.manipulateAsync(
+        uri,
+        [],
+        { compress: 0.2, format: ImageManipulator.SaveFormat.JPEG }
+      );
+      onChangeImage(jpegUri);
     } catch (error) {
       console.log("Error reading an image", error);
     }

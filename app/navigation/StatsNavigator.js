@@ -1,14 +1,19 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import StatsScreen from '../screens/StatsScreen';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const StatsNavigator = () => (
-  <Stack.Navigator presentation="modal" screenOptions={{ headerShown: false }}>
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+      presentation: 'modal',
+    }}
+  >
     <Stack.Screen name="StatsDetail" component={StatsScreen} />
   </Stack.Navigator>
-)
+);
 
 export default StatsNavigator;
