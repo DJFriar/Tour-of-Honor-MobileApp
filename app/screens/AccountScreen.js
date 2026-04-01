@@ -1,15 +1,11 @@
 import React from 'react';
 import * as Application from 'expo-application';
-import { Platform, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import * as Linking from 'expo-linking';
-
+import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 import colors from '../config/colors';
 import MiniAppButton from '../components/MiniAppButton';
 import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
-import MiniHeading from '../components/MiniHeading';
 
 function AccountScreen(props) {
   const { user, logOut } = useAuth();
@@ -17,10 +13,6 @@ function AccountScreen(props) {
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
   const appVersion = Application.nativeApplicationVersion;
-  const ANDROID_URL = 'https://improveloop.com/loop/aTOH';
-  const IPHONE_URL = 'https://improveloop.com/loop/iTOH';
-
-  console.log(user);
 
   return (
     <Screen style={styles.screen}>
@@ -36,41 +28,6 @@ function AccountScreen(props) {
             </View>
           </View>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {colorScheme === 'light' && <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />}
-            {colorScheme === 'dark' && <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />}
-          </View>
-
-          <View style={styles.faqSection}>
-            <MiniHeading>Icon Legend</MiniHeading>
-            <View style={styles.iconDefinitionRow}>
-              {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
-              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} />}
-              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial has been submitted and is awaiting review.</Text>
-            </View>
-            <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />
-              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial submission has been scored and approved. Congrats!</Text>
-            </View>
-            <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />
-              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial submission has been rejected. Check your email for details. You may resubmit this at anytime.</Text>
-            </View>
-            <View style={styles.iconDefinitionRow}>
-              {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'images']} size={25} />}
-              {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'images']} size={25} color={'white'} />}
-              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial requires two images. See the official rules for more details.</Text>
-            </View>
-            <View style={styles.iconDefinitionRow}>
-              {colorScheme === 'light' && <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} />}
-              {colorScheme === 'dark' && <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} color={'white'} />}
-              <Text style={[styles.iconDefinition, themeTextStyle]}>Tap on this icon to get driving directions using your phone's default map app.</Text>
-            </View>
-            <View style={styles.iconDefinitionRow}>
-              <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color={'red'} />
-              <Text style={[styles.iconDefinition, themeTextStyle]}>This memorial has a restriction. Scroll down the details to see what it is.</Text>
-            </View>
-          </View>
         </View>
         <View style={[styles.bottomContainer, themeContainerStyle]}>
           <View style={styles.appInfoRow}>
@@ -106,22 +63,8 @@ const styles = StyleSheet.create({
   darkTextStyle: {
     color: colors.light
   },
-  faqSection: {
-    marginTop: 10,
-    marginRight: 10,
-    paddingRight: 10
-  },
   flag: {
     fontSize: 20,
-  },
-  iconDefinition: {
-    fontSize: 14,
-    paddingLeft: 8
-  },
-  iconDefinitionRow: {
-    flexDirection: 'row',
-    marginTop: 8,
-    marginRight: 6,
   },
   label: {
     alignItems: 'flex-start',

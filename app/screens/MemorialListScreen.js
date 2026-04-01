@@ -12,6 +12,16 @@ import listOfStates from '../config/states';
 import Screen from '../components/Screen';
 import useAuth from '../auth/useAuth';
 
+const LOCALE_COMPARE_OPTS = { sensitivity: 'base' };
+
+function compareMemorialsByLocationAndCategory(a, b) {
+  let cmp = String(a.State ?? '').localeCompare(String(b.State ?? ''), undefined, LOCALE_COMPARE_OPTS);
+  if (cmp !== 0) return cmp;
+  cmp = String(a.City ?? '').localeCompare(String(b.City ?? ''), undefined, LOCALE_COMPARE_OPTS);
+  if (cmp !== 0) return cmp;
+  return String(a.CategoryName ?? '').localeCompare(String(b.CategoryName ?? ''), undefined, LOCALE_COMPARE_OPTS);
+}
+
 function MemorialListScreen({ navigation }) {
   const [masterList, setMasterList] = useState([]);
   const [search, setSearch] = useState('');
@@ -55,15 +65,18 @@ function MemorialListScreen({ navigation }) {
   }, [masterList, stateFiltered, categoryFiltered]);
 
   const displayList = useMemo(() => {
-    if (!search) return facetFilteredList;
-    const t = search.toUpperCase();
-    return facetFilteredList.filter(
-      (item) =>
-        item.CategoryName.toUpperCase().indexOf(t) > -1 ||
-        item.Name.toUpperCase().indexOf(t) > -1 ||
-        item.City.toUpperCase().indexOf(t) > -1 ||
-        item.Code.toUpperCase().indexOf(t) > -1
-    );
+    let filtered = facetFilteredList;
+    if (search) {
+      const t = search.toUpperCase();
+      filtered = facetFilteredList.filter(
+        (item) =>
+          (item.CategoryName || '').toUpperCase().indexOf(t) > -1 ||
+          item.Name.toUpperCase().indexOf(t) > -1 ||
+          item.City.toUpperCase().indexOf(t) > -1 ||
+          item.Code.toUpperCase().indexOf(t) > -1
+      );
+    }
+    return [...filtered].sort(compareMemorialsByLocationAndCategory);
   }, [facetFilteredList, search]);
 
   useEffect(() => {

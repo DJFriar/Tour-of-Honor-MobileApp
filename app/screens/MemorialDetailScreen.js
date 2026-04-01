@@ -36,6 +36,82 @@ const darkTagsStyles = {
   }
 };
 
+function MemorialIconLegendSection({ colorScheme, memorialDetails, memorialStatus, themeTextStyle }) {
+  const rows = [];
+  const status = memorialStatus.Status;
+
+  if (status === 0) {
+    rows.push(
+      <View key="pending" style={styles.iconLegendRow}>
+        {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
+        {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'clock']} size={25} color="white" />}
+        <AppText style={[styles.iconLegendText, themeTextStyle]}>
+          This memorial has been submitted and is awaiting review.
+        </AppText>
+      </View>
+    );
+  } else if (status === 1) {
+    rows.push(
+      <View key="approved" style={styles.iconLegendRow}>
+        <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color="green" />
+        <AppText style={[styles.iconLegendText, themeTextStyle]}>
+          This memorial submission has been scored and approved. Congrats!
+        </AppText>
+      </View>
+    );
+  } else if (status === 2) {
+    rows.push(
+      <View key="rejected" style={styles.iconLegendRow}>
+        <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color="red" />
+        <AppText style={[styles.iconLegendText, themeTextStyle]}>
+          This memorial submission has been rejected. Check your email for details. You may resubmit this at
+          anytime.
+        </AppText>
+      </View>
+    );
+  }
+
+  if (memorialDetails.MultiImage > 0) {
+    rows.push(
+      <View key="multi-image" style={styles.iconLegendRow}>
+        {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'images']} size={25} />}
+        {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'images']} size={25} color="white" />}
+        <AppText style={[styles.iconLegendText, themeTextStyle]}>
+          This memorial requires two images. See the official rules for more details.
+        </AppText>
+      </View>
+    );
+  }
+
+  rows.push(
+    <View key="directions" style={styles.iconLegendRow}>
+      {colorScheme === 'light' && <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} />}
+      {colorScheme === 'dark' && <FontAwesomeIcon icon={['fal', 'map-signs']} size={25} color="white" />}
+      <AppText style={[styles.iconLegendText, themeTextStyle]}>
+        Tap on this icon to get driving directions using your phone's default map app.
+      </AppText>
+    </View>
+  );
+
+  if (memorialDetails.Restrictions > 1) {
+    rows.push(
+      <View key="restrictions" style={styles.iconLegendRow}>
+        <FontAwesomeIcon icon={['fas', 'octagon-exclamation']} size={25} color="red" />
+        <AppText style={[styles.iconLegendText, themeTextStyle]}>
+          This memorial has a restriction. Scroll up to the Restrictions section for details.
+        </AppText>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.metadataDetailContainer}>
+      <MetaHeading style={themeTextStyle}>Icon legend</MetaHeading>
+      {rows}
+    </View>
+  );
+}
+
 function MemorialDetailScreen({ navigation, route }) {
   const { user, logOut } = useAuth();
   const isFocused = useIsFocused();
@@ -182,6 +258,14 @@ function MemorialDetailScreen({ navigation, route }) {
           <MetaHeading style={themeTextStyle}>Restrictions</MetaHeading>
           <AppText style={themeTextStyle}>{memorialDetails.RestrictionName}</AppText>
         </View>
+
+        <MemorialIconLegendSection
+          colorScheme={colorScheme}
+          memorialDetails={memorialDetails}
+          memorialStatus={memorialStatus}
+          themeTextStyle={themeTextStyle}
+        />
+
         <View style={{ paddingVertical: 10 }}>
           <AppText>&nbsp;</AppText>
         </View>
@@ -244,6 +328,16 @@ const styles = StyleSheet.create({
   },
   memorialNameContainer: {
     flex: 1,
+  },
+  iconLegendRow: {
+    flexDirection: 'row',
+    marginTop: 8,
+    marginRight: 6,
+  },
+  iconLegendText: {
+    flex: 1,
+    fontSize: 14,
+    paddingLeft: 8,
   },
   metadataDetailContainer: {
     flex: 1,
