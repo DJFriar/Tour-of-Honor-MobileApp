@@ -40,8 +40,12 @@ function ListItem({
             <View style={styles.statusIconContainer}>
               {status === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={20} color={'red'} />}
               {status === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={20} color={'green'} />}
-              {(status === 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'clock']} size={20} /> }
-              {(status === 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'clock']} size={20} color={'white'} /> }
+              {(status === 0 || status === 3) && colorScheme === 'light' && (
+                <FontAwesomeIcon icon={['far', 'clock']} size={20} />
+              )}
+              {(status === 0 || status === 3) && colorScheme === 'dark' && (
+                <FontAwesomeIcon icon={['far', 'clock']} size={20} color={'white'} />
+              )}
             </View>
           </View>
           <View style={styles.memorialCode}>

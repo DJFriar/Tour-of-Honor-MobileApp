@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, KeyboardAvoidingView, Image, View, StyleSheet, ScrollView, Switch, Text, useColorScheme } from 'react-native';
+import { Alert, Platform, KeyboardAvoidingView, Image, View, StyleSheet, ScrollView, Switch, Text, useColorScheme } from 'react-native';
 import * as Yup from 'yup';
 
 import AppForm from '../components/forms/AppForm';
@@ -50,6 +50,21 @@ function MemorialSubmitScreen({ navigation, route }) {
   };
 
   const handleSubmit = async (submission, { resetForm }) => {
+    if (route.params.hasEarnedCredit === true) {
+      const proceed = await new Promise((resolve) => {
+        Alert.alert(
+          'Already earned credit',
+          'You have already received credit for this memorial. You can still submit again (for example when riding with a group), but you will not receive duplicate credit. Are you sure you want to continue?',
+          [
+            { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
+            { text: 'Continue', onPress: () => resolve(true) },
+          ],
+          { cancelable: true, onDismiss: () => resolve(false) }
+        );
+      });
+      if (!proceed) return;
+    }
+
     setIsUploading(true);
 
     // Set the Submission Source to iPhone (2) or Android (3)

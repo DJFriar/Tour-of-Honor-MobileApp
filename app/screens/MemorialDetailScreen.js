@@ -40,13 +40,15 @@ function MemorialIconLegendSection({ colorScheme, memorialDetails, memorialStatu
   const rows = [];
   const status = memorialStatus.Status;
 
-  if (status === 0) {
+  if (status === 0 || status === 3) {
     rows.push(
       <View key="pending" style={styles.iconLegendRow}>
         {colorScheme === 'light' && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
         {colorScheme === 'dark' && <FontAwesomeIcon icon={['far', 'clock']} size={25} color="white" />}
         <AppText style={[styles.iconLegendText, themeTextStyle]}>
-          This memorial has been submitted and is awaiting review.
+          {status === 3
+            ? 'This memorial is on hold for scoring review.'
+            : 'This memorial has been submitted and is awaiting review.'}
         </AppText>
       </View>
     );
@@ -122,7 +124,7 @@ function MemorialDetailScreen({ navigation, route }) {
   const tagsStyles = colorScheme === 'light' ? lightTagsStyles : darkTagsStyles;
 
   const memorialID = route.params.id;
-  let memorialStatus = { "ScorerNotes": "", "Status": 9 };
+  let memorialStatus = { ScorerNotes: '', Status: 9, HasEarnedCredit: false };
   const getMemorialDetailsApi = useApi(memorial.getMemorialDetails);
   const memorialDetails = getMemorialDetailsApi.data[0] || {};
   const getMemorialMetadataApi = useApi(memorial.getMemorialMetadata);
@@ -131,7 +133,25 @@ function MemorialDetailScreen({ navigation, route }) {
     : [];
   const getMemorialStatusApi = useApi(memorial.getMemorialStatus);
   const memorialStatusApiResponse = getMemorialStatusApi.data[0] || {};
-  if (memorialStatusApiResponse.Status < 9) { memorialStatus = memorialStatusApiResponse };
+  if (
+    memorialStatusApiResponse.Status != null &&
+    typeof memorialStatusApiResponse.Status === 'number' &&
+    memorialStatusApiResponse.Status < 9
+  ) {
+    memorialStatus = {
+      ...memorialStatusApiResponse,
+      HasEarnedCredit: memorialStatusApiResponse.HasEarnedCredit === true,
+    };
+  }
+
+  const memorialSubmitParams = {
+    id: memorialID,
+    name: memorialDetails.Name,
+    code: memorialDetails.Code,
+    multiImage: memorialDetails.MultiImage,
+    sampleImage: memorialDetails.SampleImage,
+    hasEarnedCredit: memorialStatus.HasEarnedCredit === true,
+  };
 
   const memorialLat = memorialDetails.Latitude;
   const memorialLong = memorialDetails.Longitude;
@@ -173,8 +193,12 @@ function MemorialDetailScreen({ navigation, route }) {
           <View style={styles.statusIcons}>
             {memorialStatus.Status === 2 && <FontAwesomeIcon icon={['fas', 'shield-exclamation']} size={25} color={'red'} />}
             {memorialStatus.Status === 1 && <FontAwesomeIcon icon={['fas', 'shield-check']} size={25} color={'green'} />}
-            {(memorialStatus.Status === 0 && colorScheme === 'light') && <FontAwesomeIcon icon={['far', 'clock']} size={25} />}
-            {(memorialStatus.Status === 0 && colorScheme === 'dark') && <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} />}
+            {(memorialStatus.Status === 0 || memorialStatus.Status === 3) && colorScheme === 'light' && (
+              <FontAwesomeIcon icon={['far', 'clock']} size={25} />
+            )}
+            {(memorialStatus.Status === 0 || memorialStatus.Status === 3) && colorScheme === 'dark' && (
+              <FontAwesomeIcon icon={['far', 'clock']} size={25} color={'white'} />
+            )}
           </View>
         </View>
 
@@ -200,43 +224,50 @@ function MemorialDetailScreen({ navigation, route }) {
 
         </View>
         <View style={styles.submitButtonContainer}>
-          {memorialStatus.Status === 9 &&
-            <AppButton title="Submit" onPress={() =>
-              navigation.navigate('MemorialSubmitScreen', {
-                id: memorialID,
-                name: memorialDetails.Name,
-                code: memorialDetails.Code,
-                multiImage: memorialDetails.MultiImage,
-                sampleImage: memorialDetails.SampleImage
-              })}
+          {memorialStatus.Status === 9 && (
+            <AppButton
+              title="Submit"
+              onPress={() => navigation.navigate('MemorialSubmitScreen', memorialSubmitParams)}
             />
-          }
-          {memorialStatus.Status === 2 &&
+          )}
+          {memorialStatus.Status === 2 && (
             <>
               <View style={styles.disabledButtonContainer}>
                 <AppText style={[styles.disabledButtonText, themeTextStyle]}>{memorialStatus.ScorerNotes}</AppText>
               </View>
-              <AppButton title="Resubmit" onPress={() =>
-                navigation.navigate('MemorialSubmitScreen', {
-                  id: memorialID,
-                  name: memorialDetails.Name,
-                  code: memorialDetails.Code,
-                  multiImage: memorialDetails.MultiImage,
-                  sampleImage: memorialDetails.SampleImage
-                })}
+              <AppButton
+                title="Resubmit"
+                onPress={() => navigation.navigate('MemorialSubmitScreen', memorialSubmitParams)}
               />
             </>
-          }
-          {memorialStatus.Status === 1 &&
+          )}
+          {memorialStatus.Status === 1 && (
+            <>
+              <View style={styles.disabledButtonContainer}>
+                <AppText style={[styles.disabledButtonText, themeTextStyle]}>
+                  You have already earned this memorial, congrats!
+                </AppText>
+              </View>
+              <AppButton
+                title="Submit again"
+                onPress={() =>
+                  navigation.navigate('MemorialSubmitScreen', {
+                    ...memorialSubmitParams,
+                    hasEarnedCredit: true,
+                  })
+                }
+              />
+            </>
+          )}
+          {(memorialStatus.Status === 0 || memorialStatus.Status === 3) && (
             <View style={styles.disabledButtonContainer}>
-              <AppText style={[styles.disabledButtonText, themeTextStyle]}>You have already earned this memorial, congrats!</AppText>
+              <AppText style={[styles.disabledButtonText, themeTextStyle]}>
+                {memorialStatus.Status === 3
+                  ? 'This memorial is on hold for scoring review.'
+                  : 'This memorial has been submitted and is awaiting review.'}
+              </AppText>
             </View>
-          }
-          {memorialStatus.Status === 0 &&
-            <View style={styles.disabledButtonContainer}>
-              <AppText style={[styles.disabledButtonText, themeTextStyle]}>This memorial has been submitted and is awaiting review.</AppText>
-            </View>
-          }
+          )}
         </View>
 
         {/* Bottom Section */}
