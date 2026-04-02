@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import {
   FlatList,
   Modal,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
   useColorScheme,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import AppButton from './AppButton';
@@ -27,6 +29,8 @@ function AppPicker({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   const colorScheme = useColorScheme();
+  const insets = useSafeAreaInsets();
+  const listBottomPad = insets.bottom + 48;
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
 
@@ -87,6 +91,12 @@ function AppPicker({
                 keyExtractor={(item) => item.value.toString()}
                 horizontal={false}
                 numColumns={1}
+                style={styles.flatList}
+                contentContainerStyle={{ paddingBottom: listBottomPad }}
+                bounces={false}
+                alwaysBounceVertical={false}
+                {...(Platform.OS === 'android' ? { overScrollMode: 'never' } : {})}
+                showsVerticalScrollIndicator
                 renderItem={({ item }) => (
                   <StatePickerItem 
                     item={item}
@@ -152,7 +162,12 @@ const styles = StyleSheet.create({
     color: colors.dark
   },
   grid: {
-    marginHorizontal: 10
+    flex: 1,
+    marginHorizontal: 10,
+    minHeight: 0,
+  },
+  flatList: {
+    flex: 1,
   },
   modalScreen: {
     marginTop: 20,
