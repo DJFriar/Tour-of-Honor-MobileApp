@@ -178,7 +178,6 @@ function MemorialListScreen({ navigation }) {
           value={search}
           placeholder="Search"
           onChangeText={setSearch}
-          style={[{ height: 18 }, themeTextStyle]}
         />
       </View>
       <View style={styles.filtersRow}>

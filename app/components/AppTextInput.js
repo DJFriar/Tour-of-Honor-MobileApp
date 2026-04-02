@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import colors from '../config/colors';
 
-function AppTextInput({ iconName, iconFamily, height, inputContainerStyle, ...otherProps }) {
+function AppTextInput({ iconName, iconFamily, height, inputContainerStyle, style, ...otherProps }) {
   const colorScheme = useColorScheme();
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
   const themeTextStyle = colorScheme === 'light' ? styles.lightTextStyle : styles.darkTextStyle;
@@ -15,7 +15,11 @@ function AppTextInput({ iconName, iconFamily, height, inputContainerStyle, ...ot
         {iconName && <FontAwesomeIcon icon={[iconFamily, iconName]} size={20} color={colors.medium} />}
       </View>
       <View style={[styles.textContainer, themeContainerStyle]}>
-        <TextInput placeholderTextColor={colors.medium} style={[styles.text, themeTextStyle]} {...otherProps} />
+        <TextInput
+          placeholderTextColor={colors.medium}
+          style={[styles.text, themeTextStyle, style]}
+          {...otherProps}
+        />
       </View>
     </View>
   );
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
     color: colors.dark
   },
   text: {
-    fontFamily: Platform.OS === "android" ? "Roboto": "Avenir",
+    fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
   },
   textContainer: {
     flex: 1,
